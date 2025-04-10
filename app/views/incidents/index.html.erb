@@ -5,6 +5,8 @@
     🔥 Incidents
   </h2>
 
+  <h3 class="text-sm text-gray-500 italic mb-4">All dates and times are displayed in the "America/Bogota" timezone.</h3>
+
   <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
     <table class="min-w-full divide-y divide-gray-200 bg-white">
       <thead class="bg-gray-50">
@@ -17,33 +19,17 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100 text-sm text-gray-800">
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4">Awaiting team response</td>
-          <td class="px-6 py-4">
-            <span class="inline-block px-3 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">Created</span>
-          </td>
-          <td class="px-6 py-4">10 minutes ago</td>
-          <td class="px-6 py-4 text-gray-400">—</td>
-          <td class="px-6 py-4 text-gray-400">—</td>
-        </tr>
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4">Awaiting team response</td>
-          <td class="px-6 py-4">
-            <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-yellow-500 rounded-full">Alerted</span>
-          </td>
-          <td class="px-6 py-4">2025-04-10 13:50</td>
-          <td class="px-6 py-4 text-gray-400">—</td>
-          <td class="px-6 py-4 text-gray-400">—</td>
-        </tr>
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4">Awaiting team response</td>
-          <td class="px-6 py-4">
-            <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-green-600 rounded-full">Resolved</span>
-          </td>
-          <td class="px-6 py-4">2025-04-09 18:12</td>
-          <td class="px-6 py-4">2025-04-09 18:20</td>
-          <td class="px-6 py-4">2025-04-09 18:45</td>
-        </tr>
+        <% @incidents.each do |incident| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4"><%= incident.description %></td>
+            <td class="px-6 py-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold text-white <%= incident.status_background_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
+            </td>
+            <td class="px-6 py-4"><%= incident.created_at_display_time %></td>
+            <td class="px-6 py-4"><%= incident.alerted_at_display_time || '–' %></td>
+            <td class="px-6 py-4"><%= incident.resolved_at_display_time || '–' %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
