@@ -9,32 +9,36 @@ class HospitableWebhooksController < ApplicationController
     message_created = HospitalWebhookMessageCreated.new(payload)
 
     if message_created.from_guest?
-      incident = Incident
+      pending_incident = Incident
+        .pending
         .where(kind: "pending_reply")
         .where("source_details ->> 'conversation_id' = ?", message_created.conversation_id)
         .first
 
-      unless incident.present?
-        Incident.create(
+      unless pending_incident.present?
+        incident = Incident.create(
           kind: 'pending_reply',
           source_details: {
             platform: message_created.platform,
             conversation_id: message_created.conversation_id
-        })
+          }
+        )
+
+        NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident_id: incident.id)
       end
 
       render json: { message: :success } and return
     end
 
     if message_created.from_team?
-      incident = Incident
+      pending_incident = Incident
+        .pending
         .where(kind: "pending_reply")
-        .where.not(status: "resolved")
         .where("source_details ->> 'conversation_id' = ?", message_created.conversation_id)
         .first
 
-      if incident.present?
-        incident.resolve!
+      if pending_incident.present?
+        pending_incident.resolve!
       end
     end
 
