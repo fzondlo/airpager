@@ -1,6 +1,32 @@
 <div class="max-w-5xl mx-auto px-6 py-12">
   <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Airpager</h1>
 
+  <% if @average_resolved_time.present? %>
+    <div class="mb-6 flex flex-wrap gap-2">
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 my-12 mb-6 flex items-center gap-2">
+      📈 Analytics
+    </h2>
+
+    <div class="mb-6 flex flex-wrap gap-2">
+      <%= link_to "Everyone", incidents_path, class: "px-4 py-1.5 rounded-full text-sm font-medium #{params[:analytics_resolved_by].blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+
+      <% @resolved_by_options.each do |name| %>
+        <%= link_to name, incidents_path(analytics_resolved_by: name), class: "px-4 py-1.5 rounded-full text-sm font-medium #{params[:analytics_resolved_by] == name ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+      <% end %>
+
+      <!-- <button class="px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Jeremie</button>
+      <button class="px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Frank</button>
+      <button class="px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Laura</button> -->
+    </div>
+
+    <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm">
+      <p class="text-sm text-gray-600 mb-1">Average resolved time:</p>
+      <p class="text-2xl font-semibold text-gray-900"><%= Time.at(@average_resolved_time).utc.strftime("%H:%M:%S") %></p>
+    </div>
+  <% end %>
+
   <h2 class="text-2xl font-bold text-gray-800 my-12 mb-6 flex items-center gap-2">
     🔥 Incidents
   </h2>
