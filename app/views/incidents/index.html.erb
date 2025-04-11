@@ -5,36 +5,45 @@
     🔥 Incidents
   </h2>
 
-  <h3 class="text-sm text-gray-500 italic mb-4">All dates and times are displayed in the "America/Bogota" timezone.</h3>
+  <% if @incidents.any? %>
+    <h3 class="text-sm text-gray-500 italic mb-4">All dates and times are displayed in the "America/Bogota" timezone.</h3>
 
-  <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-    <table class="min-w-full divide-y divide-gray-200 bg-white">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">ID</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Description</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Created At</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Alerted At</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved At</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600"></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-100 text-sm text-gray-800">
-        <% @incidents.each do |incident| %>
-          <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4"><%= incident.id %></td>
-            <td class=""><%= incident.description %></td>
-            <td class="">
-              <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_status_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
-            </td>
-            <td class=""><%= incident.created_at_display_time %></td>
-            <td class=""><%= incident.alerted_at_display_time || '–' %></td>
-            <td class=""><%= incident.resolved_at_display_time || '–' %></td>
-            <td class=""><%= link_to "View details", incident_path(incident.model), class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %></td>
+    <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+      <table class="min-w-full divide-y divide-gray-200 bg-white">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">ID</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Description</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Created At</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Alerted At</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved At</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody class="divide-y divide-gray-100 text-sm text-gray-800">
+          <% @incidents.each do |incident| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4"><%= incident.id %></td>
+              <td class=""><%= incident.description %></td>
+              <td class="">
+                <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_status_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
+              </td>
+              <td class=""><%= incident.created_at_display_time %></td>
+              <td class=""><%= incident.alerted_at_display_time || '–' %></td>
+              <td class=""><%= incident.resolved_at_display_time || '–' %></td>
+              <td class=""><%= link_to "View details", incident_path(incident.model), class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="border border-gray-200 rounded-xl bg-white p-8 flex flex-col items-center text-center shadow-sm">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-xl font-semibold text-gray-800">No incidents yet</h2>
+      <p class="mt-2 text-gray-500">Everything is running smoothly. When something comes up, it’ll appear here.</p>
+    </div>
+
+  <% end %>
 </div>

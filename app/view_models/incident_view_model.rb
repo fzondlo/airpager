@@ -21,7 +21,7 @@ class IncidentViewModel < ApplicationViewModel
   def how_to_resolve
     case model.kind
     when 'pending_reply'
-      "You can solve this incident by accessing the conversation and reply to the customer: URL"
+      "You can solve this incident by accessing the conversation and reply to the customer: (TODO: URL with conversation ID #{model.source_details["conversation_id"]})"
     else
       "No ways available to solve this type of incident."
     end
