@@ -21,7 +21,7 @@ class IncidentViewModel < ApplicationViewModel
   def how_to_resolve
     case model.kind
     when 'pending_reply'
-      "You can solve this incident by accessing the conversation and reply to the customer: (TODO: URL with conversation ID #{model.source_details["conversation_id"]})"
+      "You can solve this incident by accessing the conversation and reply to the customer: <a class=\"text-blue-500\" href=\"#{hospitable_thread_url(model.source_details["conversation_id"])}\">#{hospitable_thread_url(model.source_details["conversation_id"])}</a>".html_safe
     else
       "No ways available to solve this type of incident."
     end
@@ -41,5 +41,11 @@ class IncidentViewModel < ApplicationViewModel
     return unless model.resolved_at.present?
 
     model.resolved_at.in_time_zone("America/Bogota").strftime("%B %-d, %Y – %H:%M")
+  end
+
+  private
+
+  def hospitable_thread_url(conversation_id)
+    "https://my.hospitable.com/inbox/thread/" << conversation_id
   end
 end
