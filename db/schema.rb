@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_10_223621) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_11_025613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,5 +22,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_10_223621) do
     t.datetime "resolved_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "resolved_by"
   end
 end

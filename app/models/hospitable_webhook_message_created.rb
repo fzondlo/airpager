@@ -13,6 +13,10 @@ class HospitableWebhookMessageCreated
     payload["data"]["conversation_id"]
   end
 
+  def contact_details
+    "#{payload["data"]["sender"]["full_name"]} <#{payload["data"]["user"]["email"]}>"
+  end
+
   def from_team?
     payload["data"]["sender_role"].in?(sender_roles_for_team)
   end

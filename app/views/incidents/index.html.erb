@@ -18,6 +18,7 @@
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Created At</th>
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Alerted At</th>
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved At</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved By</th>
             <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600"></th>
           </tr>
         </thead>
@@ -32,6 +33,7 @@
               <td class=""><%= incident.created_at_display_time %></td>
               <td class=""><%= incident.alerted_at_display_time || '–' %></td>
               <td class=""><%= incident.resolved_at_display_time || '–' %></td>
+              <td class=""><%= incident.resolved_by || '–' %></td>
               <td class=""><%= link_to "View details", incident_path(incident.model), class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %></td>
             </tr>
           <% end %>

@@ -9,8 +9,8 @@ class Incident < ApplicationRecord
     update(status: "alerted", alerted_at: Time.current)
   end
 
-  def resolve!
-    update(status: "resolved", resolved_at: Time.current)
+  def resolve!(by: '')
+    update(status: "resolved", resolved_by: by, resolved_at: Time.current)
   end
 
   private

@@ -37,7 +37,10 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
 
     post_hospitable_message_webhook(conversation_id: "test-convo-789", sender_role: "co-host")
 
-    assert incident.reload.resolved_at.present?
+    incident.reload
+
+    assert incident.resolved_at.present?
+    assert incident.resolved_by.present?
   end
 
   private
