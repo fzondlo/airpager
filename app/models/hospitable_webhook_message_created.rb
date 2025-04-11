@@ -18,7 +18,7 @@ class HospitableWebhookMessageCreated
   end
 
   def from_guest?
-    !from_company?
+    !from_team?
   end
 
   private
