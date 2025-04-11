@@ -14,5 +14,7 @@ Rails.application.routes.draw do
 
   resources :incidents, only: [:index, :show]
 
+  resources :hospitable_webhooks, only: [:create]
+
   root "incidents#index"
 end
