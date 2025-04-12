@@ -1,7 +1,8 @@
 class Incident < ApplicationRecord
   validates :kind, presence: true
 
-  scope :pending, -> { where.not(status: "resolved") }
+  scope :pending, -> { where(resolved_at: nil) }
+  scope :resolved, -> { where.not(resolved_at: nil) }
 
   after_initialize :set_defaults, if: :new_record?
 

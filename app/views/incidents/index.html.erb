@@ -1,77 +1,162 @@
 <div class="max-w-5xl mx-auto px-6 py-12">
   <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Airpager</h1>
 
-  <% if @average_resolved_time.present? %>
     <div class="mb-6 flex flex-wrap gap-2">
     </div>
 
+    <section>
     <h2 class="text-2xl font-bold text-gray-800 my-12 mb-6 flex items-center gap-2">
       📈 Analytics
     </h2>
 
-    <div class="mb-6 flex flex-wrap gap-2">
-      <%= link_to "Everyone", incidents_path, class: "px-4 py-1.5 rounded-full text-sm font-medium #{params[:analytics_resolved_by].blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+    <!-- Filter by user -->
+    <div class="mb-4 flex flex-wrap gap-2">
+      <%= link_to "Everyone", incidents_path(request.query_parameters.deep_merge(analytics: { resolved_by: nil })), class: "px-4 py-1.5 rounded-full text-sm font-medium #{params.dig(:analytics, :resolved_by).blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
 
       <% @resolved_by_options.each do |name| %>
-        <%= link_to name, incidents_path(analytics_resolved_by: name), class: "px-4 py-1.5 rounded-full text-sm font-medium #{params[:analytics_resolved_by] == name ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+        <%= link_to name, incidents_path(request.query_parameters.deep_merge(analytics: { resolved_by: name })), class: "px-4 py-1.5 rounded-full text-sm font-medium #{params.dig(:analytics, :resolved_by) == name ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
       <% end %>
-
-      <!-- <button class="px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Jeremie</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Frank</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Laura</button> -->
     </div>
 
-    <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm">
-      <p class="text-sm text-gray-600 mb-1">Average resolved time:</p>
-      <p class="text-2xl font-semibold text-gray-900"><%= Time.at(@average_resolved_time).utc.strftime("%H:%M:%S") %></p>
-    </div>
-  <% end %>
+    <!-- Date Range Filter -->
+    <div class="mb-6 w-full bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+      <h3 class="text-base font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        📅 Filter by period
+      </h3>
 
-  <h2 class="text-2xl font-bold text-gray-800 my-12 mb-6 flex items-center gap-2">
-    🔥 Incidents
-  </h2>
+      <div>
+        <p class="text-sm text-gray-700 mb-4">
+          Showing Analytics results for period:
+          <span class="font-medium text-blue-600">
+            <%=
+              case params.dig(:analytics, :period)
+              when "today"
+                "Today"
+              when "yesterday"
+                "Yesterday"
+              when "this_week"
+                "This Week"
+              when "this_month"
+                "This Month"
+              when "custom"
 
-  <% if @incidents.any? %>
-    <h3 class="text-sm text-gray-500 italic mb-4">All dates and times are displayed in the "America/Bogota" timezone.</h3>
+                if params.dig(:analytics, :start_date).present? && !params.dig(:analytics, :end_date).present?
+                  "Custom (" << params.dig(:analytics, :start_date).to_date.strftime("%B %-d, %Y") << ")"
+                elsif params.dig(:analytics, :start_date).present? && params.dig(:analytics, :end_date).present?
+                  "Custom (" << params.dig(:analytics, :start_date).to_date.strftime("%B %-d, %Y") <<  " - " << params.dig(:analytics, :end_date).to_date.strftime("%B %-d, %Y") << ")"
+                else
+                  "Custom"
+                end
+              else
+                "All Time"
+              end
+            %>
+          </span>
+        </p>
 
-    <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-      <table class="min-w-full divide-y divide-gray-200 bg-white">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">ID</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Description</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Created At</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Alerted At</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved At</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved By</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600"></th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 text-sm text-gray-800">
-          <% @incidents.each do |incident| %>
-            <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4"><%= incident.id %></td>
-              <td class=""><%= incident.description %></td>
-              <td class="">
-                <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_status_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
-              </td>
-              <td class=""><%= incident.created_at_display_time %></td>
-              <td class=""><%= incident.alerted_at_display_time || '–' %></td>
-              <td class=""><%= incident.resolved_at_display_time || '–' %></td>
-              <td class=""><%= incident.resolved_by || '–' %></td>
-              <td class=""><%= link_to "View details", incident_path(incident.model), class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %></td>
-            </tr>
+        <%= form_with url: incidents_path, method: :get, local: true, scope: :analytics, class: "flex flex-wrap items-end gap-4" do |form| %>
+          <%# Preserve current analytics params %>
+          <% (params[:analytics] || {}).without(:start_date, :end_date, :period).each do |key, value| %>
+            <%= form.hidden_field key, value: value %>
           <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <div class="border border-gray-200 rounded-xl bg-white p-8 flex flex-col items-center text-center shadow-sm">
-      <div class="text-5xl mb-4">✅</div>
-      <h2 class="text-xl font-semibold text-gray-800">No incidents yet</h2>
-      <p class="mt-2 text-gray-500">Everything is running smoothly. When something comes up, it’ll appear here.</p>
+
+          <%= form.hidden_field :period, value: "custom" %>
+
+          <!-- Start Date Field -->
+          <div class="flex flex-col">
+            <%= form.label :start_date, "From", class: "text-sm text-gray-600 mb-1" %>
+            <%= form.date_field :start_date, value: params.dig(:analytics, :start_date), required: true, class: "rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+          </div>
+
+          <!-- End Date Field -->
+          <div class="flex flex-col">
+            <%= form.label :end_date, "To (optional)", class: "text-sm text-gray-600 mb-1" %>
+            <%= form.date_field :end_date, value: params.dig(:analytics, :end_date), class: "rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+          </div>
+
+          <!-- Apply Button -->
+          <div class="pt-5">
+            <%= form.submit "Apply Period", class: "inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all cursor-pointer" %>
+          </div>
+        <% end %>
+      </div>
+
+
+      <!-- Example text -->
+      <div class="my-4 text-xs text-gray-500">e.g. From January 1, 2025 to January 25, 2025</div>
+
+
+      <!-- Preset Date Range Links -->
+      <div class="mt-4 text-xs text-gray-700 mt-4 bg-gray-100 p-4 rounded-lg shadow-sm">
+        <span>Quick filters:</span>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'all_time', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">All Time</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'today', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Today</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'yesterday', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Yesterday</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'this_week', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Week</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'this_month', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Month</a>
+      </div>
+
     </div>
 
-  <% end %>
+
+    <!-- Metric box -->
+    <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm">
+      <% if @average_resolution_time.present? %>
+        <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
+        <p class="text-2xl font-semibold text-gray-900"><%= Time.at(@average_resolution_time).utc.strftime("%H:%M:%S") %></p>
+      <% else %>
+        <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
+        <p class="text-2xl font-semibold text-gray-900">Not available</p>
+      <% end %>
+    </div>
+
+  </section>
+  <section>
+    <h2 class="text-2xl font-bold text-gray-800 my-12 mb-6 flex items-center gap-2">
+      🔥 Incidents
+    </h2>
+
+    <% if @incidents.any? %>
+      <h3 class="text-sm text-gray-500 italic mb-4">All dates and times are displayed in the "America/Bogota" timezone.</h3>
+
+      <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+        <table class="min-w-full divide-y divide-gray-200 bg-white">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">ID</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Description</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Created At</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Alerted At</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved At</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Resolved By</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-sm text-gray-800">
+            <% @incidents.each do |incident| %>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4"><%= incident.id %></td>
+                <td class=""><%= incident.description %></td>
+                <td class="">
+                  <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_status_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
+                </td>
+                <td class=""><%= incident.created_at_display_time %></td>
+                <td class=""><%= incident.alerted_at_display_time || '–' %></td>
+                <td class=""><%= incident.resolved_at_display_time || '–' %></td>
+                <td class=""><%= incident.resolved_by || '–' %></td>
+                <td class=""><%= link_to "View details", incident_path(incident.model), class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="border border-gray-200 rounded-xl bg-white p-8 flex flex-col items-center text-center shadow-sm">
+        <div class="text-5xl mb-4">✅</div>
+        <h2 class="text-xl font-semibold text-gray-800">No incidents yet</h2>
+        <p class="mt-2 text-gray-500">Everything is running smoothly. When something comes up, it’ll appear here.</p>
+      </div>
+    <% end %>
+  </section>
 </div>
