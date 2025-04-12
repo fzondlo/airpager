@@ -54,7 +54,7 @@ class IncidentAnalyticsCompare::Result
 
   def percentage_change_display
     if percentage_change.nil? || percentage_change.infinite?
-      return "∞ %"
+      return "100%"
     end
 
     "#{percentage_change}%"
