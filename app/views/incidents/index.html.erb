@@ -38,6 +38,8 @@
                 "This Week"
               when "this_month"
                 "This Month"
+              when "all_time"
+                "All Time"
               when "custom"
                 if params.dig(:analytics, :start_date).present? && !params.dig(:analytics, :end_date).present?
                   "Custom (" << params.dig(:analytics, :start_date).to_date.strftime("%B %-d, %Y") << ")"
@@ -47,7 +49,7 @@
                   "Custom"
                 end
               else
-                "All Time"
+                "Today"
               end
             %>
           </span>
@@ -88,11 +90,11 @@
       <!-- Preset Date Range Links -->
       <div class="mt-4 text-xs text-gray-700 mt-4 bg-gray-100 p-4 rounded-lg shadow-sm">
         <span>Quick filters:</span>
-        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'all_time', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">All Time</a>
         <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'today', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Today</a>
         <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'yesterday', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Yesterday</a>
         <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'this_week', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Week</a>
         <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'this_month', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Month</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'all_time', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">All Time</a>
       </div>
 
     </div>

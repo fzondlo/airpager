@@ -43,10 +43,13 @@ class IncidentAnalyticsQuery
       scope.where(resolved_at: period_this_week)
     when "this_month"
       scope.where(resolved_at: period_this_month)
+    when "all_time"
+      scope
     when "custom"
       filter_by_custom_period(scope)
     else
-      scope
+      # By default, filter by Today
+      scope.where(resolved_at: period_today)
     end
   end
 
