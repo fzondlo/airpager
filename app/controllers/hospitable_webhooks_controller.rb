@@ -38,7 +38,7 @@ class HospitableWebhooksController < ApplicationController
         .first
 
       if pending_incident.present?
-        pending_incident.resolve!(by: message_created.contact_details)
+        pending_incident.resolve!(by: message_created.sender_full_name)
       end
     end
 

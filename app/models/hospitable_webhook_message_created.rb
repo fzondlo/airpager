@@ -13,8 +13,8 @@ class HospitableWebhookMessageCreated
     payload["data"]["conversation_id"]
   end
 
-  def contact_details
-    "#{payload["data"]["sender"]["full_name"]} <#{payload["data"]["user"]["email"]}>"
+  def sender_full_name
+    "#{payload["data"]["sender"]["full_name"]}"
   end
 
   def from_team?
