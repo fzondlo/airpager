@@ -16,7 +16,13 @@ class IncidentAnalyticsQuery
   end
 
   def average_resolution_time
-    scoped.average("EXTRACT(EPOCH FROM resolved_at - created_at)")
+    return @average_resolution_time if defined?(@average_resolution_time)
+
+    @average_resolution_time = scoped.average("EXTRACT(EPOCH FROM resolved_at - created_at)")
+  end
+
+  def total_incidents_resolved
+    @total_incidents_resolved ||= scoped.count
   end
 
   private

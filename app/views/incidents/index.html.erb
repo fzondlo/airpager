@@ -39,7 +39,6 @@
               when "this_month"
                 "This Month"
               when "custom"
-
                 if params.dig(:analytics, :start_date).present? && !params.dig(:analytics, :end_date).present?
                   "Custom (" << params.dig(:analytics, :start_date).to_date.strftime("%B %-d, %Y") << ")"
                 elsif params.dig(:analytics, :start_date).present? && params.dig(:analytics, :end_date).present?
@@ -100,17 +99,25 @@
 
 
     <!-- Metric box -->
-    <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm">
-      <% if @average_resolution_time.present? %>
-        <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
-        <p class="text-2xl font-semibold text-gray-900"><%= Time.at(@average_resolution_time).utc.strftime("%H:%M:%S") %></p>
-      <% else %>
-        <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
-        <p class="text-2xl font-semibold text-gray-900">Not available</p>
-      <% end %>
+    <div class="flex space-x-4">
+      <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm w-full">
+        <% if @analytics_query.average_resolution_time.present? %>
+          <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
+          <p class="text-2xl font-semibold text-gray-900"><%= Time.at(@analytics_query.average_resolution_time).utc.strftime("%H:%M:%S") %></p>
+        <% else %>
+          <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
+          <p class="text-2xl font-semibold text-gray-900">Not available</p>
+        <% end %>
+      </div>
+
+      <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm w-full">
+        <p class="text-sm text-gray-600 mb-1">Total incidents resolved:</p>
+        <p class="text-2xl font-semibold text-gray-900"><%= @analytics_query.total_incidents_resolved %></p>
+      </div>
     </div>
 
   </section>
+
   <section>
     <h2 class="text-2xl font-bold text-gray-800 my-12 mb-6 flex items-center gap-2">
       🔥 Incidents

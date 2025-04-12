@@ -1,6 +1,6 @@
 class IncidentsController < ApplicationController
   def index
-    @average_resolution_time = analytics_query.average_resolution_time
+    @analytics_query = IncidentAnalyticsQuery.new(analytics_params)
 
     @resolved_by_options = Incident.resolved.select(:resolved_by).distinct.pluck(:resolved_by)
 
@@ -12,10 +12,6 @@ class IncidentsController < ApplicationController
   end
 
   private
-
-  def analytics_query
-    IncidentAnalyticsQuery.new(analytics_params)
-  end
 
   def analytics_params
     params.fetch(:analytics, {}).permit(:period, :resolved_by, :start_date, :end_date)
