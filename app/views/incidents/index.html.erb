@@ -105,7 +105,22 @@
       <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm w-full">
         <% if @analytics_query.average_resolution_time.present? %>
           <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
-          <p class="text-2xl font-semibold text-gray-900"><%= Time.at(@analytics_query.average_resolution_time).utc.strftime("%H:%M:%S") %></p>
+          <p class="text-2xl font-semibold text-gray-900">
+            <%= Time.at(@analytics_query.average_resolution_time).utc.strftime("%H:%M:%S") %>
+
+            <% if @analytics_query.from_today? %>
+              <% if @analytics_compare.average_resolution_time.comparable? %>
+                <span class="ml-2 text-sm font-medium <%= @analytics_compare.average_resolution_time.difference_class %>">
+                <%= @analytics_compare.average_resolution_time.arrow %>
+                <%= @analytics_compare.average_resolution_time.percentage_change_display %> compared to Yesterday
+                </span>
+              <% else %>
+                <span class="ml-2 text-sm text-gray-500 font-medium">
+                  Insufficient data to compare with Yesterday
+                </span>
+              <% end %>
+            <% end %>
+          </p>
         <% else %>
           <p class="text-sm text-gray-600 mb-1">Average resolution time:</p>
           <p class="text-2xl font-semibold text-gray-900">Not available</p>
@@ -114,7 +129,22 @@
 
       <div class="border border-gray-200 rounded-xl bg-white p-6 shadow-sm w-full">
         <p class="text-sm text-gray-600 mb-1">Total incidents resolved:</p>
-        <p class="text-2xl font-semibold text-gray-900"><%= @analytics_query.total_incidents_resolved %></p>
+        <p class="text-2xl font-semibold text-gray-900">
+          <%= @analytics_query.total_incidents_resolved %>
+
+          <% if @analytics_query.from_today? %>
+            <% if @analytics_compare.total_incidents_resolved.comparable? %>
+              <span class="ml-2 text-sm font-medium <%= @analytics_compare.total_incidents_resolved.difference_class %>">
+              <%= @analytics_compare.total_incidents_resolved.arrow %>
+              <%= @analytics_compare.total_incidents_resolved.percentage_change_display %> compared to Yesterday
+              </span>
+            <% else %>
+              <span class="ml-2 text-sm text-gray-500 font-medium">
+                Insufficient data to compare with Yesterday
+              </span>
+            <% end %>
+          <% end %>
+        </p>
       </div>
     </div>
 

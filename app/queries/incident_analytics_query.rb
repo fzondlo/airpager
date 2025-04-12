@@ -25,6 +25,10 @@ class IncidentAnalyticsQuery
     @total_incidents_resolved ||= scoped.count
   end
 
+  def from_today?
+    period.nil? || period == "today"
+  end
+
   private
 
   def filter_by_resolved_by(scope)
