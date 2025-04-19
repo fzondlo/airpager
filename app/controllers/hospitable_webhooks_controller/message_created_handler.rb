@@ -27,7 +27,8 @@ class HospitableWebhooksController
         kind: 'pending_reply',
         source_details: {
           platform: message.platform,
-          conversation_id: message.conversation_id
+          conversation_id: message.conversation_id,
+          reservation_id: message.reservation_id
         }
       )
 

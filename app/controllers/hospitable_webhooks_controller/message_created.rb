@@ -14,6 +14,10 @@ class HospitableWebhooksController
       payload["data"]["conversation_id"]
     end
 
+    def reservation_id
+      payload["data"]["reservation_id"]
+    end
+
     def sender_full_name
       "#{payload["data"]["sender"]["full_name"]}"
     end
