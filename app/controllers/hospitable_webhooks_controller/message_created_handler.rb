@@ -14,6 +14,10 @@ class HospitableWebhooksController
       end
 
       if message.from_guest? && !pending_incident.present?
+
+        Prompt.ensure_conversation_needs_reply_from_team(conversation_messages)
+        # ChatGPT.gateway.chat(prompt)
+
         return create_incident
 
         # NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident_id: incident.id)
@@ -57,15 +61,7 @@ class HospitableWebhooksController
     end
 
     def conversation_messages
-      @conversation_messages ||= begin
-        # Hospitable does not let us retrieve messages per conversation_id,
-        # only per reservation_id.
-        response = Hospitable.gateway.find_reservation_messages(message.reservation_id)
-
-        return [] unless response.success?
-
-        response.select_conversation_messages(message.conversation_id)
-      end
+      @conversation_messages ||= Message.where(conversation_id: message.conversation_id).order(created_at: :desc).limit(5)
     end
   end
 end
