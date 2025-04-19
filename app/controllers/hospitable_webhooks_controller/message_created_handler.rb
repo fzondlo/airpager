@@ -13,10 +13,7 @@ class HospitableWebhooksController
         return resolve_pending_incident
       end
 
-      if message.from_guest? && !pending_incident.present?
-
-        Prompt.ensure_conversation_needs_reply_from_team(conversation_messages)
-        # ChatGPT.gateway.chat(prompt)
+      if message.from_guest? && !pending_incident.present? && needs_reply_from_team?
 
         return create_incident
 
@@ -50,6 +47,24 @@ class HospitableWebhooksController
 
     def resolve_pending_incident
       pending_incident&.resolve!(by: message.sender_full_name)
+    end
+
+    def needs_reply_from_team?
+      prompt = Prompt.ensure_conversation_needs_reply_from_team(conversation_messages)
+
+      response = ::OpenAi.gateway.chat(prompt)
+
+      if !response.success?
+        return true
+      end
+
+      if !response.answer.in?(["TRUE", "FALSE"])
+        return true
+      end
+
+      result = ActiveModel::Type::Boolean.new.cast(response.answer)
+
+      result || true
     end
 
     def pending_incident
