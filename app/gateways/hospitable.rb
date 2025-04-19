@@ -1,4 +1,4 @@
-class Hospitable
+module Hospitable
   def self.gateway
     return BogusGateway.new unless enabled?
 

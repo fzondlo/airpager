@@ -1,4 +1,4 @@
-class Hospitable
+module Hospitable
   class BogusGateway
     def initialize(*)
       # no-op
