@@ -6,6 +6,14 @@ class HospitableWebhooksController
       @payload = payload
     end
 
+    def body
+      payload["data"]["body"]
+    end
+
+    def created_at
+      payload["data"]["created_at"]
+    end
+
     def platform
       payload["data"]["platform"]
     end
@@ -16,6 +24,10 @@ class HospitableWebhooksController
 
     def reservation_id
       payload["data"]["reservation_id"]
+    end
+
+    def sender_role
+      "#{payload["data"]["sender"]["role"]}"
     end
 
     def sender_full_name

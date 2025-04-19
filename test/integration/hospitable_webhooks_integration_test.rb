@@ -12,6 +12,12 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "test-reservation-123", incident.source_details["reservation_id"]
   end
 
+  def test_messages_received_are_stored
+    assert_difference -> { Message.count }, 2 do
+      2.times { post_hospitable_message_webhook }
+    end
+  end
+
   def test_does_not_create_duplicate_incident
     Incident.create!(
       kind: "pending_reply",
@@ -77,5 +83,5 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
       created: "2024-10-08T07:03:34Z",
       version: "v2"
     }.to_json, headers: { "Content-Type" => "application/json" }
-end
+  end
 end

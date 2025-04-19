@@ -7,6 +7,8 @@ class HospitableWebhooksController
     end
 
     def perform
+      store_message
+
       if message.from_guest?
         handle_guest_message
       elsif message.from_team?
@@ -37,6 +39,17 @@ class HospitableWebhooksController
 
     def handle_team_message
       pending_incident&.resolve!(by: message.sender_full_name)
+    end
+
+    def store_message
+      Message.create!(
+        conversation_id: message.conversation_id,
+        reservation_id: message.reservation_id,
+        sender_role: message.sender_role,
+        sender_full_name: message.sender_full_name,
+        content: message.body,
+        posted_at: message.created_at
+      )
     end
 
     def pending_incident
