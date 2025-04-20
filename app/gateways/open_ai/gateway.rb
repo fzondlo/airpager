@@ -9,7 +9,7 @@ module OpenAi
                          'Accept' => 'application/json'
     end
 
-    def chat(prompt, model: "gpt-4")
+    def chat(prompt, model: "gpt-4.1-nano")
       body = {
         model: model,
         messages: [
@@ -17,7 +17,7 @@ module OpenAi
         ]
       }
 
-      response = self.class.post("/chat/completions", headers: @headers, body: body.to_json)
+      response = self.class.post("/chat/completions", body: body.to_json)
       Response::Chat.new(response)
     end
   end

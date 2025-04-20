@@ -13,7 +13,7 @@ class HospitableWebhooksController
         return resolve_pending_incident
       end
 
-      if message.from_guest? && !pending_incident.present? && needs_reply_from_team?
+      if message.from_guest? && needs_reply_from_team? && !pending_incident.present?
 
         return create_incident
 
@@ -27,7 +27,7 @@ class HospitableWebhooksController
       Message.create!(
         conversation_id: message.conversation_id,
         reservation_id: message.reservation_id,
-        sender_role: message.sender_role,
+        sender_role: message.sender_role, # We should compute directly either guest or team, it's too raw as-is.
         sender_full_name: message.sender_full_name,
         content: message.body,
         posted_at: message.created_at
@@ -54,11 +54,11 @@ class HospitableWebhooksController
 
       response = ::OpenAi.gateway.chat(prompt)
 
-      if !response.success?
+      unless response.success?
         return true
       end
 
-      if !response.answer.in?(["TRUE", "FALSE"])
+      unless response.answer.in?(["TRUE", "FALSE"])
         return true
       end
 
