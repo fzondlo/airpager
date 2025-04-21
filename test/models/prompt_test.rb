@@ -3,14 +3,14 @@ class PromptTest < ActiveSupport::TestCase
     messages = [
       { sender_role: nil, sender_full_name: 'Alice', content: 'Hi, I have a question about my booking.' },
       { sender_role: 'host', sender_full_name: 'Frank', content: 'Sure, what would you like to know?' },
-      { sender_role: 'teammate', sender_full_name: 'Bob', content: 'Can I also help?' }
+      { sender_role: 'teammate', sender_full_name: 'Bob', content: 'Can I also help?' },
     ]
 
     expected_prompt = <<~TEXT
       Return only TRUE or FALSE: does our team need to reply to the guest?
 
       Conversation:
-      [ - Alice]: Hi, I have a question about my booking.
+      [guest - Alice]: Hi, I have a question about my booking.
       [host - Frank]: Sure, what would you like to know?
       [teammate - Bob]: Can I also help?
     TEXT

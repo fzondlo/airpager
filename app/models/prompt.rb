@@ -5,7 +5,7 @@ class Prompt
 
       Conversation:
       #{messages.map do |message|
-        "[#{message[:sender_role]} - #{message[:sender_full_name]}]: #{message[:content]}"
+        "[#{message[:sender_role] || 'guest'} - #{message[:sender_full_name]}]: #{message[:content]}"
       end.join("\n")}
     PROMPT
   end
