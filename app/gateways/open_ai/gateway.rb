@@ -18,6 +18,10 @@ module OpenAi
       }
 
       response = self.class.post("/chat/completions", body: body.to_json)
+
+      Rails.logger.debug "Prompt: #{prompt}"
+      Rails.logger.debug "Response: #{body.to_json}"
+
       Response::Chat.new(response)
     end
   end
