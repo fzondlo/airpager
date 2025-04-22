@@ -27,7 +27,11 @@ class HospitableWebhooksController
     end
 
     def sender_role
-      "#{payload["data"]["sender"]["role"]}"
+      "#{payload["data"]["sender_role"]}"
+    end
+
+    def sender_type
+      "#{payload["data"]["sender_type"]}"
     end
 
     def sender_full_name

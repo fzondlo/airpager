@@ -3,7 +3,7 @@ require 'test_helper'
 class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
   def test_creates_incident_when_message_from_guest
     assert_difference -> { Incident.count }, 1 do
-      post_hospitable_message_webhook(conversation_id: "test-convo-123", reservation_id: "test-reservation-123", sender_role: "")
+      post_hospitable_message_webhook(conversation_id: "test-convo-123", reservation_id: "test-reservation-123", sender_role: "", sender_type: "guest")
     end
 
     incident = Incident.first
@@ -28,7 +28,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     )
 
     assert_no_difference -> { Incident.count } do
-      post_hospitable_message_webhook(conversation_id: "test-convo-456", sender_role: "")
+      post_hospitable_message_webhook(conversation_id: "test-convo-456", sender_role: "", sender_type: "guest")
     end
   end
 
@@ -42,7 +42,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
       resolved_at: nil
     )
 
-    post_hospitable_message_webhook(conversation_id: "test-convo-789", sender_role: "co-host")
+    post_hospitable_message_webhook(conversation_id: "test-convo-789", sender_role: "co-host", sender_type: "host")
 
     incident.reload
 
@@ -52,7 +52,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
 
   private
 
-  def post_hospitable_message_webhook(conversation_id: "becd1474-ccd1-40bf-9ce8-04456bfa338d", reservation_id: "becd1474-ccd1-40bf-9ce8-04456bfa338d", sender_role: nil)
+  def post_hospitable_message_webhook(conversation_id: "becd1474-ccd1-40bf-9ce8-04456bfa338d", reservation_id: "becd1474-ccd1-40bf-9ce8-04456bfa338d", sender_role: nil, sender_type: "guest")
     post "/hospitable_webhooks", params: {
       id: "497f6eca-6276-4993-bfeb-53cbbbba6f08",
       data: {
