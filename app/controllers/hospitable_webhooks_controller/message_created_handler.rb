@@ -54,17 +54,20 @@ class HospitableWebhooksController
 
       response = ::OpenAi.gateway.chat(prompt)
 
+      puts "Prompt: #{prompt}"
+      puts "Response success OpenAI: #{response.success?}"
+
       unless response.success?
         return true
       end
+
+      puts "Response answer OpenAI: #{response.answer}"
 
       unless response.answer.in?(["TRUE", "FALSE"])
         return true
       end
 
-      result = ActiveModel::Type::Boolean.new.cast(response.answer)
-
-      result || true
+      ActiveModel::Type::Boolean.new.cast(response.answer)
     end
 
     def pending_incident
