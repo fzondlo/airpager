@@ -22,6 +22,9 @@ module OpenAi
       Rails.logger.info "Prompt: #{prompt}"
       Rails.logger.info "Response: #{body.to_json}"
 
+      puts "Prompt: #{prompt}"
+      puts "Response: #{body.to_json}"
+
       Response::Chat.new(response)
     end
   end
