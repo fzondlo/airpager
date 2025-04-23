@@ -13,9 +13,11 @@ class HospitableWebhooksController
         return resolve_pending_incident
       end
 
-      if message.from_guest? && needs_reply_from_team? && !pending_incident.present?
+      if message.from_guest? && !pending_incident.present?
 
-        return create_incident
+        if needs_reply_from_team?
+          return create_incident
+        end
 
         # NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident_id: incident.id)
       end
@@ -80,7 +82,7 @@ class HospitableWebhooksController
     end
 
     def conversation_messages
-      @conversation_messages ||= Message.where(conversation_id: message.conversation_id).order(created_at: :desc).limit(5)
+      @conversation_messages ||= Message.where(conversation_id: message.conversation_id).order(created_at: :desc).limit(5).all.reverse
     end
   end
 end
