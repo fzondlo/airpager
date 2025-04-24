@@ -18,7 +18,12 @@ class IncidentAnalyticsQuery
   def average_resolution_time
     return @average_resolution_time if defined?(@average_resolution_time)
 
-    @average_resolution_time = scoped.average("EXTRACT(EPOCH FROM resolved_at - created_at)")
+    scope = scoped
+
+    # After April 23, 2025
+    scope = scope.where("created_at >= ?", Date.new(2025, 4, 23))
+
+    @average_resolution_time = scope.average("EXTRACT(EPOCH FROM resolved_at - created_at)")
   end
 
   def total_incidents_resolved
