@@ -7,7 +7,7 @@ class PromptTest < ActiveSupport::TestCase
     ]
 
     expected_prompt = <<~TEXT
-      Return only TRUE or FALSE: does our team need to reply to the guest?
+      Return only TRUE or FALSE: does our team need to reply to the last message of the guest?
 
       Conversation:
       [guest - Alice]: Hi, I have a question about my booking.
