@@ -21,7 +21,7 @@ class IncidentAnalyticsQuery
     scope = scoped
 
     # After April 23, 2025
-    scope = scope.where("created_at >= ?", Time.zone.local(2025, 4, 23))
+    scope = scope.where("created_at >= ?", Time.zone.local(2025, 4, 26))
 
     @average_resolution_time = scope.average("EXTRACT(EPOCH FROM resolved_at - created_at)")
   end
