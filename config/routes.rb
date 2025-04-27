@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :incidents, only: [:index, :show]
+  resources :incidents, only: [ :index, :show ]
 
-  resources :hospitable_webhooks, only: [:create]
+  resources :hospitable_webhooks, only: [ :create ]
 
   root "incidents#index"
 end

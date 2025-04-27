@@ -5,7 +5,7 @@ class IncidentsController < ApplicationController
     if @analytics_query.from_today?
       @analytics_compare = IncidentAnalyticsCompare.new(
         current: @analytics_query,
-        to: IncidentAnalyticsQuery.new(analytics_params.merge({ period: 'yesterday' }))
+        to: IncidentAnalyticsQuery.new(analytics_params.merge({ period: "yesterday" }))
       )
     end
 

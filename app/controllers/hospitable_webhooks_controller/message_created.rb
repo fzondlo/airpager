@@ -49,7 +49,7 @@ class HospitableWebhooksController
     private
 
     def sender_roles_for_team
-      ["host", "co-host", "teammate"]
+      [ "host", "co-host", "teammate" ]
     end
   end
 end

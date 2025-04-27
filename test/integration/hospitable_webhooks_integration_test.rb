@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
   def test_creates_incident_when_message_from_guest

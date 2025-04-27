@@ -2,10 +2,10 @@ module Hospitable
   class Response
     class FindReservationMessages < Response
       def select_conversation_messages(conversation_id)
-        messages = body['data']
+        messages = body["data"]
 
         # Filter messages that are not from this conversation_id
-        messages.select { |message| message['conversation_id'] == conversation_id }
+        messages.select { |message| message["conversation_id"] == conversation_id }
       end
     end
   end

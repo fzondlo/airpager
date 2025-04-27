@@ -47,7 +47,7 @@ class IncidentAnalyticsCompare::Result
 
     if previous.zero?
        return current.zero? ? 0 : Float::INFINITY
-     end
+    end
 
     ((difference / previous.to_f) * 100).round(2)
   end

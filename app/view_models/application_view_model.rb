@@ -17,9 +17,9 @@ class ApplicationViewModel
     @model = model
     @options = if options.respond_to?(:to_unsafe_h)
                  options.to_unsafe_h.with_indifferent_access
-               else
+    else
                  options.to_h.with_indifferent_access
-               end
+    end
   end
 
   def method_missing(method, *args, &block)

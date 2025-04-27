@@ -16,7 +16,7 @@ class HospitableWebhooksController
       if message.from_guest? && !pending_incident.present?
 
         if needs_reply_from_team?
-          return create_incident
+          create_incident
         end
 
         # NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident_id: incident.id)
@@ -39,7 +39,7 @@ class HospitableWebhooksController
 
     def create_incident
       Incident.create!(
-        kind: 'pending_reply',
+        kind: "pending_reply",
         source_details: {
           platform: message.platform,
           conversation_id: message.conversation_id,
@@ -66,7 +66,7 @@ class HospitableWebhooksController
 
       puts "Response answer OpenAI: #{response.answer}"
 
-      unless response.answer.in?(["TRUE", "FALSE"])
+      unless response.answer.in?([ "TRUE", "FALSE" ])
         return true
       end
 

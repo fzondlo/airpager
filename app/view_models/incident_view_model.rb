@@ -3,17 +3,17 @@ class IncidentViewModel < ApplicationViewModel
 
   def kind
     @kind ||= case model.kind
-    when 'pending_reply'
+    when "pending_reply"
      PendingReplyIncidentKind.new(model)
-   else
+    else
      BaseIncidentKind.new(model)
-   end
+    end
   end
 
   def badge_status_class
-    return 'bg-gray-200 text-gray-800' if model.status == 'created'
-    return 'bg-yellow-300 text-yellow-800' if model.status == 'alerted'
-    return 'bg-green-200 text-green-800' if model.status == 'resolved'
+    return "bg-gray-200 text-gray-800" if model.status == "created"
+    return "bg-yellow-300 text-yellow-800" if model.status == "alerted"
+    "bg-green-200 text-green-800" if model.status == "resolved"
   end
 
   def created_at_display_time
@@ -71,11 +71,10 @@ class PendingReplyIncidentKind < BaseIncidentKind
   def conversation_link
     url = hospitable_thread_url(model.source_details["conversation_id"])
 
-    return "<a href='#{url}' class='text-blue-500'>#{url}</a>"
+    "<a href='#{url}' class='text-blue-500'>#{url}</a>"
   end
 
   def hospitable_thread_url(conversation_id)
     "https://my.hospitable.com/inbox/thread/" << conversation_id
   end
 end
-
