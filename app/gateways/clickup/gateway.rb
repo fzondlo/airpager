@@ -2,7 +2,11 @@ module Clickup
   class Gateway
     include HTTParty
     base_uri "https://api.clickup.com"
-    RESERVAS_LIST_ID = '901311254964'
+    LIST_NAMES_TO_ID = {
+      reservas: '901311254964',
+      limpiezas: '901311220753'
+    }
+
 
     def initialize(api_token)
       self.class.headers "Authorization" => api_token,
@@ -10,15 +14,16 @@ module Clickup
                        "Accept" => "application/json"
     end
 
-    def create_clickup_task(task)
+    def create_clickup_task(task, list_name)
       self.class.post(
-        "/api/v2/list/#{RESERVAS_LIST_ID}/task",
+        "/api/v2/list/#{LIST_NAMES_TO_ID[list_name]}/task",
         body: task.to_json
       )
     end
 
-    def find_tasks()
-      self.class.get("/api/v2/list/#{RESERVAS_LIST_ID}/task")
+    def find_tasks(list_name)
+      list = LIST_NAMES_TO_ID[list_name]
+      self.class.get("/api/v2/list/#{list}/task")
     end
   end
 end
