@@ -7,7 +7,7 @@ module OpenAi
     private
 
     def fake_chat_response(prompt)
-      if prompt.include?("Return only TRUE or FALSE: does our team need to reply to the guest?")
+      if prompt.include?("Return only TRUE or FALSE: does our team need to reply to the last message of the guest?")
         return chat_response("TRUE")
       end
 

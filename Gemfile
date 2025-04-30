@@ -26,6 +26,9 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Make API calls
 gem "httparty"
 
+# Processing jobs
+gem 'sidekiq'
+
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
 gem "solid_queue"

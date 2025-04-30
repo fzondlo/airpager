@@ -50,6 +50,33 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert incident.resolved_by.present?
   end
 
+  def test_auto_responder_worker_is_enqueued_after_hours
+    travel_to Time.zone.parse("22:00:00") do
+      assert_difference -> { AfterHoursAutoResponderWorker.jobs.size }, 1 do
+        post_hospitable_message_webhook(sender_role: "", sender_type: "guest", reservation_id: "becd1474")
+      end
+
+      job = AfterHoursAutoResponderWorker.jobs.last
+      assert_equal ["becd1474"], job["args"]
+    end
+  end
+
+  def test_auto_responder_worker_is_not_enqueued_after_hours_without_reservation_id
+    travel_to Time.zone.parse("22:00:00") do
+      assert_no_difference -> { AfterHoursAutoResponderWorker.jobs.size } do
+        post_hospitable_message_webhook(sender_role: "", sender_type: "guest", reservation_id: nil)
+      end
+    end
+  end
+
+  def test_auto_responder_worker_is_not_enqueued_during_normal_hours
+    travel_to Time.zone.parse("14:00:00") do
+      assert_no_difference -> { AfterHoursAutoResponderWorker.jobs.size } do
+        post_hospitable_message_webhook(sender_role: "", sender_type: "guest", reservation_id: "becd1474")
+      end
+    end
+  end
+
   private
 
   def post_hospitable_message_webhook(conversation_id: "becd1474-ccd1-40bf-9ce8-04456bfa338d", reservation_id: "becd1474-ccd1-40bf-9ce8-04456bfa338d", sender_role: nil, sender_type: "guest")
