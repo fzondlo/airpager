@@ -11,7 +11,7 @@ module Hospitable
 
           property = res[:properties].first
           guest = res[:guest]
-          binding.pry if guest[:first_name] == "Manuela"
+          # binding.pry if guest[:first_name] == "Manuela"
           {
             id: res[:id],
             code: res[:code],
