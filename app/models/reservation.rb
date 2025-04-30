@@ -27,9 +27,9 @@ class Reservation
         # ],
         # "email_assignees": [
         # ],
-        # "tags": [
-        #   "tag name 1"
-        # ],
+        "tags": [
+          property[:name]
+        ],
         "status": "TO DO",
         # "priority": 3,
         # "time_estimate": 8640000,
