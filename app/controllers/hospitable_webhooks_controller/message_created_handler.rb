@@ -17,9 +17,13 @@ class HospitableWebhooksController
 
         if needs_reply_from_team?
           create_incident
-        end
 
-        # NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident_id: incident.id)
+          # NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident_id: incident.id)
+
+          if after_hours? && message.reservation_id.present?
+            AfterHoursAutoResponderWorker.perform_in(2.minutes, message.reservation_id)
+          end
+        end
       end
     end
 
@@ -57,14 +61,14 @@ class HospitableWebhooksController
 
       response = ::OpenAi.gateway.chat(prompt)
 
-      puts "Prompt: #{prompt}"
-      puts "Response success OpenAI: #{response.success?}"
+      puts "Prompt: #{prompt}" unless Rails.env.test?
+      puts "Response success OpenAI: #{response.success?}" unless Rails.env.test?
 
       unless response.success?
         return true
       end
 
-      puts "Response answer OpenAI: #{response.answer}"
+      puts "Response answer OpenAI: #{response.answer}" unless Rails.env.test?
 
       unless response.answer.in?([ "TRUE", "FALSE" ])
         return true
@@ -82,7 +86,14 @@ class HospitableWebhooksController
     end
 
     def conversation_messages
+      # TODO: Should order by posted_at, created_at could have some issues
       @conversation_messages ||= Message.where(conversation_id: message.conversation_id).order(created_at: :desc).limit(5).all.reverse
+    end
+
+    def after_hours?
+      current_hour = Time.zone.now.hour
+
+      !current_hour.between?(8, 21)
     end
   end
 end
