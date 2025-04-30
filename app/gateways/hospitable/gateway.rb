@@ -9,13 +9,13 @@ module Hospitable
                          "Accept" => "application/json"
     end
 
-    # def properties
-    #  self.class.get("/v2/properties/")
-    # end
+    def properties
+     self.class.get("/v2/properties/")
+    end
 
-    # def reservations
-    #  self.class.get("/v2/reservations/?properties[]=2dffe1d8-960d-4b16-8521-7f3628d9ec33")
-    # end
+    def reservations(reservation_id)
+     self.class.get("/v2/reservations/?properties[]=#{reservation_id}")
+    end
 
     def find_reservation_messages(reservation_id)
       response = self.class.get("/v2/reservations/#{reservation_id}/messages")
