@@ -2,6 +2,14 @@ module Hospitable
   class Response
     class FindReservations < Response
 
+      APARTMENT_NAME_MAPPINGS = {
+        "Murano" => "Murano 901",
+        "Lauret" => "Lauret 902",
+        "Alans Apartment" => "Santa Ana 1001 (Alan)",
+        "Modern Urban Apt w Designer" => "Santa Maria 301 (Yuri)",
+        "Nebraska" => "Nebraska 1101"
+      }
+
       def reservations
         body["data"].map do |reservation|
           res = reservation.with_indifferent_access
@@ -12,13 +20,13 @@ module Hospitable
             id: res[:id],
             code: res[:code],
             status: res[:reservation_status][:current][:category],
-            arrival_date: res[:check_in],
-            departure_date: res[:check_out],
+            arrival_time: Time.parse(res[:check_in]),
+            departure_time: Time.parse(res[:check_out]),
             infant_count: res[:guests][:infant_count],
             nights: res[:nights],
             property: {
               id: property[:id],
-              name: property[:name],
+              name: APARTMENT_NAME_MAPPINGS[property[:name]],
             },
             guest: {
               first_name: guest[:first_name],
