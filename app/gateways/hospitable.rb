@@ -7,7 +7,7 @@ module Hospitable
   end
 
   def self.enabled?
-    !Rails.env.test?
+    !Rails.env.test? && api_token.present?
   end
 
   private

@@ -16,6 +16,12 @@ module ActiveSupport
       Sidekiq::Worker.clear_all
     end
 
+    def create_incident(overrides = {})
+      Incident.create!({
+        kind: 'pending_reply'
+      }.merge(overrides))
+    end
+
     # Add more helper methods to be used by all tests here...
   end
 end

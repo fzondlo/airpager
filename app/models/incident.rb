@@ -14,6 +14,10 @@ class Incident < ApplicationRecord
     update(status: "resolved", resolved_by: by, resolved_at: Time.current)
   end
 
+  def resolved?
+    status == "resolved"
+  end
+
   private
 
   def set_defaults
