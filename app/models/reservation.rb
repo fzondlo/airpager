@@ -1,7 +1,5 @@
 class Reservation
 
-  delegate :reservation_task, ClickupTaskBuilder
-
   UPDATE_ACTIONS = {
     do_nothing:          0,
     create_new_records:  1,
@@ -18,7 +16,7 @@ class Reservation
           cleaning_task(res), :limpiezas)
 
         Clickup.gateway.create_clickup_task(
-          reservation_task(res), :reservas)
+          ClickupTaskBuilder.reservation_task(res), :reservas)
 
         puts "Reservation & Cleaning tasks created for #{res[:code]}"
       end

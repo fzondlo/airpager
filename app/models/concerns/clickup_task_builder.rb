@@ -10,7 +10,7 @@ class ClickupTaskBuilder
   GUEST_LANG_ID       = "6b9c77a5-010e-4eee-a45c-f8163ff0de3f".freeze
   GUEST_LOC_ID        = "2f6211a5-cbe8-4804-9bbb-3c51ade3e5b5".freeze
 
-  def self.reservation_task(reservation:)
+  def self.reservation_task(reservation)
     new(reservation).build_reservation_task
   end
 
