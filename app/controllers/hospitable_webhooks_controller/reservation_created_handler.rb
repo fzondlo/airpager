@@ -5,7 +5,7 @@ class HospitableWebhooksController
     end
 
     def perform
-      Reservation.new.create_clickup_tasks
+      SyncClickupReservationsWorker.perform_async
     end
   end
 end
