@@ -50,6 +50,12 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert incident.resolved_by.present?
   end
 
+  def test_notify_team_of_incident_worker_is_enqueued_when_message_from_guest
+    assert_difference -> { NotifyTeamOfIncidentWorker.jobs.size }, 1 do
+      post_hospitable_message_webhook(sender_role: "", sender_type: "guest")
+    end
+  end
+
   def test_auto_responder_worker_is_enqueued_after_hours
     travel_to Time.zone.parse("22:00:00") do
       assert_difference -> { AfterHoursAutoResponderWorker.jobs.size }, 1 do
