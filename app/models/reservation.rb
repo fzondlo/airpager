@@ -8,8 +8,8 @@ class Reservation
   }.freeze
 
   def create_clickup_tasks
-    all_reservations.each do |res|
-      if action_for_reservation_id[res[:id]] == UPDATE_ACTIONS[:do_nothing]
+    active_reservations.each do |res|
+      if action_for_reservation[res[:id]] == UPDATE_ACTIONS[:do_nothing]
         puts "Skipping #{res[:code]}"
       else
         Clickup.gateway.create_clickup_task(
@@ -25,8 +25,8 @@ class Reservation
 
   private
 
-  def action_for_reservation_id
-    @action_for_reservation_id ||= begin
+  def action_for_reservation
+    @action_for_reservation ||= begin
       # Collect all existing reservation IDs from task custom fields
       existing_ids = all_reservas["tasks"]
                        .flat_map { |task| task["custom_fields"] }
@@ -50,6 +50,14 @@ class Reservation
 
   def all_reservas
     @all_reservas ||= Clickup.gateway.find_tasks(:reservas)
+  end
+
+  def cancelled_reservations
+    all_reservations.select{|x| x[:status] == "cancelled"}
+  end
+
+  def active_reservations
+    all_reservations.select{|x| x[:status] == "accepted"}
   end
 
   def all_reservations

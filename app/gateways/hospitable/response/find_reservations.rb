@@ -5,16 +5,13 @@ module Hospitable
       def reservations
         body["data"].map do |reservation|
           res = reservation.with_indifferent_access
-
-          next if res[:reservation_status][:current][:category] == "cancelled"
-          # next if res[:status_history].last[:status] == "canceled"
-
           property = res[:properties].first
           guest = res[:guest]
           # binding.pry if guest[:first_name] == "Alan"
           {
             id: res[:id],
             code: res[:code],
+            status: res[:reservation_status][:current][:category],
             arrival_date: res[:check_in],
             departure_date: res[:check_out],
             infant_count: res[:guests][:infant_count],
@@ -30,7 +27,7 @@ module Hospitable
               location: guest[:location],
             }
           }
-        end.compact!
+        end.compact
       end
     end
   end
