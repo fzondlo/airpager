@@ -61,14 +61,15 @@ class HospitableWebhooksController
 
       response = ::OpenAi.gateway.chat(prompt)
 
-      puts "Prompt: #{prompt}" unless Rails.env.test?
-      puts "Response success OpenAI: #{response.success?}" unless Rails.env.test?
-
       unless response.success?
         return true
       end
 
-      puts "Response answer OpenAI: #{response.answer}" unless Rails.env.test?
+      OpenAiRequest.create(
+        prompt: prompt,
+        answer: response.answer,
+        response_payload: response.body
+      )
 
       unless response.answer.in?([ "TRUE", "FALSE" ])
         return true

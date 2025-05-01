@@ -50,6 +50,13 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert incident.resolved_by.present?
   end
 
+  def test_track_open_ai_requests
+    assert_difference -> { OpenAiRequest.count }, 1 do
+      post_hospitable_message_webhook(sender_role: "", sender_type: "guest")
+    end
+  end
+
+
   def test_notify_team_of_incident_worker_is_enqueued_when_message_from_guest
     assert_difference -> { NotifyTeamOfIncidentWorker.jobs.size }, 1 do
       post_hospitable_message_webhook(sender_role: "", sender_type: "guest")
