@@ -28,6 +28,7 @@ gem "httparty"
 
 # Processing jobs
 gem 'sidekiq'
+gem "sidekiq-cron"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
