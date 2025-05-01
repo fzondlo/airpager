@@ -9,7 +9,7 @@ class Reservation
 
   def create_clickup_tasks
     active_reservations.each do |res|
-      if false #action_for_reservation[res[:id]] == UPDATE_ACTIONS[:do_nothing]
+      if action_for_reservation[res[:id]] == UPDATE_ACTIONS[:do_nothing]
         puts "Skipping #{res[:code]}"
       else
         Clickup.gateway.create_clickup_task(

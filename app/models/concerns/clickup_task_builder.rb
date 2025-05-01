@@ -39,9 +39,9 @@ class ClickupTaskBuilder
       name:                        task_name,
       # tags:                        [@property[:name]],
       status:                      "Activo", ## For reservations, also Cancelado
-      # start_date:
+      start_date: start_time,
       start_date_time:             start_time,
-      # due_date:
+      due_date: due_time,
       due_date_time:               due_time,
       check_required_custom_fields: true,
       custom_fields:               build_custom_fields
@@ -77,7 +77,7 @@ class ClickupTaskBuilder
       cf(RESERVATION_ID_ID,   "reservation_id",   @reservation[:id]),
       cf(NIGHTS_ID,           "nights",           @reservation[:nights]),
       cf(PROPERTY_ID_ID,      "property_id",      @reservation[:property_id]),
-      cf(PROPERTY_NAME_ID,    "property_name",    @property[:name]),
+      cf(PROPERTY_NAME_ID,    "property_name",    PROPERTY_NAME_OPTION_IDS[@property[:name]]),
       cf(GUEST_NAME_ID,       "guest_name",       "#{@guest[:first_name]} #{@guest[:last_name]}"),
       cf(GUEST_LANG_ID,       "guest_language",   @guest[:language]),
       cf(GUEST_LOC_ID,        "guest_location",   @guest[:location])
