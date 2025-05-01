@@ -9,9 +9,13 @@ class NotifyTeamOfIncidentWorkerTest < ActiveSupport::TestCase
   end
 
   def test_skips_if_incident_not_found
+    assert_equal "created", @incident.status
+
     Allquiet.stub(:gateway, @mock) do
       @worker.perform(999)
       @mock.verify # No expectations; ensure no method calls are made
+
+      @incident.reload
       assert_equal "created", @incident.status
     end
   end
@@ -23,19 +27,21 @@ class NotifyTeamOfIncidentWorkerTest < ActiveSupport::TestCase
     Allquiet.stub(:gateway, @mock) do
       @worker.perform(@incident.id)
       @mock.verify # No expectations; ensure no method calls are made
+
+      @incident.reload
       assert_equal "resolved", @incident.status
     end
   end
 
   def test_creates_incident_and_alerts_when_valid
+    assert_equal "created", @incident.status
+
     Allquiet.stub(:gateway, @mock) do
       @mock.expect(:create_incident, true)
-
-      assert_equal "created", @incident.status
       @worker.perform(@incident.id)
-      assert_equal "alerted", @incident.reload.status
-
       @mock.verify # Ensures that create_incident was called correctly
+
+      @incident.reload
       assert_equal "alerted", @incident.status
     end
   end
