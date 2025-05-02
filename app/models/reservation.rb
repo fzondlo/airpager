@@ -62,8 +62,6 @@ class Reservation
           elsif hospitable_res[:status] == "accepted" &&
               task_reservation_status[hospitable_res[:id]] == "active"
             UPDATE_ACTIONS[:do_nothing]
-          else
-            puts "Something went wrong, did not meet action conditions"
           end
       end
     end
