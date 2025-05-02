@@ -14,10 +14,17 @@ module Clickup
                        "Accept" => "application/json"
     end
 
-    def create_clickup_task(task, list_name)
+    def create_task(task, list_name)
       self.class.post(
         "/api/v2/list/#{LIST_NAMES_TO_ID[list_name]}/task",
         body: task.to_json
+      )
+    end
+
+    def update_task(task_id, updates)
+      self.class.put(
+        "/api/v2/task/#{task_id}",
+        body: updates.to_json
       )
     end
 
