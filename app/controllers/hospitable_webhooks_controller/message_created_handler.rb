@@ -20,8 +20,8 @@ class HospitableWebhooksController
 
           NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident.id)
 
-          if after_hours? && message.reservation_id.present?
-            AfterHoursAutoResponderWorker.perform_in(2.minutes, message.reservation_id)
+          if after_hours?
+            AfterHoursAutoResponderWorker.perform_in(2.minutes, incident.id)
           end
         end
       end
