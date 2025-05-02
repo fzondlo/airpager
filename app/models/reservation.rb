@@ -95,7 +95,7 @@ class Reservation
   end
 
   def hospitable_reservations
-    @all_reservation ||= Hospitable.gateway.find_reservations(
+    @hospitable_reservations ||= Hospitable.gateway.find_reservations(
         Hospitable.gateway.find_properties.properties.pluck(:id)
       ).reservations
   end
