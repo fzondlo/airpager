@@ -83,12 +83,12 @@ class HospitableWebhooksController
         .pending
         .where(kind: "pending_reply")
         .where("source_details ->> 'conversation_id' = ?", message.conversation_id)
+        .where("source_details ->> 'reservation_id' = ?", message.reservation_id)
         .first
     end
 
     def conversation_messages
-      # TODO: Should order by posted_at, created_at could have some issues
-      @conversation_messages ||= Message.where(conversation_id: message.conversation_id).order(created_at: :desc).limit(5).all.reverse
+      @conversation_messages ||= Message.where(conversation_id: message.conversation_id, reservation_id: message.reservation_id).order(posted_at: :desc).limit(5).all.reverse
     end
 
     def after_hours?

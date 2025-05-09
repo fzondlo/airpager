@@ -24,7 +24,8 @@ class HospitableWebhooksController < ApplicationController
   def handler_for(action)
     {
       "message.created" => MessageCreatedHandler,
-      "reservation.created" => ReservationCreatedHandler
+      "reservation.created" => ReservationCreatedHandler,
+      "reservation.updated" => ReservationUpdatedHandler
     }[action]
   end
 end
