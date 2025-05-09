@@ -1,4 +1,4 @@
-module WaAPI
+module Waapi
   class Gateway
     include HTTParty
     base_uri "https://api.openai.com/v1"

@@ -1,4 +1,4 @@
-module WaAPI
+module Waapi
   class Response
     delegate :success?, to: :raw_response
 
