@@ -1,4 +1,4 @@
-module Allquiet
+module Waapi
   def self.gateway
     return BogusGateway.new unless enabled?
 

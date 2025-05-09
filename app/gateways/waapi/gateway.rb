@@ -9,7 +9,7 @@ module Waapi
                          "Accept" => "application/json"
     end
 
-    def chat(prompt, model: "gpt-4.1-nano")
+    def chat
     end
   end
 end
