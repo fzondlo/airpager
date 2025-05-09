@@ -1,14 +1,15 @@
 class ClickupTaskBuilder
   # Custom field IDs
-  INFANT_COUNT_ID     = "7a1b1c45-311e-4263-8e98-ad49380e764e".freeze
+  INFANT_COUNT_ID = "7a1b1c45-311e-4263-8e98-ad49380e764e".freeze
   RESERVATION_CODE_ID = "94a0b9ed-e562-4c1b-9e8b-f1d52b0f51cf".freeze
-  RESERVATION_ID_ID   = "fa6c9901-9b21-4f6d-94f5-21c5d903ba47".freeze
-  NIGHTS_ID           = "43946508-f103-4373-a810-af2976ee2f39".freeze
-  PROPERTY_ID_ID      = "6faef2f7-a1b3-4587-b052-bf4683c55620".freeze
-  GUEST_NAME_ID       = "de5c58c0-bc80-499d-96a1-2f34e47cc012".freeze
-  GUEST_LANG_ID       = "6b9c77a5-010e-4eee-a45c-f8163ff0de3f".freeze
-  GUEST_LOC_ID        = "2f6211a5-cbe8-4804-9bbb-3c51ade3e5b5".freeze
-  PROPERTY_NAME_ID    = "ae0bf089-d100-4dbb-a455-c9fc041270d4".freeze
+  RESERVATION_ID_ID = "fa6c9901-9b21-4f6d-94f5-21c5d903ba47".freeze
+  NIGHTS_ID = "43946508-f103-4373-a810-af2976ee2f39".freeze
+  PROPERTY_ID_ID = "6faef2f7-a1b3-4587-b052-bf4683c55620".freeze
+  GUEST_NAME_ID = "de5c58c0-bc80-499d-96a1-2f34e47cc012".freeze
+  GUEST_LANG_ID = "6b9c77a5-010e-4eee-a45c-f8163ff0de3f".freeze
+  GUEST_LOC_ID = "2f6211a5-cbe8-4804-9bbb-3c51ade3e5b5".freeze
+  PROPERTY_NAME_ID = "ae0bf089-d100-4dbb-a455-c9fc041270d4".freeze
+  SCHEDULE_CLEANING_ON = "96745ccb-7cfb-4604-a47a-3e0b2866c11e".freeze
 
   # Property Name IDs for Dropdown Options
   PROPERTY_NAME_OPTION_IDS = {
@@ -80,7 +81,9 @@ class ClickupTaskBuilder
       cf(PROPERTY_NAME_ID,    "property_name",    PROPERTY_NAME_OPTION_IDS[@property[:name]]),
       cf(GUEST_NAME_ID,       "guest_name",       "#{@guest[:first_name]} #{@guest[:last_name]}"),
       cf(GUEST_LANG_ID,       "guest_language",   @guest[:language]),
-      cf(GUEST_LOC_ID,        "guest_location",   @guest[:location])
+      cf(GUEST_LOC_ID,        "guest_location",   @guest[:location]),
+      cf(SCHEDULE_CLEANING_ON, "Fetcha para agendar limpieza",
+         timestamp_ms(@reservation[:departure_time] - 14.days))
     ]
   end
 
