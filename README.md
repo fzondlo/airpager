@@ -10,3 +10,6 @@ before deploying you should run "bundle exec rails test"
 
 To view logs:
 heroku logs -n 10000
+
+To deploy:
+git push heroku main
