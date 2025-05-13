@@ -26,5 +26,18 @@ module Airpager
 
     config.time_zone = "America/Bogota"
     config.active_record.default_timezone = :utc
+
+    # config.after_initialize do
+    #   if Rails.env.production? || Rails.env.staging?
+    #     # add prod url
+    #   end
+    #
+    #   if Rails.env.development?
+    #     local_ngrok_url = "https://cf77-186-121-47-138.ngrok-free.app/wappi_webhooks"
+    #     Waapi.gateway.rb.register_webhook(local_ngrok_url)
+    #     puts "WaAPI registered w/ webhook #{local_ngrok_url}"
+    #   end
+    # end
+
   end
 end

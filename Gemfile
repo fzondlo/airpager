@@ -26,6 +26,10 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Make API calls
 gem "httparty"
 
+# Google drive integration
+gem "googleauth"
+gem "google-apis-drive_v3"
+
 # Processing jobs
 gem 'sidekiq'
 gem "sidekiq-cron"
