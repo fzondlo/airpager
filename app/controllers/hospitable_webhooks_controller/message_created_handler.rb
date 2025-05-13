@@ -79,13 +79,30 @@ class HospitableWebhooksController
     end
 
     def pending_incident
-      @pending_incident ||= Incident
-        .pending
-        .where(kind: "pending_reply")
-        .where("source_details ->> 'conversation_id' = ?", message.conversation_id)
-        .where("source_details ->> 'reservation_id' = ?", message.reservation_id)
-        .first
+      @pending_incident ||= begin
+        scope = Incident
+          .pending
+          .where(kind: "pending_reply")
+          .where("source_details ->> 'conversation_id' = ?", message.conversation_id)
+
+        if message.reservation_id.present?
+          scope = scope.where("source_details ->> 'reservation_id' = ?", message.reservation_id)
+        else
+          scope = scope.where("source_details ->> 'reservation_id' IS NULL")
+        end
+
+        scope.first
+      end
     end
+
+    # def pending_incident
+    #   @pending_incident ||= Incident
+    #     .pending
+    #     .where(kind: "pending_reply")
+    #     .where("source_details ->> 'conversation_id' = ?", message.conversation_id)
+    #     .where("source_details ->> 'reservation_id' = ?", message.reservation_id)
+    #     .first
+    # end
 
     def conversation_messages
       @conversation_messages ||= Message.where(conversation_id: message.conversation_id, reservation_id: message.reservation_id).order(posted_at: :desc).limit(5).all.reverse

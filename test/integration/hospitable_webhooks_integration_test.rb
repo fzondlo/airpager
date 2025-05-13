@@ -10,6 +10,17 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "pending_reply", incident.kind
     assert_equal "test-convo-123", incident.source_details["conversation_id"]
     assert_equal "test-reservation-123", incident.source_details["reservation_id"]
+
+
+    # Test when no reservation_id
+    assert_difference -> { Incident.count }, 1 do
+      post_hospitable_message_webhook(conversation_id: "test-convo-124", reservation_id: "", sender_role: "", sender_type: "guest")
+    end
+
+    incident = Incident.last
+    assert_equal "pending_reply", incident.kind
+    assert_equal "test-convo-124", incident.source_details["conversation_id"]
+    assert_equal "", incident.source_details["reservation_id"]
   end
 
   def test_messages_received_are_stored
@@ -23,12 +34,26 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
       kind: "pending_reply",
       source_details: {
         platform: "airbnb",
-        conversation_id: "test-convo-456"
+        conversation_id: "test-convo-456",
+        reservation_id: "test-resa-456"
       }
     )
 
     assert_no_difference -> { Incident.count } do
-      post_hospitable_message_webhook(conversation_id: "test-convo-456", sender_role: "", sender_type: "guest")
+      post_hospitable_message_webhook(conversation_id: "test-convo-456", reservation_id: "test-resa-456", sender_role: "", sender_type: "guest")
+    end
+
+    # Test when no reservation_id
+    Incident.create!(
+      kind: "pending_reply",
+      source_details: {
+        platform: "airbnb",
+        conversation_id: "test-convo-457"
+      }
+    )
+
+    assert_no_difference -> { Incident.count } do
+      post_hospitable_message_webhook(conversation_id: "test-convo-457", reservation_id: "", sender_role: "", sender_type: "guest")
     end
   end
 
@@ -42,7 +67,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
       resolved_at: nil
     )
 
-    post_hospitable_message_webhook(conversation_id: "test-convo-789", sender_role: "co-host", sender_type: "host")
+    post_hospitable_message_webhook(conversation_id: "test-convo-789", reservation_id: "", sender_role: "co-host", sender_type: "host")
 
     incident.reload
 
