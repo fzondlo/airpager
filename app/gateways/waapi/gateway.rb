@@ -10,7 +10,6 @@ module Waapi
     end
 
     def send_message(message, chat_id)
-
       self.class.post(
         "/api/v1/instances/#{instance_id}/client/action/send-message",
         body: {

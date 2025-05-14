@@ -7,7 +7,6 @@ class WaapiWebhooksController < ApplicationController
 
   def create
     return unless subscribed_to_group?
-
     image_url = GoogleDrive.gateway.create_image(image, WHATSAPP_GROUP_IDS[group_id])
     message = "Factura se guardó: #{image_url}"
     Waapi.gateway.send_message(message, group_id)
@@ -23,9 +22,8 @@ class WaapiWebhooksController < ApplicationController
     payload[:data][:message][:_data][:from]
   end
 
-
   def image
-    payload[:data][:message][:_data][:body]
+    payload[:data][:media][:data]
   end
 
   def payload
