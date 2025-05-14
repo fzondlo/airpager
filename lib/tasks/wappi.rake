@@ -9,7 +9,7 @@ namespace :waapi do
     chats = Waapi.gateway.find_all_chats
     pretty_json = JSON.pretty_generate(chats)
     file_path = Rails.root.join("tmp", "all_chats.json")
-    File.write(file_path, pretty_json)
+    File.write(file_path, chats)
     puts "\n\nSuccess! Exported all chats to #{file_path}\n\n"
   end
 end
