@@ -10,5 +10,6 @@ namespace :waapi do
     pretty_json = JSON.pretty_generate(chats)
     file_path = Rails.root.join("tmp", "all_chats.json")
     File.write(file_path, pretty_json)
+    puts "\n\nSuccess! Exported all chats to #{file_path}\n\n"
   end
 end
