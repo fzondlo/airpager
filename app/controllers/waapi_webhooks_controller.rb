@@ -22,7 +22,7 @@ class WaapiWebhooksController < ApplicationController
       Acabo de ver que subiste una factura para la cuenta de #{WHATSAPP_GROUP_IDS[group_id]}.
 
       Ya la guardé para que nunca se pierda. Aqui esta el link:
-      #{image_url}"
+      #{image_url}
     TEXT
 
     Waapi.gateway.send_message(message, group_id)
