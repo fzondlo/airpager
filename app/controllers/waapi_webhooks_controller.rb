@@ -12,7 +12,7 @@ class WaapiWebhooksController < ApplicationController
   }
 
   def create
-    return unless subscribed_to_group?
+    return if !subscribed_to_group? || !contains_image?
     image_url = GoogleDrive.gateway.create_image(image, WHATSAPP_GROUP_IDS[group_id])
     message = <<~TEXT
       Hola,
@@ -29,6 +29,10 @@ class WaapiWebhooksController < ApplicationController
   end
 
   private
+
+  def contains_image?
+    payload[:data][:media][:mimetype] == "image/jpeg"
+  end
 
   def subscribed_to_group?
     !!WHATSAPP_GROUP_IDS[group_id]
