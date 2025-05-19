@@ -53,7 +53,7 @@ gem "thruster", require: false
 gem "pry"
 
 group :production do
-  gem 'ddtrace'
+  gem 'datadog', require: 'datadog/auto_instrument'
 end
 
 group :development, :test do
