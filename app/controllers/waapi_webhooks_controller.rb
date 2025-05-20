@@ -13,7 +13,7 @@ class WaapiWebhooksController < ApplicationController
 
   def create
     return if !subscribed_to_group? || !contains_image?
-    image_url = GoogleDrive.gateway.create_image(image, WHATSAPP_GROUP_IDS[group_id])
+
     message = <<~TEXT
       Hola,
 
@@ -23,12 +23,26 @@ class WaapiWebhooksController < ApplicationController
 
       Ya la guardé para que nunca se pierda. Aqui esta el link:
       #{image_url}
+
+      Y intente sacar estos datos:
+      Fetcha de factura: #{receipt.date}
+      Costo en COP: #{receipt.cop}
+      Costo en USD: #{receipt.usd}
+      Descripcion de factura: #{receipt.description}
     TEXT
 
     Waapi.gateway.send_message(message, group_id)
   end
 
   private
+
+  def receipt
+    @receipt ||= OpenAi.gateway.process_receipt(Prompt.process_receipt, image)
+  end
+
+  def image_url
+    @image_url ||= GoogleDrive.gateway.create_image(image, WHATSAPP_GROUP_IDS[group_id])
+  end
 
   def contains_image?
     payload[:data][:media][:mimetype] == "image/jpeg"

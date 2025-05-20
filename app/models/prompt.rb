@@ -15,4 +15,26 @@ class Prompt
       end.join("\n")}
     PROMPT
   end
+
+  def self.process_receipt
+    <<~PROMPT
+      This image is a reciept. I would like you to pull out the following elements:
+
+      - Date of transaction (as date)
+      - Cost
+      - Currency (will either be USD or COP)
+      - Description of what was purchased in spanish, no more than 15 words. Try to summarize all the items that were purchased as part of the reciept.
+
+      And then using the date and the cost do a lookup to find the missing currency, if you have USD then convert to COP using the exchange rate on the date of the transaction. And if you have COP then convert to USD.
+
+      Please respond using this JSON format and substitute the values, and use the format of the example values below. No markdown, no code fences, no explanation, just this json response object.
+
+      {
+        "date": "30/1/2025",
+        "cost_in_usd": 12.44,
+        "cost_in_cop": 49522,
+        "description": "Table and chairs",
+      }
+    PROMPT
+  end
 end

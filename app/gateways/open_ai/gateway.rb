@@ -16,16 +16,42 @@ module OpenAi
           { role: "user", content: prompt }
         ]
       }
-
-      response = self.class.post("/chat/completions", body: body.to_json)
-
-      Rails.logger.info "Prompt: #{prompt}"
-      Rails.logger.info "Response: #{body.to_json}"
+      response = self.class.post(
+        "/chat/completions",
+        body: body.to_json
+      )
 
       puts "Prompt: #{prompt}"
-      puts "Response: #{body.to_json}"
+      puts "Response: #{response.to_json}"
 
       Response::Chat.new(response)
+    end
+
+    def process_receipt(prompt, receipt, model: "o4-mini")
+      body = {
+        model: model,
+        messages: [
+          { role: "user", content: [
+            {
+              "type": "text",
+              "text": prompt
+            },
+            {
+              "type": "image_url",
+              "image_url": { "url": "data:image/jpeg;base64,#{receipt}" }
+            }
+          ]
+        }]
+      }
+      response = self.class.post(
+        "/chat/completions",
+        body: body.to_json
+      )
+
+      puts "Prompt: #{prompt}"
+      puts "Response: #{response.to_json}"
+
+      Response::Receipt.new(response)
     end
   end
 end
