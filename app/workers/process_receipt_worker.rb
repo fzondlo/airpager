@@ -29,8 +29,13 @@ class ProcessReceiptWorker
   end
 
   def receipt
-    @receipt ||= OpenAi.gateway.process_receipt(Prompt.process_receipt, @image)
-  end
+    @receipt ||= begin
+         OpenAi.gateway.process_receipt(Prompt.process_receipt, @image)
+       rescue => e
+         puts("chatgpt failed with #{e}")
+         OpenStruct.new
+       end
+    end
 
   def image_url
     @image_url ||= GoogleDrive.gateway.create_image(@image, @group)
