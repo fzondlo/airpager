@@ -1,6 +1,8 @@
 module OpenAi
   class Response
     class Receipt < Response
+      include ActionView::Helpers::NumberHelper
+
       def date
         response[:date]
       end
