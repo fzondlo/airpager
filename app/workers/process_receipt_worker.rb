@@ -54,6 +54,10 @@ class ProcessReceiptWorker
       Costo en COP: #{receipt.cop}
       Costo en USD: #{receipt.usd}
       Descripcion de factura: #{receipt.description}
+
+      Tambien puedes copiar esto por la tabla:
+
+      `#{receipt.description} #{receipt.cop}  #{receipt.date} #{image_url}`
     TEXT
   end
 
