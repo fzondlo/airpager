@@ -28,6 +28,8 @@ class Prompt
 
       And then using the date and the cost do a lookup to find the missing currency, if you have USD then convert to COP using the exchange rate on the date of the transaction. And if you have COP then convert to USD.
 
+      Please be extra sure and spend extra time if needed to do multiple looks to confirm the conversion is accurate for the day of the transaction as I will charge clients this amount.
+
       Please respond using this JSON format and substitute the values, and use the format of the example values below. No markdown, no code fences, no explanation, just this json response object.
 
       {
