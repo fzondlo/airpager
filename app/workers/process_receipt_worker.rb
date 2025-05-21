@@ -57,7 +57,7 @@ class ProcessReceiptWorker
 
       Tambien puedes copiar esto por la tabla:
 
-      `#{receipt.description} #{receipt.cop}  #{receipt.date} #{image_url}`
+      `#{receipt.description}\t#{receipt.cop}\t#{receipt.date}\t#{image_url}`
     TEXT
   end
 
