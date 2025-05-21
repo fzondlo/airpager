@@ -33,7 +33,7 @@ class Prompt
       Please respond using this JSON format and substitute the values, and use the format of the example values below. No markdown, no code fences, no explanation, just this json response object.
 
       {
-        "date": "30/1/2025",
+        "date": "30.1.2025",
         "cost_in_usd": 12.44,
         "cost_in_cop": 49522,
         "description": "Table and chairs",
