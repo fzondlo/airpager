@@ -13,7 +13,13 @@ class ProcessReceiptWorker
   private
 
   def add_to_spreadsheet
-    row = [receipt.date, receipt.cop, receipt.usd, receipt.description]
+    row = [
+      receipt.date,
+      receipt.cop,
+      receipt.usd,
+      receipt.description,
+      image_url
+    ]
     value_range  = Google::Apis::SheetsV4::ValueRange.new(values: [row])
 
     begin
