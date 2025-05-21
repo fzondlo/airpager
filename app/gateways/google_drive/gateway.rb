@@ -49,15 +49,33 @@ module GoogleDrive
       public_url
     end
 
+    def sheets
+      @sheets ||= begin
+         sheets = Google::Apis::SheetsV4::SheetsService.new
+         sheets.authorization = credentials
+         sheets
+       end
+    end
+
     private
+
+    def credentials
+      @credentials ||= begin
+         scopes = [
+           Google::Apis::DriveV3::AUTH_DRIVE_FILE,
+           Google::Apis::SheetsV4::AUTH_SPREADSHEETS
+         ]
+         credentials = Google::Auth::ServiceAccountCredentials.make_creds(
+           json_key_io: StringIO.new(JSON.generate(@auth_json)),
+           scope: scopes
+         )
+         credentials.fetch_access_token!
+         credentials
+       end
+    end
 
     def drive
       @drive ||= begin
-         credentials = Google::Auth::ServiceAccountCredentials.make_creds(
-           json_key_io: StringIO.new(JSON.generate(@auth_json)),
-           scope:       Google::Apis::DriveV3::AUTH_DRIVE_FILE
-         )
-         credentials.fetch_access_token!
          drive = Google::Apis::DriveV3::DriveService.new
          drive.authorization = credentials
          drive
