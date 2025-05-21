@@ -1,5 +1,7 @@
 class ProcessReceiptWorker
   include Sidekiq::Worker
+  SPREADSHEET_ID = "1O1t-wesNYbhr0AMMGENyUkjGAnOzmPjlwyEZFUA153M"
+  SHEET_NAME     = "Receipts"
 
   def perform(group, group_id, base64_image)
     @image = base64_image
@@ -11,9 +13,6 @@ class ProcessReceiptWorker
   private
 
   def add_to_spreadsheet
-    SPREADSHEET_ID = "1O1t-wesNYbhr0AMMGENyUkjGAnOzmPjlwyEZFUA153M"
-    SHEET_NAME     = "Receipts"   # make sure this tab exists exactly
-
     row = [receipt.date, receipt.cop, receipt.usd, receipt.description]
     value_range  = Google::Apis::SheetsV4::ValueRange.new(values: [row])
 
