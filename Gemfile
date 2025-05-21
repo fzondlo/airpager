@@ -29,7 +29,7 @@ gem "httparty"
 # Google drive integration
 gem "googleauth"
 gem "google-apis-drive_v3"
-gem 'google-apis-sheets_v4', '~> 0.6.0'
+gem 'google-apis-sheets_v4', '~> 0.43.0'
 
 # Processing jobs
 gem 'sidekiq'
