@@ -15,6 +15,7 @@ class ProcessReceiptWorker
   def add_to_spreadsheet
     row = [
       receipt.date,
+      receipt.vendor_name,
       receipt.cop,
       receipt.usd,
       receipt.description,
@@ -25,7 +26,7 @@ class ProcessReceiptWorker
     begin
       GoogleDrive.gateway.sheets.append_spreadsheet_value(
         SPREADSHEET_ID,
-        "#{SHEET_NAME}!A:D",
+        "#{SHEET_NAME}!A:F",
         value_range,
         value_input_option:  "USER_ENTERED",
         insert_data_option:   "INSERT_ROWS"

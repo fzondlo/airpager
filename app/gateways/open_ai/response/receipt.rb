@@ -19,6 +19,10 @@ module OpenAi
         response[:description]
       end
 
+      def vendor_name
+        response[:vendor_name]
+      end
+
       private
 
       def response

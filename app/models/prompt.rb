@@ -24,6 +24,7 @@ class Prompt
       - Cost
       - Currency (will either be USD or COP)
       - Description of what was purchased in spanish, no more than 15 words. Try to summarize all the items that were purchased as part of the reciept.
+      - Vendor name (can be your best guess)
 
       And then using the date and the cost do a lookup to find the missing currency, if you have USD then convert to COP using the exchange rate on the date of the transaction. And if you have COP then convert to USD.
 
@@ -34,6 +35,7 @@ class Prompt
         "cost_in_usd": 12.44,
         "cost_in_cop": 49522,
         "description": "Table and chairs",
+        "vendor_name": "Home Center"
       }
     PROMPT
   end
