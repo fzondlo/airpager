@@ -37,15 +37,15 @@ class ClickupTaskBuilder
 
   def build_reservation_task
     {
-      name:                        task_name,
-      # tags:                        [@property[:name]],
-      status:                      "Activo", ## For reservations, also Cancelado
+      name: task_name,
+      # tags: [@property[:name]],
+      status: "Activo", ## For reservations, also Cancelado
       start_date: start_time,
-      start_date_time:             start_time,
+      start_date_time: true,
       due_date: due_time,
-      due_date_time:               due_time,
+      due_date_time: true,
       check_required_custom_fields: true,
-      custom_fields:               build_custom_fields
+      custom_fields: build_custom_fields
     }
   end
 
