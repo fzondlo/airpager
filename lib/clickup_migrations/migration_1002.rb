@@ -1,5 +1,5 @@
 module ClickupMigrations
-  class Migration1001 < Base
+  class Migration1002 < Base
 
     OFFSET_MS = 18_000_000
     OFFSET_S = OFFSET_MS / 1_000.0
@@ -20,15 +20,19 @@ module ClickupMigrations
     private
 
     def tasks_to_update
-      (all_cleanings + all_reservations).map do |task|
-        task if !!task['start_date']
-      end.compact
+      binding.pry
+      # (all_cleanings + all_reservations).map do |task|
+      #   task if !!task['start_date']
+      # end.compact
     end
 
     def apply_offset(time)
       time.to_i + OFFSET_MS
     end
 
+    # all_cleanings.select{|x| x['id'] == '86a8bppa7' }[0]["due_date"]
+    # all_reservations.select{|x| x['id'] == '86a8wyatb' }[0]["due_date"]
+    #
     # def target_task
     #   # was originally [{:start_date=>"1746504000000", :due_date=>"1746504000000"}]
     #   all_cleanings.select do |task|

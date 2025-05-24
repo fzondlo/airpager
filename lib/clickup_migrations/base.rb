@@ -2,7 +2,7 @@ module ClickupMigrations
   class Base
 
     def up
-      # force_confirmation
+      force_confirmation
       puts "Running migration up ##{migration_number}..."
       migration_up
       puts "Migration completed successfull!"

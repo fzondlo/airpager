@@ -1,5 +1,5 @@
 class ClickupTaskBuilder
-  
+
   # Custom field IDs
   INFANT_COUNT_ID = "7a1b1c45-311e-4263-8e98-ad49380e764e".freeze
   RESERVATION_CODE_ID = "94a0b9ed-e562-4c1b-9e8b-f1d52b0f51cf".freeze
@@ -19,7 +19,7 @@ class ClickupTaskBuilder
     "Santa Ana 1001 (Alan)" => "d56ba8d9-49e0-4ed2-bbd5-ca9526ac1703",
     "Santa Maria 301 (Yuri)" => "be78e5a4-9623-4b0d-a61a-2e18d405b207",
     "Nebraska 1101" => "9813fd45-359f-4d37-ba6b-c3084e5a9b8c",
-  }
+  }.freeze
 
   def self.reservation_task(reservation)
     new(reservation, :reservation).build_reservation_task
@@ -42,9 +42,9 @@ class ClickupTaskBuilder
       # tags: [@property[:name]],
       status: "Activo", ## For reservations, also Cancelado
       start_date: start_date,
-      start_date_time: false,
+      start_date_time: true,
       due_date: clickup_timestamp(@reservation[:departure_time]),
-      due_date_time: false,
+      due_date_time: true,
       check_required_custom_fields: true,
       custom_fields: build_custom_fields
     }
