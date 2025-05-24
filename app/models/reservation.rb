@@ -40,8 +40,8 @@ class Reservation
   end
 
   def create_clickup_tasks(reservation)
-    Clickup.gateway.create_task(
-      ClickupTaskBuilder.cleaning_task(reservation), :limpiezas)
+    # Clickup.gateway.create_task(
+    #   ClickupTaskBuilder.cleaning_task(reservation), :limpiezas)
     Clickup.gateway.create_task(
       ClickupTaskBuilder.reservation_task(reservation), :reservas)
     puts "Reservation & Cleaning tasks created for #{reservation[:code]}"

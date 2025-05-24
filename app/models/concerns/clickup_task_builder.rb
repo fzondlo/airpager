@@ -1,4 +1,5 @@
 class ClickupTaskBuilder
+  
   # Custom field IDs
   INFANT_COUNT_ID = "7a1b1c45-311e-4263-8e98-ad49380e764e".freeze
   RESERVATION_CODE_ID = "94a0b9ed-e562-4c1b-9e8b-f1d52b0f51cf".freeze
@@ -40,10 +41,10 @@ class ClickupTaskBuilder
       name: task_name,
       # tags: [@property[:name]],
       status: "Activo", ## For reservations, also Cancelado
-      start_date: start_time,
-      start_date_time: true,
-      due_date: due_time,
-      due_date_time: true,
+      start_date: start_date,
+      start_date_time: false,
+      due_date: clickup_timestamp(@reservation[:departure_time]),
+      due_date_time: false,
       check_required_custom_fields: true,
       custom_fields: build_custom_fields
     }
@@ -51,24 +52,18 @@ class ClickupTaskBuilder
 
   private
 
-  def start_time
-    @task_type == :cleaning ?
-      timestamp_ms(@reservation[:departure_time]) :
-      timestamp_ms(@reservation[:arrival_time])
+  def clickup_timestamp(timestamp)
+    # clickup loses it's mind if the timestamp is not at 4am
+    timestamp.change(hour: 4).to_i * 1000
   end
 
-  def due_time
+  def start_date
     @task_type == :cleaning ?
-      timestamp_ms(@reservation[:departure_time] + 4.hours) :
-      timestamp_ms(@reservation[:departure_time])
+      nil : clickup_timestamp(@reservation[:arrival_time])
   end
 
   def task_name
     "#{@property[:name]} – #{@guest[:first_name]} #{@guest[:last_name]}"
-  end
-
-  def timestamp_ms(date)
-    date.to_i * 1_000
   end
 
   def build_custom_fields
@@ -83,7 +78,7 @@ class ClickupTaskBuilder
       cf(GUEST_LANG_ID,       "guest_language",   @guest[:language]),
       cf(GUEST_LOC_ID,        "guest_location",   @guest[:location]),
       cf(SCHEDULE_CLEANING_ON, "Fetcha para agendar limpieza",
-         timestamp_ms(@reservation[:departure_time] - 14.days))
+         clickup_timestamp(@reservation[:departure_time] - 14.days))
     ]
   end
 
