@@ -1,8 +1,8 @@
 class ProcessReceiptWorker
   include Sidekiq::Worker
   SPREADSHEET_IDS = {
-    "2024": "1O1t-wesNYbhr0AMMGENyUkjGAnOzmPjlwyEZFUA153M",
-    "2025": "1hA3LtzZxpWJ1sntUYTOa3kNi4Qop94AODzHtet7ajcs"
+    "2024" => "1O1t-wesNYbhr0AMMGENyUkjGAnOzmPjlwyEZFUA153M",
+    "2025" => "1hA3LtzZxpWJ1sntUYTOa3kNi4Qop94AODzHtet7ajcs"
   }
   SHEET_NAME     = "Receipts"
 
@@ -28,7 +28,7 @@ class ProcessReceiptWorker
 
     begin
       GoogleDrive.gateway.sheets.append_spreadsheet_value(
-        SPREADSHEET_IDS[group],
+        SPREADSHEET_IDS[@group],
         "#{SHEET_NAME}!A:F",
         value_range,
         value_input_option:  "USER_ENTERED",
