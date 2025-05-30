@@ -17,7 +17,7 @@ module ClickupMigrations
     def task_ids_to_update
       # unfortunately this check does nothing as the Api does not return the
       # start_date_time or due_date_time, so we are flying blind
-      (all_cleanings + all_reservations).map do |task|
+      all_cleanings.map do |task|
         task['id'] if task['start_date_time'] != true
       end.compact
     end

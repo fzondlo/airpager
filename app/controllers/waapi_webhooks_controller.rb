@@ -9,7 +9,8 @@ class WaapiWebhooksController < ApplicationController
     "120363401730486616@g.us" => "Sara",
     "120363357444254649@g.us" => "Alan",
     "120363402028991064@g.us" => "Yuri",
-    "120363400288549445@g.us" => "2024"
+    "120363400288549445@g.us" => "2024",
+    "120363418474521633@g.us" => "2025"
   }
   def create
     return if !subscribed_to_group? || !contains_image?
