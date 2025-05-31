@@ -2,11 +2,11 @@ module Clickup
   class Gateway
     include HTTParty
     base_uri "https://api.clickup.com"
+
     LIST_NAMES_TO_ID = {
       reservas: '901311254964',
       limpiezas: '901311220753'
     }
-
 
     def initialize(api_token)
       self.class.headers "Authorization" => api_token,
@@ -30,7 +30,12 @@ module Clickup
 
     def find_tasks(list_name)
       list = LIST_NAMES_TO_ID[list_name]
-      self.class.get("/api/v2/list/#{list}/task")
+      self.class.get("/api/v2/list/#{list}/task")["tasks"]
+    end
+
+    def get_custom_fields_for(list_name)
+      list = LIST_NAMES_TO_ID[list_name]
+      self.class.get("/api/v2/list/#{list}/field")
     end
   end
 end

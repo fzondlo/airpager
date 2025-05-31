@@ -6,8 +6,11 @@ module Hospitable
         "Murano" => "Murano 901",
         "Lauret" => "Lauret 902",
         "Alans Apartment" => "Santa Ana 1001 (Alan)",
-        "Modern Urban Apt w Designer" => "Santa Maria 301 (Yuri)",
-        "Nebraska" => "Nebraska 1101"
+        "Modern Urban Apt w Designer" => "Santa Maria 302 (Yuri)",
+        "Nebraska" => "Nebraska 1101",
+        "Santa Maria 402 Yuri" => "Santa Maria 402 (Yuri)",
+        "Edgar 201" => "Santa Maria 201 (Edgar)",
+        "Angelas Apartment" => "Castelmola 301 (Angela)"
       }
 
       def reservations

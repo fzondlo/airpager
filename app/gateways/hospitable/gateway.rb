@@ -25,7 +25,7 @@ module Hospitable
     end
 
     def find_reservation_messages(reservation_id)
-      response = self.class.get("/v2/reservations/#{reservation_id}/messages")
+      response = self.class.get("/v2/clickup/#{reservation_id}/messages")
       Response::FindReservationMessages.new(response)
     end
   end
