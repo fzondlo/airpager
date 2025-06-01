@@ -100,7 +100,7 @@ class Task
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1613/31885787b07f736"
       },
       {
-        name: "Olga",
+        name: "Doña Olga",
         custom_field_id: "9a6a3378-c1d7-48c1-bfa4-f793584d26e4",
         whatsapp_group: "120363354564826542@g.us",
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1553/75cecf85c84c162"
