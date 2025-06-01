@@ -28,17 +28,57 @@ class Task
       limpiadora: "354e3ebf-dc3d-450a-8426-d4c6c421551f"
     }.freeze
 
-    # Property Name IDs for Dropdown Options
-    PROPERTY_NAME_OPTION_IDS = {
-      "Murano 901" => "d2aee479-0c39-4d28-bab5-88b708b0c0fd",
-      "Lauret 902" => "79168bfd-d7cf-462a-a236-5908ac9ba7bc",
-      "Nebraska 1101" => "9813fd45-359f-4d37-ba6b-c3084e5a9b8c",
-      "Santa Ana 1001 (Alan)" => "d56ba8d9-49e0-4ed2-bbd5-ca9526ac1703",
-      "Santa Maria 302 (Yuri)" => "be78e5a4-9623-4b0d-a61a-2e18d405b207",
-      "Santa Maria 402 (Yuri)" => "0a52529d-51f1-48f6-b95c-5482a61cf34a",
-      "Santa Maria 201 (Edgar)" => "0e3d2f39-f889-499c-869f-effd75bff830",
-      "Castelmola 301 (Angela)" => "f90e68e4-ef41-45af-9652-ba2d0de46268"
-    }.freeze
+    # Property Name IDs for Custom Field Ids
+    PROPERTIES = [
+      {
+        name: "Murano 901",
+        custom_field_id: "d2aee479-0c39-4d28-bab5-88b708b0c0fd",
+        address: "Cra 75# 40-23\nApt 901\nEdificio Murano San martin\nLaureles- Estadio\nMedellín, Antioquia",
+        google_maps: "https://maps.app.goo.gl/qdiDviTmWWZVL1Mr6"
+      },
+      {
+        name: "Lauret 902",
+        custom_field_id: "79168bfd-d7cf-462a-a236-5908ac9ba7bc",
+        address: "CRA 72 #39A - 22,\nApt 902\nEdificio Lauret\nLaureles - Estadio\nMedellín, Antioquia",
+        google_maps: "https://maps.app.goo.gl/aVHVDAGXNM24Ew7YA"
+      },
+      {
+        name: "Nebraska 1101",
+        custom_field_id: "9813fd45-359f-4d37-ba6b-c3084e5a9b8c",
+        address: "Cq. 73A #34a-60\nApt 1101\nEdificio Nebraska\nLaureles - Estadio, Medellín, Laureles",
+        google_maps: "https://maps.app.goo.gl/7ntzytCkPDMChEN8A"
+      },
+      {
+        name: "Santa Ana 1001 (Alan)",
+        custom_field_id: "d56ba8d9-49e0-4ed2-bbd5-ca9526ac1703",
+        address: "Cq. 73A #39-68\nApt 1001 \nEdificio Santa Ana \nLaureles Medellín",
+        google_maps: "https://maps.app.goo.gl/fj9EyXgMoUGREz5GA"
+      },
+      {
+        name: "Santa Maria 302 (Yuri)",
+        custom_field_id: "be78e5a4-9623-4b0d-a61a-2e18d405b207",
+        address: "Cra 77 #42-19\nApt 302\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
+        google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
+      },
+      {
+        name: "Santa Maria 402 (Yuri)",
+        custom_field_id: "0a52529d-51f1-48f6-b95c-5482a61cf34a",
+        address: "Cra 77 #42-19\nApt 402\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
+        google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
+      },
+      {
+        name: "Santa Maria 201 (Edgar)",
+        custom_field_id: "0e3d2f39-f889-499c-869f-effd75bff830",
+        address: "Cra 77 #42-19\nApt 201\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
+        google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
+      },
+      {
+        name: "Castelmola 301 (Angela)",
+        custom_field_id: "f90e68e4-ef41-45af-9652-ba2d0de46268",
+        address: "Tv. 37 #63b-33, \nApt 301\nEdificio Castelmola\nLaureles - Estadio, Medellín",
+        google_maps: "https://maps.app.goo.gl/Vu13uFrpPZoCgjjp7"
+      }
+    ].freeze
 
     CLEANING_STAFF = [
       {
@@ -71,7 +111,7 @@ class Task
         whatsapp_group: "120363418846854020@g.us",
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1633/d675cd727b47417"
       }
-    ]
+    ].freeze
 
   end
 end

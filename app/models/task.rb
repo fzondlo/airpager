@@ -32,6 +32,34 @@ class Task
     Clickup.gateway.find_tasks(:reservas)
   end
 
+  def cleanings_tomorrow
+    tomorrow = Date.today + 1
+    tomorrow_start = Time.new(tomorrow.year, tomorrow.month, tomorrow.day, 0, 0, 0)
+    tomorrow_end = Time.new(tomorrow.year, tomorrow.month, tomorrow.day, 23, 59, 59)
+    params = {
+      due_date_gt: tomorrow_start.to_i * 1000,
+      due_date_lt: tomorrow_end.to_i * 1000,
+      order_by: "due_date",
+      statuses: ["ACTIVO"],
+      reverse: true
+    }
+    Clickup.gateway.find_tasks(:limpiezas, params)
+  end
+
+  def cleanings_today
+    today = Date.today
+    today_start = Time.new(today.year, today.month, today.day, 0, 0, 0)
+    today_end = Time.new(today.year, today.month, today.day, 23, 59, 59)
+    params = {
+      due_date_gt: today_start.to_i * 1000,
+      due_date_lt: today_end.to_i * 1000,
+      order_by: "due_date",
+      statuses: ["ACTIVO"],
+      reverse: true
+    }
+    Clickup.gateway.find_tasks(:limpiezas, params)
+  end
+
   def next_task_for_cleaner(cleaner_cf_id)
     today_in_ms = (Time.new(Time.now.year, Time.now.month, Time.now.day, 0, 0, 0).to_i * 1000)
     custom_fields_filter = [

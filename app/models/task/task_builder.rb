@@ -46,13 +46,17 @@ class Task
         cf(:reservation_id, "reservation_id", @reservation[:id]),
         cf(:nights, "nights", @reservation[:nights]),
         cf(:property_id, "property_id", @reservation[:property_id]),
-        cf(:property_name, "property_name", PROPERTY_NAME_OPTION_IDS[@property[:name]]),
+        cf(:property_name, "property_name", get_property_id(@property[:name])),
         cf(:guest_name, "guest_name", "#{@guest[:first_name]} #{@guest[:last_name]}"),
         cf(:guest_lang, "guest_language", @guest[:language]),
         cf(:guest_loc, "guest_location", @guest[:location]),
         cf(:schedule_cleaning_on, "Fetcha para agendar limpieza",
            clickup_timestamp(@reservation[:departure_time] - 14.days))
       ]
+    end
+
+    def get_property_id(name)
+      PROPERTIES.find { |p| p[:name] == name }[:custom_field_id]
     end
 
     def cf(field_id, field_name, value)

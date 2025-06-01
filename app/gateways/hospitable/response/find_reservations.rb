@@ -2,6 +2,7 @@ module Hospitable
   class Response
     class FindReservations < Response
 
+      # MAKE SURE THESE MATCH THA NAMES IN Task:Mapping!
       APARTMENT_NAME_MAPPINGS = {
         "Murano" => "Murano 901",
         "Lauret" => "Lauret 902",

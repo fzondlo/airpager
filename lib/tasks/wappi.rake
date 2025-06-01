@@ -24,4 +24,10 @@ namespace :waapi do
     File.write(file_path, chats)
     puts "\n\nSuccess! Exported all chats to #{file_path}\n\n"
   end
+
+  # bundle exec rake waapi:confirm_cleanings_tomorrow
+  desc "Send messages for confirmation tomorrow"
+  task confirm_cleanings_tomorrow: [:environment] do
+    DayBeforeCleaningReminderWorker.new.perform
+  end
 end

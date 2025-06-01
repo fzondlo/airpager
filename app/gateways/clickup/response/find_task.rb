@@ -32,11 +32,19 @@ module Clickup
       end
 
       def limpiadora
-        get_dropdown_value_for_cf(custom_fields[:limpiadora])
+        get_dropdown_value_for_cf(custom_fields[:limpiadora], :name)
+      end
+
+      def limpiadora_id
+        get_dropdown_value_for_cf(custom_fields[:limpiadora], :id)
       end
 
       def property_name
-        get_dropdown_value_for_cf(custom_fields[:property_name])
+        get_dropdown_value_for_cf(custom_fields[:property_name], :name)
+      end
+
+      def property_id
+        get_dropdown_value_for_cf(custom_fields[:property_name], :id)
       end
 
       private
@@ -47,8 +55,8 @@ module Clickup
         end.with_indifferent_access
       end
 
-      def get_dropdown_value_for_cf(cf)
-        cf[:type_config][:options].select{|o| o[:orderindex] == cf[:value]}[0][:name]
+      def get_dropdown_value_for_cf(cf, field_name)
+        cf[:type_config][:options].select{|o| o[:orderindex] == cf[:value]}[0][field_name]
       end
     end
   end

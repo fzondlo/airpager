@@ -22,16 +22,16 @@ class AssignedCleanerWorker
 
   def message
     <<~MESSAGE
-        Hola #{@cleaner[:name]},
+      Hola #{@cleaner[:name]},
 
-        *Te hemos asignado la siguiente limpieza:*
-        #{cleaning_text(@assigned_cleaning)}
+      *Te hemos asignado la siguiente limpieza:*
+      #{cleaning_text(@assigned_cleaning)}
 
-        *Tambien puedes ver tu calendario cumpleto aqui:*
-        #{@cleaner[:calendar]}
+      *Tambien puedes ver tu calendario cumpleto aqui:*
+      #{@cleaner[:calendar]}
 
-        *Y aqui tienes las proximas 3 limpiezas:*
-        #{next_cleanings.map { |x| cleaning_text(x) }.join("\n")}
+      *Y aqui tienes las proximas 3 limpiezas:*
+      #{next_cleanings.map { |x| cleaning_text(x) }.join("\n")}
     MESSAGE
   end
 end

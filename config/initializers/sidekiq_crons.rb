@@ -1,7 +1,24 @@
-EVERY_DAY = "0 0 * * *"
+EVERY_DAY   = "0 0 * * *"
+AT_8_30_AM  = "30 8 * * *"
+AT_11_AM    = "0 11 * * *"
+TIME_ZONE   = Time.zone.tzinfo.identifier
 
 Sidekiq::Cron::Job.create(
-  name: 'SyncClickupReservationsWorker',
+  name:  'SyncClickupReservationsWorker – midnight',
   klass: 'SyncClickupReservationsWorker',
-  cron: "#{EVERY_DAY} #{Time.zone.tzinfo.identifier}",
+  cron:  "#{EVERY_DAY} #{TIME_ZONE}"
+)
+
+# Run at 8:30 AM every day
+Sidekiq::Cron::Job.create(
+  name:  'DayBeforeCleaningReminderWorker – 8:30am',
+  klass: 'DayBeforeCleaningReminderWorker',
+  cron:  "#{AT_8_30_AM} #{TIME_ZONE}"
+)
+
+# Run at 11 AM every day
+Sidekiq::Cron::Job.create(
+  name:  'DayBeforeCleaningReminderWorker – 11am',
+  klass: 'DayBeforeCleaningReminderWorker',
+  cron:  "#{AT_11_AM} #{TIME_ZONE}"
 )
