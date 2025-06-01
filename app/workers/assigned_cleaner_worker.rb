@@ -2,7 +2,7 @@ class AssignedCleanerWorker
   include Sidekiq::Worker
 
   def perform(task_id, assigned_cleaner)
-    @cleaner = assigned_cleaner
+    @cleaner = assigned_cleaner.with_indifferent_access
     @assigned_cleaning = Clickup.gateway.find_task(task_id)
 
     Waapi.gateway.send_message(message, @cleaner[:whatsapp_group])
