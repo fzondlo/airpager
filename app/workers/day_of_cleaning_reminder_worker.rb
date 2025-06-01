@@ -30,7 +30,7 @@ class DayBeforeCleaningReminderWorker
       Hoy tienes esta limpieza:
 
       #{property[:address]}
-      #{property[:google_maps]}}
+      #{property[:google_maps]}
     MESSAGE
   end
 end
