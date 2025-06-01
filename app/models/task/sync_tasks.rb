@@ -27,10 +27,7 @@ class Task
     private
 
     def find_task_id(reservation_id)
-      @tasks.find do |task|
-        reservation_id == task["custom_fields"]
-          .select{|x| x["name"] == "reservation_id"}[0]["value"]
-      end['id']
+      @tasks.find { |t| t.reservation_id == reservation_id }["id"]
     end
 
     def cancel_task(reservation)
@@ -42,11 +39,15 @@ class Task
     end
 
     def create_task(reservation)
-      Clickup.gateway.create_task(
-        TaskBuilder.new(reservation, @task_type).build,
-        @task_type
-      )
-      puts "Tasks created for #{@task_type} #{reservation[:code]}"
+      begin
+        Clickup.gateway.create_task(
+          TaskBuilder.new(reservation, @task_type).build,
+          @task_type
+        )
+        puts "Tasks created for List: #{@task_type} Reservation Code: #{reservation[:code]}"
+      rescue Task::TaskBuilder::PropertyNotFoundError => e
+        puts "Error building task: #{e.message}"
+      end
     end
 
   end

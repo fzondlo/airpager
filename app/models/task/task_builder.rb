@@ -2,6 +2,8 @@ class Task
   class TaskBuilder
     include Task::Mapping
 
+    class PropertyNotFoundError < StandardError; end
+
     def initialize(reservation, task_type)
       @reservation   = reservation
       @property      = reservation[:property]
@@ -56,7 +58,12 @@ class Task
     end
 
     def get_property_id(name)
-      PROPERTIES.find { |p| p[:name] == name }[:custom_field_id]
+      mapped_property = PROPERTIES.find { |p| p[:name] == name }
+      if mapped_property
+        mapped_property[:custom_field_id]
+      else
+        raise PropertyNotFoundError, "Property not found for Property #{name} & Reservation #{@reservation[:code]}"
+      end
     end
 
     def cf(field_id, field_name, value)
