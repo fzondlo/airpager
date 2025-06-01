@@ -3,9 +3,8 @@ class ClickupWebhooksController < ApplicationController
   include Task::Mapping
 
   def create
-    # AssignedCleanerWorker.perform_async(task_id, assigned_cleaner)
     if cleaner_update? && assigned_cleaner
-      AssignedCleanerWorker.new.perform(task_id, assigned_cleaner)
+      AssignedCleanerWorker.perform_async(task_id, assigned_cleaner)
     end
   end
 
