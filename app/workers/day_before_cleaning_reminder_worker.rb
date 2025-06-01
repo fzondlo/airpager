@@ -27,7 +27,7 @@ class DayBeforeCleaningReminderWorker
     <<~MESSAGE
       Buenos dias #{cleaner[:name]}!
 
-      Tienes esta limpieza el dia de manana para el dia de manana:
+      Tienes esta limpieza el dia de manana:
 
       #{property[:address]}
       #{property[:google_maps]}}
