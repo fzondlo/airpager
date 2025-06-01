@@ -31,18 +31,13 @@ class Task
     end
 
     def cancelled_with_active_task?(res)
-      res[:status] == "cancelled" && task_reservation_status[res[:id]] == "active"
+      res[:status] == "cancelled" && task_reservation_status[res[:id]] == "activo"
     end
 
-    #returns hash of reservation ids with status either "active" or "cancelled"
+    #returns hash of reservation ids with status either "activo" or "cancelado"
     def task_reservation_status
       @task_reservation_status ||= @tasks.each_with_object({}) do |task, memo|
-        cf = task["custom_fields"].find { |f| f["name"] == "reservation_id" }
-        reservation_id = cf&.fetch("value", nil)
-        next unless reservation_id
-
-        status = task.dig("status", "status") == "activo" ? "active" : "cancelled"
-        memo[reservation_id] = status
+        memo[task.reservation_id] = task.status
       end
     end
   end

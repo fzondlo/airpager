@@ -1,12 +1,8 @@
 module Clickup
   class Gateway
     include HTTParty
+    include Task::Mapping
     base_uri "https://api.clickup.com"
-
-    LIST_NAMES_TO_ID = {
-      reservas: '901311254964',
-      limpiezas: '901311220753'
-    }
 
     def initialize(api_token)
       self.class.headers "Authorization" => api_token,
@@ -28,14 +24,21 @@ module Clickup
       )
     end
 
-    def find_tasks(list_name)
+    def find_task(task_id)
+      response = self.class.get("/api/v2/task/#{task_id}")
+      Response::FindTask.new(response.parsed_response)
+    end
+
+    def find_tasks(list_name, query_params = {})
       list = LIST_NAMES_TO_ID[list_name]
-      self.class.get("/api/v2/list/#{list}/task")["tasks"]
+      response = self.class.get("/api/v2/list/#{list}/task", query: query_params)
+      response.parsed_response["tasks"].map do |task|
+        Response::FindTask.new(task)
+      end
     end
 
     def get_custom_fields_for(list_name)
-      list = LIST_NAMES_TO_ID[list_name]
-      self.class.get("/api/v2/list/#{list}/field")
+      self.class.get("/api/v2/list/#{LIST_NAMES_TO_ID[list_name]}/field")
     end
   end
 end

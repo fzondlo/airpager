@@ -18,7 +18,7 @@ class Prompt
 
   def self.process_receipt
     <<~PROMPT
-      This image is a reciept. I would like you to pull out the following elements:
+      This image is a receipt. I would like you to pull out the following elements:
 
       - Date of transaction (as date)
       - Cost

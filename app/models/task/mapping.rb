@@ -1,6 +1,11 @@
 class Task
   module Mapping
 
+    LIST_NAMES_TO_ID = {
+      reservas: '901311254964',
+      limpiezas: '901311220753'
+    }
+
     UPDATE_ACTIONS = {
       do_nothing:          0,
       create_new_records:  1,
@@ -20,6 +25,7 @@ class Task
       guest_loc: "2f6211a5-cbe8-4804-9bbb-3c51ade3e5b5",
       property_name: "ae0bf089-d100-4dbb-a455-c9fc041270d4",
       schedule_cleaning_on: "96745ccb-7cfb-4604-a47a-3e0b2866c11e",
+      limpiadora: "354e3ebf-dc3d-450a-8426-d4c6c421551f"
     }.freeze
 
     # Property Name IDs for Dropdown Options
@@ -33,6 +39,39 @@ class Task
       "Santa Maria 201 (Edgar)" => "0e3d2f39-f889-499c-869f-effd75bff830",
       "Castelmola 301 (Angela)" => "f90e68e4-ef41-45af-9652-ba2d0de46268"
     }.freeze
+
+    CLEANING_STAFF = [
+      {
+        name: "Ale",
+        custom_field_id: "923fa8f7-7eb7-4aca-883a-1849e908ef18",
+        whatsapp_group: "120363377987360866@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1593/d9dc7b14fef585e"
+      },
+      {
+        name: "Jenyfer",
+        custom_field_id: "57841d0e-3e6a-4cde-8921-87f05d711715",
+        whatsapp_group: "120363377989240467@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1573/2049ca5610260eb"
+      },
+      {
+        name: "Johana",
+        custom_field_id: "6ceb206c-b86f-4c5b-af1a-0b3a7adb4eb0",
+        whatsapp_group: "120363415585932604@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1613/31885787b07f736"
+      },
+      {
+        name: "Olga",
+        custom_field_id: "9a6a3378-c1d7-48c1-bfa4-f793584d26e4",
+        whatsapp_group: "120363354564826542@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1553/75cecf85c84c162"
+      },
+      {
+        name: "Liliana",
+        custom_field_id: "6c6f2821-0331-448a-a91c-c86cb91eb058",
+        whatsapp_group: "120363418846854020@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1633/d675cd727b47417"
+      }
+    ]
 
   end
 end

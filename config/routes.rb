@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :hospitable_webhooks, only: [ :create ]
 
   resources :waapi_webhooks, only: [ :create ]
+  resources :clickup_webhooks, only: [ :create ]
 
   root "incidents#index"
 end
