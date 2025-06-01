@@ -7,10 +7,10 @@ class Task
     }
 
     UPDATE_ACTIONS = {
-      do_nothing:          0,
-      create_new_records:  1,
-      cancel:  2,
-      cancel_and_rebook:   3
+      do_nothing: 0,
+      create_new_records: 1,
+      cancel: 2,
+      cancel_and_rebook: 3
     }.freeze
 
     # Custom field IDs
