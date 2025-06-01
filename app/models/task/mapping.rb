@@ -33,7 +33,7 @@ class Task
       {
         name: "Murano 901",
         custom_field_id: "d2aee479-0c39-4d28-bab5-88b708b0c0fd",
-        address: "Cra 75# 40-23\nApt 901\nEdificio Murano San martin\nLaureles- Estadio\nMedellín, Antioquia",
+        address: "Cra 75# 40-23\nApt 901\nEdificio Murano San Martin\nLaureles- Estadio\nMedellín, Antioquia",
         google_maps: "https://maps.app.goo.gl/qdiDviTmWWZVL1Mr6"
       },
       {
