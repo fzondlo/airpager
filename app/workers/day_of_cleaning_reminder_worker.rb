@@ -1,4 +1,4 @@
-class DayBeforeCleaningReminderWorker
+class DayOfCleaningReminderWorker
   include Sidekiq::Worker
   include Task::Mapping
 
