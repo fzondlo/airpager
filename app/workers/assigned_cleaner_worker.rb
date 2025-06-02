@@ -13,7 +13,7 @@ class AssignedCleanerWorker
   def next_cleanings
     @next_cleanings ||= Task.new.next_task_for_cleaner(
       @cleaner[:custom_field_id]
-    ).first(3)
+    ).first(10)
   end
 
   def cleaning_text(task)
@@ -30,7 +30,7 @@ class AssignedCleanerWorker
       *Tambien puedes ver tu calendario cumpleto aqui:*
       #{@cleaner[:calendar]}
 
-      *Y aqui tienes las proximas 3 limpiezas:*
+      *Y aqui tienes las proximas limpiezas:*
       #{next_cleanings.map { |x| cleaning_text(x) }.join("\n")}
     MESSAGE
   end

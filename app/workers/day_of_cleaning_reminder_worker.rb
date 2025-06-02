@@ -22,7 +22,7 @@ class DayOfCleaningReminderWorker
   def next_cleanings(cleaner)
     Task.new.next_task_for_cleaner(
       cleaner[:custom_field_id]
-    ).first(3)
+    ).first(10)
   end
 
   def cleaning_text(task)
@@ -45,7 +45,7 @@ class DayOfCleaningReminderWorker
       Tambien puedes ver tu calendario cumpleto aqui:
       #{cleaner[:calendar]}
 
-      Y aqui tienes las proximas 3 limpiezas:
+      Y aqui tienes las proximas limpiezas:
       #{next_cleanings(cleaner).map { |x| cleaning_text(x) }.join("\n")}
     MESSAGE
   end
