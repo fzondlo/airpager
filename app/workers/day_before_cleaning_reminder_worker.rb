@@ -30,7 +30,7 @@ class DayBeforeCleaningReminderWorker
       Tienes esta limpieza el dia de manana:
 
       #{property[:address]}
-      #{property[:google_maps]}}
+      #{property[:google_maps]}
 
       Nos puedes confirma si puedes asistir?
     MESSAGE

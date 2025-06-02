@@ -11,8 +11,8 @@ Sidekiq::Cron::Job.create(
 
 # Run at 8:30 AM every day
 Sidekiq::Cron::Job.create(
-  name:  'DayBeforeCleaningReminderWorker – 8:30am',
-  klass: 'DayBeforeCleaningReminderWorker',
+  name:  'DayOfCleaningReminderWorker – 8:30am',
+  klass: 'DayOfCleaningReminderWorker',
   cron:  "#{AT_8_30_AM} #{TIME_ZONE}"
 )
 
