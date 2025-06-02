@@ -19,6 +19,16 @@ class DayOfCleaningReminderWorker
     PROPERTIES.find { |p| p[:custom_field_id] == property_id }
   end
 
+  def next_cleanings(cleaner)
+    Task.new.next_task_for_cleaner(
+      cleaner[:custom_field_id]
+    ).first(3)
+  end
+
+  def cleaning_text(task)
+    "- #{task.due_date_readable} - #{task.property_name}"
+  end
+
   def find_cleaner(task)
     CLEANING_STAFF.find { |c| c[:custom_field_id] == task.limpiadora_id }
   end
@@ -27,10 +37,16 @@ class DayOfCleaningReminderWorker
     <<~MESSAGE
       Buenos dias #{cleaner[:name]}!
 
-      Hoy tienes esta limpieza:
+      *Hoy tienes esta limpieza:*
 
       #{property[:address]}
       #{property[:google_maps]}
+
+      Tambien puedes ver tu calendario cumpleto aqui:
+      #{cleaner[:calendar]}
+
+      Y aqui tienes las proximas 3 limpiezas:
+      #{next_cleanings(cleaner).map { |x| cleaning_text(x) }.join("\n")}
     MESSAGE
   end
 end
