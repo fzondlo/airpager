@@ -11,6 +11,7 @@ bundle exec rails test
 
 To view logs:
 heroku logs -n 10000
+heroku logs -n 10000 --ps worker
 
 To deploy:
 git push heroku main
