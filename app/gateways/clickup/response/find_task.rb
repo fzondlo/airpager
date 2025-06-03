@@ -20,7 +20,7 @@ module Clickup
 
       def due_date_readable
         date = Time.at(due_date.to_i / 1000)
-        date.strftime("%-m.%-d.%Y")
+        date.strftime("%-d.%-m.%Y")
       end
 
       def reservation_code
