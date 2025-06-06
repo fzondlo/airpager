@@ -39,8 +39,8 @@ class Task
     params = {
       due_date_gt: tomorrow_start.to_i * 1000,
       due_date_lt: tomorrow_end.to_i * 1000,
-      order_by: "due_date",
-      statuses: ["ACTIVO"],
+      order_by: "start_date",
+      statuses: [ "ACTIVO" ],
       reverse: true
     }
     Clickup.gateway.find_tasks(:limpiezas, params)
@@ -53,8 +53,8 @@ class Task
     params = {
       due_date_gt: today_start.to_i * 1000,
       due_date_lt: today_end.to_i * 1000,
-      order_by: "due_date",
-      statuses: ["ACTIVO"],
+      order_by: "start_date",
+      statuses: [ "ACTIVO" ],
       reverse: true
     }
     Clickup.gateway.find_tasks(:limpiezas, params)
@@ -72,8 +72,8 @@ class Task
     params = {
       custom_fields: custom_fields_filter,
       due_date_gt: now_in_ms,
-      order_by: "due_date",
-      statuses: ["ACTIVO"],
+      order_by: "start_date",
+      statuses: [ "ACTIVO" ],
       reverse: true
     }
     Clickup.gateway.find_tasks(:limpiezas, params)

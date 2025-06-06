@@ -1,6 +1,5 @@
 module ClickupMigrations
   class Base
-
     def up
       force_confirmation
       puts "Running migration up ##{migration_number}..."

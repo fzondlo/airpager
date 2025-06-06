@@ -1,9 +1,8 @@
-require 'uri'
-require 'net/http'
+require "uri"
+require "net/http"
 
 namespace :clickup do
-
-  # bundle exec rake clickup:migration 1
+  # bundle exec rake clickup:migration 1003 up
   # NOTE you must pass in a valid migration number, will not do that here as
   # these actions are destructive. BE CAREFUL!
   desc "Run clickup migrations"
