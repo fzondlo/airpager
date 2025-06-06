@@ -1,6 +1,5 @@
 class Task
   class SyncTasks
-
     include Task::Mapping
 
     def initialize(hospitable_reservations, action_for_reservation, tasks, task_type)
@@ -27,7 +26,7 @@ class Task
     private
 
     def find_task_id(reservation_id)
-      @tasks.find { |t| t.reservation_id == reservation_id }["id"]
+      @tasks.find { |t| t.reservation_id == reservation_id }.id
     end
 
     def cancel_task(reservation)
@@ -49,6 +48,5 @@ class Task
         puts "Error building task: #{e.message}"
       end
     end
-
   end
 end

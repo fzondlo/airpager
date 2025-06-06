@@ -18,7 +18,7 @@ class Task
         status: "Activo", ## For clickup, also Cancelado
         start_date: start_date,
         start_date_time: true,
-        due_date: clickup_timestamp(@reservation[:departure_time]),
+        due_date: due_date,
         due_date_time: true,
         check_required_custom_fields: true,
         custom_fields: build_custom_fields
@@ -33,8 +33,16 @@ class Task
     end
 
     def start_date
+      if @task_type == :limpiezas
+        clickup_timestamp(@reservation[:departure_time])
+      else
+        clickup_timestamp(@reservation[:arrival_time])
+      end
+    end
+
+    def due_date
       @task_type == :limpiezas ?
-        nil : clickup_timestamp(@reservation[:arrival_time])
+        nil : clickup_timestamp(@reservation[:departure_time])
     end
 
     def task_name
