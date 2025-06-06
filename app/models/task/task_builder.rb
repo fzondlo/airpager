@@ -41,8 +41,7 @@ class Task
     end
 
     def due_date
-      @task_type == :limpiezas ?
-        nil : clickup_timestamp(@reservation[:departure_time])
+      clickup_timestamp(@reservation[:departure_time])
     end
 
     def task_name

@@ -1,9 +1,8 @@
 module ClickupMigrations
   class Migration1002 < Base
-
     OFFSET_MS = 18_000_000
     OFFSET_S = OFFSET_MS / 1_000.0
-    #1_746_522_000_000 - 1_746_504_000_000
+    # 1_746_522_000_000 - 1_746_504_000_000
 
     DESCRIPTION = <<~DESCRIPTION
         This will update the following boards: Limpieza and Reservas
@@ -14,13 +13,12 @@ module ClickupMigrations
       DESCRIPTION
 
     def migration_up
-      tasks_to_update.each{|task| update_task(task)}
+      tasks_to_update.each { |task| update_task(task) }
     end
 
     private
 
     def tasks_to_update
-      binding.pry
       # (all_cleanings + all_reservations).map do |task|
       #   task if !!task['start_date']
       # end.compact
@@ -56,11 +54,11 @@ module ClickupMigrations
 
     def update_task(task)
       Clickup.gateway.update_task(
-        task['id'],
+        task["id"],
         { start_date_time: false,
           due_date_time: false,
           start_date: nil,
-          due_date: apply_offset(task['due_date'])
+          due_date: apply_offset(task["due_date"])
         }
       )
       puts "Task ID: #{task['id']} Updated Successfully"
