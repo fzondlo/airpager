@@ -6,9 +6,7 @@ class MessagesRespondedYesterdayWorker
   ADMIN_GROUP = "120363418474521633@g.us"
 
   def perform
-    Waapi.gateway.send_message(
-      message(cleaner, property),
-      ADMIN_GROUP)
+    Waapi.gateway.send_message(message, ADMIN_GROUP)
   end
 
   private
@@ -31,10 +29,7 @@ class MessagesRespondedYesterdayWorker
     messages_by_person.first[0]
   end
 
-  def message(cleaner, property)
-    leader =
-
-
+  def message
     <<~MESSAGE
       Buenos dias equipo :)
 
