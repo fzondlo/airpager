@@ -2,8 +2,7 @@ class MessagesRespondedYesterdayWorker
   include Sidekiq::Worker
   include Task::Mapping
 
-  # ADMIN_GROUP = "120363403470995044@g.us"
-  ADMIN_GROUP = "120363418474521633@g.us"
+  ADMIN_GROUP = "120363403470995044@g.us"
 
   def perform
     Waapi.gateway.send_message(message, ADMIN_GROUP)
@@ -21,7 +20,7 @@ class MessagesRespondedYesterdayWorker
 
   def messages_by_person_text
     messages_by_person.map.with_index do |(name, count), index|
-      "#{index+1}. #{name} - #{count} mensajes"
+      "#{index+1}. #{name} - #{count} mensajes 🎉🎉"
     end.join("\n")
   end
 
@@ -33,11 +32,7 @@ class MessagesRespondedYesterdayWorker
     <<~MESSAGE
       Buenos dias equipo ☕
 
-      El que mas respondio por airbnb ayer fue:
-      🎉🎉 #{winner} 🎉🎉
-
-      Mensajes respondidos ayer por persona:
-
+      *Mensajes respondidos ayer por persona:*
       #{messages_by_person_text}
 
       Gracias a todos que respondieron!
