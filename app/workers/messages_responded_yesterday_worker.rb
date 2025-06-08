@@ -21,7 +21,7 @@ class MessagesRespondedYesterdayWorker
 
   def messages_by_person_text
     messages_by_person.map.with_index do |(name, count), index|
-      "#{index}. #{name} con #{count} mensajes"
+      "#{index+1}. #{name} - #{count} mensajes"
     end.join("\n")
   end
 
@@ -31,15 +31,16 @@ class MessagesRespondedYesterdayWorker
 
   def message
     <<~MESSAGE
-      Buenos dias equipo :)
+      Buenos dias equipo ☕
 
-      El que mas respondio por airbnb ayer fue: #{winner}!
+      El que mas respondio por airbnb ayer fue:
+      🎉🎉 #{winner} 🎉🎉
 
       Mensajes respondidos ayer por persona:
 
       #{messages_by_person_text}
 
-      Gracias a todos que respondieron por su ayuda!
+      Gracias a todos que respondieron!
     MESSAGE
   end
 end
