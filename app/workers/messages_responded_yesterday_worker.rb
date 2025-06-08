@@ -2,7 +2,8 @@ class MessagesRespondedYesterdayWorker
   include Sidekiq::Worker
   include Task::Mapping
 
-  ADMIN_GROUP = "120363403470995044@g.us"
+  # ADMIN_GROUP = "120363403470995044@g.us"
+  ADMIN_GROUP = "120363418474521633@g.us"
 
   def perform
     Waapi.gateway.send_message(message, ADMIN_GROUP)
