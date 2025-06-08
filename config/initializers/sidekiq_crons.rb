@@ -18,8 +18,8 @@ Sidekiq::Cron::Job.create(
 
 # Run at 8:30 AM every day
 Sidekiq::Cron::Job.create(
-  name:  'MessagesRespondedYesterday – 8:30am',
-  klass: 'MessagesRespondedYesterday',
+  name:  'MessagesRespondedYesterdayWorker – 8:30am',
+  klass: 'MessagesRespondedYesterdayWorker',
   cron:  "#{AT_8_30_AM} #{TIME_ZONE}"
 )
 

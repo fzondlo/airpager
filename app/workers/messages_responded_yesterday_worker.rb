@@ -1,4 +1,4 @@
-class MessagesRespondedYesterday
+class MessagesRespondedYesterdayWorker
   include Sidekiq::Worker
   include Task::Mapping
 
