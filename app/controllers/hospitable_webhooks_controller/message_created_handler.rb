@@ -7,24 +7,22 @@ class HospitableWebhooksController
     end
 
     def perform
-      sm = store_message
-
       if message.from_team?
         return resolve_pending_incident
       end
 
       if message.from_guest? && !pending_incident.present?
-        MessageEscalationPath.new(urgency, sm, incident).escalate
+        MessageEscalationPath.new(urgency, stored_message, create_incident).escalate
       end
     end
 
     private
 
     def urgency
-      MessageUrgency.new(message).urgency
+      MessageUrgency.new(stored_message).urgency
     end
 
-    def store_message
+    def stored_message
       Message.create!(
         conversation_id: message.conversation_id,
         reservation_id: message.reservation_id,

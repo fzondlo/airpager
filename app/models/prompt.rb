@@ -46,7 +46,6 @@ class Prompt
       {
         "urgency": "P1"
       }
-
     PROMPT
   end
 
