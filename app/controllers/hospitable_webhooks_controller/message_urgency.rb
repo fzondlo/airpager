@@ -1,5 +1,7 @@
 class HospitableWebhooksController
   class MessageUrgency
+    attr_reader :message
+
     URGENCY = {
       NO_RESPONSE_REQUIRED: :P0,
       P1: :P1,
@@ -28,7 +30,7 @@ class HospitableWebhooksController
     end
 
     def conversation_messages
-      @conversation_messages ||= Message.where(conversation_id: @message.conversation_id, reservation_id: message.reservation_id).order(posted_at: :desc).limit(5).all.reverse
+      @conversation_messages ||= Message.where(conversation_id: message.conversation_id, reservation_id: message.reservation_id).order(posted_at: :desc).limit(5).all.reverse
     end
 
     def urgency_from_chatgpt
