@@ -1,6 +1,12 @@
 class HospitableWebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  HANDLERS = {
+    "message.created" => MessageCreatedHandler,
+    "reservation.created" => ReservationCreatedHandler,
+    "reservation.updated" => ReservationUpdatedHandler
+  }
+
   def create
     if handler.present?
       handler.new(payload).perform
@@ -16,16 +22,6 @@ class HospitableWebhooksController < ApplicationController
   end
 
   def handler
-    @handler ||= handler_for(
-      payload["action"]
-    )
-  end
-
-  def handler_for(action)
-    {
-      "message.created" => MessageCreatedHandler,
-      "reservation.created" => ReservationCreatedHandler,
-      "reservation.updated" => ReservationUpdatedHandler
-    }[action]
+    @handler ||= HANDLERS[payload["action"]]
   end
 end

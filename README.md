@@ -16,8 +16,8 @@ heroku logs -n 10000 --ps worker
 To deploy:
 git push heroku main
 
-To run pry:
+To run Pry:
 bundle exec pry -r ./config/environment
 
-Or Pry on Heroku:
+Or Rails Console on Heroku:
 heroku run rails console

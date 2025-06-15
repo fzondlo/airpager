@@ -1,10 +1,20 @@
 class Task
   module Mapping
+    STAFF_ON_CALL = "frank".freeze
+
+    STAFF_PHONE_NUMBERS = {
+      frank: "573228953728",
+      laura: "573015348775",
+      angie: "573184418412"
+    }.freeze
+
+    ALERT_INCIDENT_GROUP = "120363420427504586@g.us".freeze
+    LOGGING_WA_GROUP = "120363418506911919@g.us".freeze
 
     LIST_NAMES_TO_ID = {
-      reservas: '901311254964',
-      limpiezas: '901311220753'
-    }
+      reservas: "901311254964",
+      limpiezas: "901311220753"
+    }.freeze
 
     UPDATE_ACTIONS = {
       do_nothing: 0,
@@ -112,6 +122,5 @@ class Task
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1633/d675cd727b47417"
       }
     ].freeze
-
   end
 end

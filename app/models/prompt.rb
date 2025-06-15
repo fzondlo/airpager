@@ -2,17 +2,51 @@ class Prompt
   def self.ensure_conversation_needs_reply_from_team(messages)
     <<~PROMPT
       Pretend that you are an Airbnb host and a customer is messaging you through the platform.
-      Below are the past message exchanges.
-      After this last comment, do you think that the host needs to respond?
-      And in this context, in cases of acknowledgment or thank you, it is not necessary to respond.
-      You would want to respond only if the guest has a question that needs to be answered, is unhappy with something, or if there is a similar situation where not responding would not be acceptable from a hospitality point of view.
+      Below you will find the message exchange.
 
-      Please only respond with either "TRUE" (as in, a response is necessary), or "FALSE" when a response is not necessary.
+      I would like you to clasify the urgency of the guest's request as either:
+      P1, P2, P3, or NO_RESPONSE_REQUIRED
 
-      Conversation:
+      Here are example of different each P level. Please use this to as a guide and take your best
+      guess based on the conversation below. If you are not sure, better to err on the side of caution.
+      So for example if it's something that you think is between a P3 and P2, then better to go with
+      a P2.
+
+      P1:
+        - Something urgent that requires an immediate response.
+        - Guest unable to enter the apartment.
+        - Stuck in the elevator.
+        - The access code isn’t working to the buliding or the apartment and the guest is locked out.
+
+      P2:
+        - Power outage.
+        - Water heater is not working.
+
+      P3:
+        - Not an urgent problem, more of a question or a thankyou that should require a "you're welcome"
+        - A request for a late checkout or early checkin
+        - A request for a refund or a discount
+        - A request to schedule a complimentary cleaning
+        - Recommendations for food or places to visit.
+        - When they send passports or identification documents.
+
+      NO_RESPONSE_REQUIRED:
+        - When conversation has come to a natural conclusion.
+        - When the guest is just saying thank you or goodbye and a "you're welcome" is not appropriate
+
+      Here is the Conversation:
       #{messages.map do |message|
         "[#{message[:sender_type]} - #{message[:sender_full_name]}]: #{message[:content]}"
       end.join("\n")}
+
+      Please classify as P1, P2, or P3 using this JSON format and substitute the values.
+      Use the format of the example values below. No markdown,
+      no code fences, no explanation, just this json response object.
+
+      {
+        "urgency": "P1"
+      }
+
     PROMPT
   end
 
