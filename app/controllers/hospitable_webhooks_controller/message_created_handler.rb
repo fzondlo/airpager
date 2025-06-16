@@ -23,7 +23,7 @@ class HospitableWebhooksController
     end
 
     def stored_message
-      Message.create!(
+      @stored_message ||= Message.create!(
         conversation_id: message.conversation_id,
         reservation_id: message.reservation_id,
         sender_role: message.sender_role,
@@ -35,7 +35,7 @@ class HospitableWebhooksController
     end
 
     def create_incident
-      Incident.create!(
+      @create_incident ||= Incident.create!(
         kind: "pending_reply",
         source_details: {
           platform: message.platform,
