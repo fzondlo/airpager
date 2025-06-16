@@ -11,18 +11,18 @@ class HospitableWebhooksController
     end
 
     def escalate
-      # case urgency_level
-      # when :NO_RESPONSE_REQUIRED
-      #   log_to_wappi("No response required for message from #{@message[:sender_full_name]}")
-      # when :P1
-      #   escalate_p1
-      # when :P2
-      #   escalate_p2
-      # when :P3
-      #   escalate_p3
-      # else
-      #   raise "Unknown urgency level: #{urgency_level}"
-      # end
+      case urgency_level
+      when :NO_RESPONSE_REQUIRED
+        log_to_wappi("No response required for message from #{@message[:sender_full_name]}")
+      when :P1
+        escalate_p1
+      when :P2
+        escalate_p2
+      when :P3
+        escalate_p3
+      else
+        raise "Unknown urgency level: #{urgency_level}"
+      end
     end
 
     private

@@ -46,12 +46,14 @@ class HospitableWebhooksController
         response_payload: response.body
       )
 
-      unless response.answer.to_sym.in?(URGENCY.keys)
+      chatgpt_urgency_level = JSON.parse(response.answer).dig("urgency")
+
+      unless chatgpt_urgency_level.to_sym.in?(URGENCY.keys)
         Rails.logger.warn "ChatGPT returned an unknown urgency: #{response.answer}"
         return URGENCY[:P1]
       end
 
-      URGENCY[response.answer.to_sym]
+      URGENCY[chatgpt_urgency_level.to_sym]
     end
 
     def prompt
