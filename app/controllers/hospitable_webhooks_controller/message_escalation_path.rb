@@ -29,12 +29,12 @@ class HospitableWebhooksController
 
     def escalate_p1
       alert_person_on_call
-      # (1..4).each do |i|
-      #   AlertPersonOnCallWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
-      # end
-      # (5..20).each do |i|
-      #   AlertTeamWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
-      # end
+      (1..4).each do |i|
+        AlertPersonOnCallWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
+      end
+      (5..20).each do |i|
+        AlertTeamWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
+      end
       NotifyTeamOfIncidentWorker.perform_in(20.minutes, incident.id)
     end
 
