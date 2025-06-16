@@ -1,6 +1,6 @@
 class Task
   module Mapping
-    STAFF_ON_CALL = "frank".freeze
+    STAFF_ON_CALL = :frank
 
     STAFF_PHONE_NUMBERS = {
       frank: "573228953728",
