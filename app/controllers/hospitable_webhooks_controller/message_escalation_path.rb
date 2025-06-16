@@ -5,13 +5,13 @@ class HospitableWebhooksController
     attr_reader :urgency, :message, :incident
 
     def initialize(urgency_level, message, incident)
-      @urgency = urgency_level
+      @urgency_level = urgency_level
       @message = message
       @incident = incident
     end
 
     def escalate
-      case @urgency
+      case urgency_level
       when :NO_RESPONSE_REQUIRED
         log_to_wappi("No response required for message from #{@message[:sender_full_name]}")
       when :P1
@@ -21,7 +21,7 @@ class HospitableWebhooksController
       when :P3
         escalate_p3
       else
-        raise "Unknown urgency level: #{@urgency}"
+        raise "Unknown urgency level: #{urgency_level}"
       end
     end
 
@@ -30,7 +30,7 @@ class HospitableWebhooksController
     def escalate_p1
       alert_person_on_call
       (1..4).each do |i|
-        AlertPersonOnCallWorker.perform_in(i.minutes, incident.id, message.id)
+        AlertPersonOnCallWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
       end
       (5..20).each do |i|
         AlertTeamWorker.perform_in(i.minutes, incident.id, message.id)
@@ -41,7 +41,7 @@ class HospitableWebhooksController
     def escalate_p2
       alert_person_on_call
       [ 2, 4, 6, 8 ].each do |minutes|
-        AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id)
+        AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
       end
       (10..20).each do |i|
         AlertTeamWorker.perform_in(i.minutes, incident.id, message.id)
@@ -52,30 +52,26 @@ class HospitableWebhooksController
     def escalate_p3
       # TODO: Create after hours response that guests can click on to escalate
       if after_hours?
-        AlertPersonOnCallWorker.perform_at(next_830, incident.id, message.id)
+        AlertPersonOnCallWorker.perform_at(next_830, incident.id, message.id, urgency_level)
         [ 10, 20, 30 ].each do |minutes|
           scheduled_time = next_830 + minutes.minutes
-          AlertPersonOnCallWorker.perform_at(scheduled_time, incident.id, message.id)
+          AlertPersonOnCallWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
         end
       else
         alert_person_on_call
         [ 10, 20, 30 ].each do |minutes|
-          AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id)
+          AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
         end
       end
     end
 
-    # def pager
-    #   NotifyTeamOfIncidentWorker.perform_in(15.minutes, incident.id)
+    # def after_hours_response
+    #   AfterHoursAutoResponderWorker.perform_in(2.minutes, message.reservation_id)
+    #   log_to_wappi("After hours response sent to #{message.sender_full_name}")
     # end
 
-    def after_hours_response
-      AfterHoursAutoResponderWorker.perform_in(2.minutes, message.reservation_id)
-      log_to_wappi("After hours response sent to #{message.sender_full_name}")
-    end
-
     def alert_person_on_call
-      alert = "Tienes un mensaje pendiente de AirBnB con Prioridad #{@urgency} de #{message.sender_full_name}"
+      alert = "Tienes un mensaje pendiente de AirBnB con Prioridad #{urgency_level} de #{message.sender_full_name}"
       Waapi.gateway.send_message(alert, person_on_call)
       log_to_wappi("#{alert} - sent to #{STAFF_ON_CALL}")
     end
