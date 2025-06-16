@@ -40,12 +40,12 @@ class HospitableWebhooksController
 
     def escalate_p2
       alert_person_on_call
-      # [ 2, 4, 6, 8 ].each do |minutes|
-      #   AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
-      # end
-      # (10..20).each do |i|
-      #   AlertTeamWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
-      # end
+      [ 2, 4, 6, 8 ].each do |minutes|
+        AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
+      end
+      (10..20).each do |i|
+        AlertTeamWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
+      end
       NotifyTeamOfIncidentWorker.perform_in(20.minutes, incident.id)
     end
 
@@ -53,23 +53,23 @@ class HospitableWebhooksController
       # TODO: Create after hours response that guests can click on to escalate
       if after_hours?
         AlertPersonOnCallWorker.perform_at(next_830, incident.id, message.id, urgency_level)
-        # [ 10, 20, 30 ].each do |minutes|
-        #   scheduled_time = next_830 + minutes.minutes
-        #   AlertPersonOnCallWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
-        # end
-        # [ 40, 45 ].each do |minutes|
-        #   scheduled_time = next_830 + minutes.minutes
-        #   AlertTeamWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
-        # end
+        [ 10, 20, 30 ].each do |minutes|
+          scheduled_time = next_830 + minutes.minutes
+          AlertPersonOnCallWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
+        end
+        [ 40, 45 ].each do |minutes|
+          scheduled_time = next_830 + minutes.minutes
+          AlertTeamWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
+        end
         NotifyTeamOfIncidentWorker.perform_at(next_830 + 45.minutes, incident.id, urgency_level)
       else
         alert_person_on_call
-        # [ 10, 20, 30 ].each do |minutes|
-        #   AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
-        # end
-        # [ 40, 45 ].each do |minutes|
-        #   AlertTeamWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
-        # end
+        [ 10, 20, 30 ].each do |minutes|
+          AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
+        end
+        [ 40, 45 ].each do |minutes|
+          AlertTeamWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
+        end
         NotifyTeamOfIncidentWorker.perform_in(45.minutes, incident.id, urgency_level)
       end
     end
