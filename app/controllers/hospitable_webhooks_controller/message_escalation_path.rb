@@ -2,7 +2,7 @@ class HospitableWebhooksController
   class MessageEscalationPath
     include Task::Mapping
 
-    attr_reader :urgency, :message, :incident
+    attr_reader :urgency_level, :message, :incident
 
     def initialize(urgency_level, message, incident)
       @urgency_level = urgency_level
