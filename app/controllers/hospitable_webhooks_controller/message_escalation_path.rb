@@ -33,7 +33,7 @@ class HospitableWebhooksController
         AlertPersonOnCallWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
       end
       (5..20).each do |i|
-        AlertTeamWorker.perform_in(i.minutes, incident.id, message.id)
+        AlertTeamWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
       end
       NotifyTeamOfIncidentWorker.perform_in(20.minutes, incident.id)
     end
@@ -44,7 +44,7 @@ class HospitableWebhooksController
         AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
       end
       (10..20).each do |i|
-        AlertTeamWorker.perform_in(i.minutes, incident.id, message.id)
+        AlertTeamWorker.perform_in(i.minutes, incident.id, message.id, urgency_level)
       end
       NotifyTeamOfIncidentWorker.perform_in(20.minutes, incident.id)
     end
@@ -57,11 +57,20 @@ class HospitableWebhooksController
           scheduled_time = next_830 + minutes.minutes
           AlertPersonOnCallWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
         end
+        [ 40, 45 ].each do |minutes|
+          scheduled_time = next_830 + minutes.minutes
+          AlertTeamWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
+        end
+        NotifyTeamOfIncidentWorker.perform_at(next_830 + 45.minutes, incident.id, urgency_level)
       else
         alert_person_on_call
         [ 10, 20, 30 ].each do |minutes|
           AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
         end
+        [ 40, 45 ].each do |minutes|
+          AlertTeamWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
+        end
+        NotifyTeamOfIncidentWorker.perform_in(45.minutes, incident.id, urgency_level)
       end
     end
 
