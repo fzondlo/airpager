@@ -50,11 +50,18 @@ class HospitableWebhooksController
     end
 
     def escalate_p3
+      # TODO: Create after hours response that guests can click on to escalate
       if after_hours?
-        after_hours_response
-        # TODO: Call worker witth message id and urgency level for 8:30am tomorrow
+        AlertPersonOnCallWorker.perform_at(next_830, incident.id, message.id)
+        [ 10, 20, 30 ].each do |minutes|
+          scheduled_time = next_830 + minutes.minutes
+          AlertPersonOnCallWorker.perform_at(scheduled_time, incident.id, message.id)
+        end
       else
         alert_person_on_call
+        [ 10, 20, 30 ].each do |minutes|
+          AlertPersonOnCallWorker.perform_in(minutes.minutes, incident.id, message.id)
+        end
       end
     end
 
@@ -86,7 +93,8 @@ class HospitableWebhooksController
       !current_hour.between?(8, 21)
     end
 
-    def schedule_for_830
+    # I say next because this is used to schedule a job for the next morning at 8:30am
+    def next_830
       now = Time.zone.now
       scheduled_time = now.change(hour: 8, min: 0, sec: 0)
 

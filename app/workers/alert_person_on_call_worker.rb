@@ -2,9 +2,9 @@ class AlertPersonOnCallWorker
   include Sidekiq::Worker
   include Task::Mapping
 
-  def perform(incident_id, message_id)
+  def perform(incident_id, message_id, urgency)
     incident = Incident.find_by(id: incident_id)
-    incident = Incident.find_by(id: message_id)
+    message = Message.find_by(id: message_id)
 
     unless incident.present?
       Sidekiq.logger.warn "Incident #{incident_id} not found. Skipping."
