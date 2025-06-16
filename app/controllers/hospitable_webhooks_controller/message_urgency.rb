@@ -46,7 +46,7 @@ class HospitableWebhooksController
         response_payload: response.body
       )
 
-      unless response.answer.in?(URGENCY.keys.map(&:to_s))
+      unless response.answer.to_sym.in?(URGENCY.keys)
         Rails.logger.warn "ChatGPT returned an unknown urgency: #{response.answer}"
         return URGENCY[:P1]
       end
