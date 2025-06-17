@@ -1,5 +1,15 @@
 require 'csv'
 
+##
+# To run this task on production and download the file generated, run the following command:
+#
+# For messages:
+# $ heroku run bash --app airpager -c 'FILE=$(rake export:messages | tail -n1) && cat "$FILE"' > messages.csv
+#
+# For messages_questions
+# $ heroku run bash --app airpager -c 'FILE=$(rake export:messages_questions | tail -n1) && cat "$FILE"' > messages_questions.csv
+##
+
 namespace :export do
   desc "Export all messages to CSV"
   task messages: :environment do
@@ -35,7 +45,8 @@ namespace :export do
       end
     end
 
-    puts "Done. File saved at: #{file_path}"
+    puts "Done. File saved at:"
+    puts file_path
   end
 
   desc "Export messages that are questions to CSV"
@@ -72,6 +83,7 @@ namespace :export do
       end
     end
 
-    puts "Done. File saved at: #{file_path}"
+    puts "Done. File saved at"
+    puts file_path
   end
 end
