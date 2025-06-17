@@ -8,6 +8,8 @@ require 'csv'
 #
 # For messages_questions
 # $ heroku run 'bash -c "rake export:messages_questions && cat tmp/messages_questions_export.csv"' --app airpager > messages_questions_export.csv
+#
+# Note: The start of the file downloaded has some junk in it from the STDOUT, you'll need to drop it manually.
 ##
 
 namespace :export do
@@ -69,6 +71,8 @@ namespace :export do
       ]
 
       Message.find_each do |message|
+        next unless message.content&.strip&.ends_with?("?")
+
         csv << [
           message.id,
           message.conversation_id,
