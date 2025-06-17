@@ -12,7 +12,7 @@ class HospitableWebhooksController
 
     def escalate
       case urgency_level
-      when :NO_RESPONSE_REQUIRED
+      when :P0
         log_to_wappi("No response required for message from #{@message[:sender_full_name]}")
       when :P1
         escalate_p1
