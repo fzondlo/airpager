@@ -13,7 +13,7 @@ class HospitableWebhooksController
     def escalate
       case urgency_level
       when :P0
-        log_to_wappi("No response required for message from #{@message[:sender_full_name]}: #{@message[:content]}")
+        log_to_wappi("No response required for message from #{message[:sender_full_name]}: #{message[:content]}")
       when :P1
         escalate_p1
       when :P2
@@ -82,7 +82,7 @@ class HospitableWebhooksController
     def alert_person_on_call
       alert = "Tienes un mensaje pendiente de AirBnB con Prioridad #{urgency_level} de #{message.sender_full_name}"
       Waapi.gateway.send_message(alert, person_on_call)
-      log_to_wappi("#{alert} - sent to #{STAFF_ON_CALL}")
+      log_to_wappi("#{alert} - sent to #{STAFF_ON_CALL} for #{message[:sender_full_name]}: #{message[:content]}")
     end
 
     def log_to_wappi(alert)
