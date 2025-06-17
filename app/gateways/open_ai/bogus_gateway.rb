@@ -8,7 +8,7 @@ module OpenAi
 
     def fake_chat_response(prompt)
       if prompt.include?("Pretend that you are an Airbnb host and a customer is messaging you through the platform.")
-        return chat_response("TRUE")
+        return chat_response("{\n  \"urgency\": \"P2\"\n}")
       end
 
       chat_response("You said: #{prompt}")
