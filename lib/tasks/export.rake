@@ -4,10 +4,10 @@ require 'csv'
 # To run this task on production and download the file generated, run the following command:
 #
 # For messages:
-# $ heroku run bash --app airpager -c 'FILE=$(rake export:messages | tail -n1) && cat "$FILE"' > messages.csv
+# $ heroku run 'bash -c "rake export:messages && cat tmp/messages_export.csv"' --app airpager > messages_export.csv
 #
 # For messages_questions
-# $ heroku run bash --app airpager -c 'FILE=$(rake export:messages_questions | tail -n1) && cat "$FILE"' > messages_questions.csv
+# $ heroku run 'bash -c "rake export:messages_questions && cat tmp/messages_questions_export.csv"' --app airpager > messages_questions_export.csv
 ##
 
 namespace :export do
@@ -15,7 +15,7 @@ namespace :export do
   task messages: :environment do
     puts "Exporting messages to CSV..."
 
-    file_path = Rails.root.join("tmp", "messages_export_#{Time.now.to_i}.csv")
+    file_path = Rails.root.join("tmp", "messages_export.csv")
 
     CSV.open(file_path, "wb") do |csv|
       csv << %w[
@@ -45,7 +45,7 @@ namespace :export do
       end
     end
 
-    puts "Done. File saved at:"
+    puts "Done. File saved at #{file_path}"
     puts file_path
   end
 
@@ -53,7 +53,7 @@ namespace :export do
   task messages_questions: :environment do
     puts "Exporting questions to CSV..."
 
-    file_path = Rails.root.join("tmp", "messages_questions_export_#{Time.now.to_i}.csv")
+    file_path = Rails.root.join("tmp", "messages_questions_export.csv")
 
     CSV.open(file_path, "wb") do |csv|
       csv << %w[
@@ -83,7 +83,6 @@ namespace :export do
       end
     end
 
-    puts "Done. File saved at"
-    puts file_path
+    puts "Done. File saved at #{file_path}"
   end
 end
