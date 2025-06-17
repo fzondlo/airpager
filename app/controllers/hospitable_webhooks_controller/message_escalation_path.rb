@@ -61,7 +61,7 @@ class HospitableWebhooksController
           scheduled_time = next_830 + minutes.minutes
           AlertTeamWorker.perform_at(scheduled_time, incident.id, message.id, urgency_level)
         end
-        NotifyTeamOfIncidentWorker.perform_at(next_830 + 45.minutes, incident.id, urgency_level)
+        NotifyTeamOfIncidentWorker.perform_at(next_830 + 45.minutes, incident.id)
       else
         alert_person_on_call
         [ 10, 20, 30 ].each do |minutes|
@@ -70,7 +70,7 @@ class HospitableWebhooksController
         [ 40, 45 ].each do |minutes|
           AlertTeamWorker.perform_in(minutes.minutes, incident.id, message.id, urgency_level)
         end
-        NotifyTeamOfIncidentWorker.perform_in(45.minutes, incident.id, urgency_level)
+        NotifyTeamOfIncidentWorker.perform_in(45.minutes, incident.id)
       end
     end
 
