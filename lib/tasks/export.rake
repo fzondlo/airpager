@@ -9,7 +9,7 @@ require 'csv'
 # For messages_questions
 # $ heroku run 'bash -c "rake export:messages_questions && cat tmp/messages_questions_export.csv"' --app airpager > messages_questions_export.csv
 #
-# Note: The start of the file downloaded has some junk in it from the STDOUT, you'll need to drop it manually.
+# Notes: The start of the file downloaded has some junk in it from the STDOUT, you'll need to drop it manually with an editor like Sublimetext.
 ##
 
 namespace :export do
@@ -48,7 +48,6 @@ namespace :export do
     end
 
     puts "Done. File saved at #{file_path}"
-    puts file_path
   end
 
   desc "Export messages that are questions to CSV"
