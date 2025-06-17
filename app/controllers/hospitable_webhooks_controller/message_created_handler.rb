@@ -7,6 +7,8 @@ class HospitableWebhooksController
     end
 
     def perform
+      stored_message # to store every message
+
       if message.from_team?
         return resolve_pending_incident
       end
