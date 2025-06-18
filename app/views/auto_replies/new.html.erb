@@ -1,0 +1,22 @@
+<div class="max-w-2xl mx-auto py-10 px-6">
+  <h1 class="text-2xl font-bold text-slate-800 mb-6">New Auto Reply</h1>
+
+  <%= render "shared/form_errors", record: @auto_reply %>
+
+  <%= form_tag auto_replies_path, method: :post, class: "space-y-6" do %>
+    <div>
+      <%= label_tag "auto_reply[trigger]", "Trigger", class: "block text-sm font-medium text-slate-700" %>
+      <%= text_field_tag "auto_reply[trigger]", nil, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
+    </div>
+
+    <div>
+      <%= label_tag "auto_reply[reply]", "Reply", class: "block text-sm font-medium text-slate-700" %>
+      <%= text_area_tag "auto_reply[reply]", nil, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <%= link_to "Cancel", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+      <%= submit_tag "Create Auto Reply", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,29 @@
+<div class="max-w-2xl mx-auto py-10 px-6">
+  <h1 class="text-2xl font-bold text-slate-800 mb-6">Auto Reply Details</h1>
+
+  <div class="space-y-4 bg-white shadow rounded-xl p-6 border border-slate-200">
+    <div>
+      <h2 class="text-sm font-semibold text-slate-500 uppercase">Trigger</h2>
+      <p class="text-lg text-slate-800"><%= simple_format(@auto_reply.trigger) %></p>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-semibold text-slate-500 uppercase">Reply</h2>
+      <p class="whitespace-pre-wrap text-slate-700"><%= simple_format(@auto_reply.reply) %></p>
+    </div>
+  </div>
+
+  <div class="mt-8 flex justify-between items-center">
+    <%= link_to "Back", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+
+    <div class="flex gap-3">
+      <%= link_to "Edit", edit_auto_reply_path(@auto_reply),
+                  class: "text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition" %>
+
+      <%= button_to "Delete", auto_reply_path(@auto_reply),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition" %>
+    </div>
+  </div>
+</div>

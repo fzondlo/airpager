@@ -2,6 +2,7 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  resources :auto_replies
   mount Sidekiq::Web => "/sidekiq"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -22,6 +23,8 @@ Rails.application.routes.draw do
 
   resources :waapi_webhooks, only: [ :create ]
   resources :clickup_webhooks, only: [ :create ]
+
+  resources :auto_replies
 
   root "incidents#index"
 end
