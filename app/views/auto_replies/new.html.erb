@@ -6,7 +6,7 @@
   <%= form_tag auto_replies_path, method: :post, class: "space-y-6" do %>
     <div>
       <%= label_tag "auto_reply[trigger]", "Trigger", class: "block text-sm font-medium text-slate-700" %>
-      <%= text_field_tag "auto_reply[trigger]", nil, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
+      <%= text_area_tag "auto_reply[trigger]", nil, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
     <div>

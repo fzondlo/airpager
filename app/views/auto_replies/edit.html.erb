@@ -7,7 +7,7 @@
 
     <div>
       <%= label_tag "auto_reply[trigger]", "Trigger", class: "block text-sm font-medium text-slate-700" %>
-      <%= text_field_tag "auto_reply[trigger]", @auto_reply.trigger, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
+      <%= text_area_tag "auto_reply[trigger]", @auto_reply.trigger, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
     <div>
@@ -19,6 +19,5 @@
       <%= link_to "Cancel", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
       <%= submit_tag "Update Auto Reply", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>
     </div>
-
   <% end %>
 </div>
