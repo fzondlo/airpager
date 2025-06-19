@@ -53,5 +53,22 @@ module OpenAi
 
       Response::Receipt.new(response)
     end
+
+    def auto_reply(system_prompt, user_input, model: "gpt-4.1-nano")
+      body = {
+        model: model,
+        messages: [
+          { role: "system", content: system_prompt },
+          { role: "user", content: user_input }
+        ]
+      }
+
+      response = self.class.post(
+        "/chat/completions",
+        body: body.to_json
+      )
+
+      Response::AutoReply.new(response)
+    end
   end
 end

@@ -1,0 +1,33 @@
+<div class="max-w-2xl mx-auto py-10 px-6">
+  <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Auto Reply Chat</h1>
+
+  <div class="bg-white border border-slate-200 rounded-xl shadow p-6 space-y-6">
+
+    <%= form_tag sandbox_auto_replies_path, method: :get, class: "space-y-4" do %>
+      <div>
+        <%= label_tag :message, "Ask something", class: "block text-sm font-medium text-slate-700" %>
+        <%= text_field_tag :message, nil, placeholder: "Type your message...",
+              class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
+      </div>
+      <div class="text-right">
+        <%= submit_tag "Send", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>
+      </div>
+    <% end %>
+
+    <% if @message.present? %>
+      <div class="space-y-2">
+        <div class="bg-slate-100 rounded-xl px-4 py-3 w-fit max-w-full">
+          <p class="text-sm text-slate-800"><strong>You:</strong> <%= @message %></p>
+        </div>
+
+        <div class="bg-blue-50 rounded-xl px-4 py-3 w-fit max-w-full ml-auto">
+          <p class="text-sm text-slate-700"><strong>Auto Reply:</strong> <%= @bot_reply %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-6 text-center">
+    <%= link_to "Back to List", auto_replies_path, class: "text-sm text-slate-500 hover:underline" %>
+  </div>
+</div>

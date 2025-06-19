@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :clickup_webhooks, only: [ :create ]
 
   resources :auto_replies
+  resources :sandbox_auto_replies, only: [ :index, :create ]
 
   root "incidents#index"
 end
