@@ -1,4 +1,5 @@
 class AutoRepliesController < ApplicationController
+  before_action :set_properties, only: [:new, :edit]
   before_action :set_auto_reply, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -9,6 +10,7 @@ class AutoRepliesController < ApplicationController
   end
 
   def new
+    @properties = Property.order(:slug)
     @auto_reply = AutoReply.new
   end
 
@@ -44,7 +46,11 @@ class AutoRepliesController < ApplicationController
     @auto_reply = AutoReply.find(params[:id])
   end
 
+  def set_properties
+    @properties = Property.all
+  end
+
   def auto_reply_params
-    params.require(:auto_reply).permit(:trigger, :reply)
+    params.require(:auto_reply).permit(:trigger, :reply, property_ids: [])
   end
 end

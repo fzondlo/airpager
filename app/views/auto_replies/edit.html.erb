@@ -15,6 +15,15 @@
       <%= text_area_tag "auto_reply[reply]", @auto_reply.reply, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
+    <div>
+      <%= label_tag "auto_reply[property_ids][]", "Properties", class: "block text-sm font-medium text-slate-700" %>
+      <span class="text-xs">Hint: Use CMD to select multiple properties</span>
+      <%= select_tag "auto_reply[property_ids][]",
+        options_from_collection_for_select(@properties, :id, :name, @auto_reply.property_ids),
+        multiple: true,
+        class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    </div>
+
     <div class="flex items-center justify-between">
       <%= link_to "Cancel", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
       <%= submit_tag "Update Auto Reply", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_18_025913) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_19_033935) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_025913) do
     t.text "reply"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "auto_reply_properties", force: :cascade do |t|
+    t.bigint "auto_reply_id", null: false
+    t.bigint "property_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auto_reply_id", "property_id"], name: "index_auto_reply_properties_on_auto_reply_id_and_property_id", unique: true
+    t.index ["auto_reply_id"], name: "index_auto_reply_properties_on_auto_reply_id"
+    t.index ["property_id"], name: "index_auto_reply_properties_on_property_id"
   end
 
   create_table "incidents", force: :cascade do |t|
@@ -51,4 +61,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_025913) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "properties", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.text "address"
+    t.string "clickup_custom_field_id", null: false
+    t.string "google_maps_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["clickup_custom_field_id"], name: "index_properties_on_clickup_custom_field_id", unique: true
+    t.index ["slug"], name: "index_properties_on_slug", unique: true
+  end
+
+  add_foreign_key "auto_reply_properties", "auto_replies"
+  add_foreign_key "auto_reply_properties", "properties"
 end

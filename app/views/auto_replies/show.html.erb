@@ -11,6 +11,17 @@
       <h2 class="text-sm font-semibold text-slate-500 uppercase">Reply</h2>
       <p class="whitespace-pre-wrap text-slate-700"><%= simple_format(@auto_reply.reply) %></p>
     </div>
+
+    <% if @auto_reply.properties.any? %>
+      <div>
+        <h2 class="text-sm font-semibold text-slate-500 uppercase">Properties</h2>
+        <ul class="list-disc list-inside text-slate-700">
+          <% @auto_reply.properties.order(:slug).each do |property| %>
+          <li><%= property.name %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
   <div class="mt-8 flex justify-between items-center">
