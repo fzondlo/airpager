@@ -7,7 +7,7 @@
       <div>
         <%= label_tag :property_id, "Property", class: "block text-sm font-medium text-slate-700" %>
         <%= select_tag :property_id,
-          options_from_collection_for_select(@properties, :id, :name),
+          options_from_collection_for_select(@properties, :id, :name, @property_id),
           class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
       </div>
 
