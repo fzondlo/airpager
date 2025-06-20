@@ -16,6 +16,8 @@
     </div>
 
     <div>
+      <%# Ensures the property_ids param is sent even if no properties are selected, allowing associations to be cleared %>
+      <%= hidden_field_tag "auto_reply[property_ids][]", "" %>
       <%= label_tag "auto_reply[property_ids][]", "Properties", class: "block text-sm font-medium text-slate-700" %>
       <span class="text-xs">Hint: Use CMD to select multiple properties</span>
       <%= select_tag "auto_reply[property_ids][]",
