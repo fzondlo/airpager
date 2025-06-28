@@ -1,4 +1,6 @@
 class IncidentsController < ApplicationController
+  include BasicAuthProtected
+
   def index
     @analytics_query = IncidentAnalyticsQuery.new(analytics_params)
 

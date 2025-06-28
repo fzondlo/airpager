@@ -1,4 +1,6 @@
 class SandboxAutoRepliesController < ApplicationController
+  include BasicAuthProtected
+
   before_action :set_properties
   before_action :set_message
   before_action :set_property_id

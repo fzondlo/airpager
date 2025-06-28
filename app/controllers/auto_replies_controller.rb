@@ -1,4 +1,6 @@
 class AutoRepliesController < ApplicationController
+  include BasicAuthProtected
+
   before_action :set_properties, only: [:new, :edit]
   before_action :set_auto_reply, only: [:show, :edit, :update, :destroy]
 
