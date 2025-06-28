@@ -27,4 +27,6 @@ heroku run rails console
 Install docker mac
 https://docs.docker.com/desktop/setup/install/mac-install/
 
-Then rbenv, ruby version specified in repo, bundle
+Then rbenv, ruby version specified in repo
+Copy over ~/config/master.key
+then bundle and enjoy!
