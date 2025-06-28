@@ -120,6 +120,12 @@ class Task
         custom_field_id: "6c6f2821-0331-448a-a91c-c86cb91eb058",
         whatsapp_group: "120363418846854020@g.us",
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-1633/d675cd727b47417"
+      },
+      {
+        name: "Alba",
+        custom_field_id: "7ab1261c-1eca-4fe6-bb40-995b8ffcca54",
+        whatsapp_group: "120363399851749931@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-2013/e75f7e8fb6593fe"
       }
     ].freeze
   end
