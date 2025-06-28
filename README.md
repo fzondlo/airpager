@@ -21,3 +21,10 @@ bundle exec pry -r ./config/environment
 
 Or Rails Console on Heroku:
 heroku run rails console
+
+
+# To Setup:
+Install docker mac
+https://docs.docker.com/desktop/setup/install/mac-install/
+
+Then rbenv, ruby version specified in repo, bundle
