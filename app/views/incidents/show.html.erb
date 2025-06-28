@@ -30,5 +30,27 @@
       <h2 class="text-lg text-black font-semibold mb-1">How to resolve?</h2>
       <p class="text-gray-700"><%= @incident.how_to_resolve %></p>
     </div>
+
+    <% if @incident.kind.conversation_messages.any? %>
+      <div>
+        <h2 class="text-lg text-black font-semibold mb-4">Conversation Messages</h2>
+
+        <div class="space-y-4">
+          <% @incident.kind.conversation_messages.each do |message| %>
+            <div class="flex <%= message.from_guest? ? 'justify-start' : 'justify-end' %>">
+              <div class="<%= message.from_guest? ? 'bg-gray-100 text-gray-900' : 'bg-blue-600 text-white' %> max-w-md p-3 rounded-xl shadow">
+                <div class="text-sm font-semibold mb-1">
+                  <%= message.sender_full_name %>
+                  <span class="text-xs text-gray-400 ml-2"><%= message.posted_at.strftime('%b %d, %H:%M') %></span>
+                </div>
+                <div class="text-sm whitespace-pre-line">
+                  <%= message.content %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

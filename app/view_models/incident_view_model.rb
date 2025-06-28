@@ -51,6 +51,10 @@ class BaseIncidentKind
   def how_to_resolve
     "No resolution instructions available."
   end
+
+  def conversation_messages
+    []
+  end
 end
 
 class PendingReplyIncidentKind < BaseIncidentKind
@@ -66,15 +70,27 @@ class PendingReplyIncidentKind < BaseIncidentKind
     "You can solve this incident by accessing the conversation and reply to the customer: #{conversation_link}".html_safe
   end
 
+  def conversation_messages
+    @conversation_messages ||= MessageViewModel.wrap(
+      Message.where(conversation_id: conversation_id, reservation_id: reservation_id).order(posted_at: :desc).limit(5).all.reverse
+    )
+  end
+
+  def conversation_id
+    model.source_details["conversation_id"]
+  end
+
+  def reservation_id
+    model.source_details["reservation_id"]
+  end
+
   private
 
   def conversation_link
-    url = hospitable_thread_url(model.source_details["conversation_id"])
-
-    "<a href='#{url}' class='text-blue-500'>#{url}</a>"
+    "<a href='#{hospitable_thread_url}' class='text-blue-500'>#{hospitable_thread_url}</a>"
   end
 
-  def hospitable_thread_url(conversation_id)
+  def hospitable_thread_url
     "https://my.hospitable.com/inbox/thread/" << conversation_id
   end
 end
