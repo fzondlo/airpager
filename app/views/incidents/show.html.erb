@@ -35,7 +35,7 @@
       <div>
         <h2 class="text-lg text-black font-semibold mb-4">Conversation Messages</h2>
 
-        <div class="space-y-4">
+        <div class="space-y-4 max-w-[600px]">
           <% @incident.kind.conversation_messages.each do |message| %>
             <div class="flex <%= message.from_guest? ? 'justify-start' : 'justify-end' %>">
               <div class="<%= message.from_guest? ? 'bg-gray-100 text-gray-900' : 'bg-blue-600 text-white' %> max-w-md p-3 rounded-xl shadow">
