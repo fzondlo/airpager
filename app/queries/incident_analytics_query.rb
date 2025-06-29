@@ -1,8 +1,9 @@
 class IncidentAnalyticsQuery
-  attr_reader :period, :resolved_by, :start_date, :end_date
+  attr_reader :period, :urgency_level, :resolved_by, :start_date, :end_date
 
   def initialize(params = {})
     @resolved_by = params[:resolved_by]
+    @urgency_level = params[:urgency_level]
     @period = params[:period]
     @start_date = params[:start_date]
     @end_date = params[:end_date]
@@ -12,6 +13,7 @@ class IncidentAnalyticsQuery
     scope = Incident.resolved
     scope = filter_by_resolved_by(scope)
     scope = filter_by_period(scope)
+    scope = filter_by_urgency_level(scope)
     scope
   end
 
@@ -40,6 +42,12 @@ class IncidentAnalyticsQuery
     return scope unless resolved_by.present?
 
     scope.where(resolved_by: resolved_by)
+  end
+
+  def filter_by_urgency_level(scope)
+    return scope unless urgency_level.present?
+
+    scope.where(urgency_level: urgency_level)
   end
 
   def filter_by_period(scope)

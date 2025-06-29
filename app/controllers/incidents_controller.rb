@@ -12,6 +12,7 @@ class IncidentsController < ApplicationController
     end
 
     @resolved_by_options = Incident.resolved.select(:resolved_by).distinct.pluck(:resolved_by)
+    @urgency_level_options = ["P0", "P1", "P2", "P3"]
 
     @incidents = IncidentViewModel.wrap(Incident.order(created_at: :desc).all)
   end
@@ -23,6 +24,6 @@ class IncidentsController < ApplicationController
   private
 
   def analytics_params
-    params.fetch(:analytics, {}).permit(:period, :resolved_by, :start_date, :end_date)
+    params.fetch(:analytics, {}).permit(:period, :resolved_by, :start_date, :end_date, :urgency_level)
   end
 end
