@@ -16,6 +16,14 @@ class IncidentViewModel < ApplicationViewModel
     "bg-green-200 text-green-800" if model.status == "resolved"
   end
 
+  def badge_urgency_level_class
+    return "bg-gray-200 text-gray-800" if model.urgency_level == "P0"
+    return "bg-red-300 text-red-800" if model.urgency_level == "P1"
+    return "bg-orange-200 text-orange-800" if model.urgency_level == "P2"
+    "bg-yellow-200 text-yellow-800" if model.urgency_level == "P3"
+  end
+
+
   def created_at_display_time
     model.created_at.in_time_zone("America/Bogota").strftime("%B %-d, %Y – %H:%M")
   end

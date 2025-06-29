@@ -13,12 +13,16 @@ class HospitableWebhooksController
     def escalate
       case urgency_level
       when :P0
+        incident.update(urgency_level: 'P0')
         log_to_wappi("No response required for message from #{message[:sender_full_name]}: #{message[:content]}")
       when :P1
+        incident.update(urgency_level: 'P1')
         escalate_p1
       when :P2
+        incident.update(urgency_level: 'P2')
         escalate_p2
       when :P3
+        incident.update(urgency_level: 'P3')
         escalate_p3
       else
         raise "Unknown urgency level: #{urgency_level}"
