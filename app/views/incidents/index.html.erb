@@ -179,14 +179,14 @@
                 <td class="px-6 py-4"><%= incident.id %></td>
                 <td>
                   <% if incident.urgency_level.present? %>
-                    <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_status_class %> bg-gray-200 rounded-full"><%= incident.urgency_level %></span>
+                    <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_urgency_level_class %> bg-gray-200 rounded-full"><%= incident.urgency_level %></span>
                   <% else %>
                     -
                   <% end %>
                 </td>
                 <td class=""><%= incident.description %></td>
                 <td class="">
-                  <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_urgency_level_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
+                  <span class="inline-block px-3 py-1 text-xs font-semibold <%= incident.badge_status_class %> bg-gray-200 rounded-full"><%= incident.status %></span>
                 </td>
                 <td class=""><%= incident.created_at_display_time %></td>
                 <td class=""><%= incident.alerted_at_display_time || '–' %></td>
