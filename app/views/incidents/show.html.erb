@@ -14,6 +14,13 @@
         <%= @incident.badge_status_class %>">
         <%= @incident.status.capitalize %>
       </span>
+
+      <% if @incident.urgency_level.present? %>
+        <span class="inline-block px-3 py-1 text-xs font-medium rounded-full
+          <%= @incident.badge_urgency_level_class %>">
+          <%= @incident.urgency_level %>
+        </span>
+      <% end %>
     </div>
 
     <div>
