@@ -13,10 +13,10 @@
         <h3 class="text-base font-semibold text-gray-800 mb-4">
           👤 Filter by person
         </h3>
-        <%= link_to "Everyone", incidents_path(request.query_parameters.deep_merge(analytics: { resolved_by: nil })), class: "px-4 py-1.5 rounded-full text-xs font-medium leading-tight #{params.dig(:analytics, :resolved_by).blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+        <%= link_to "Everyone", incidents_path(request.query_parameters.deep_merge(search: { resolved_by: nil })), class: "px-4 py-1.5 rounded-full text-xs font-medium leading-tight #{params.dig(:search, :resolved_by).blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
 
         <% @resolved_by_options.each do |name| %>
-          <%= link_to name, incidents_path(request.query_parameters.deep_merge(analytics: { resolved_by: name })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:analytics, :resolved_by) == name ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+          <%= link_to name, incidents_path(request.query_parameters.deep_merge(search: { resolved_by: name })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:search, :resolved_by) == name ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
         <% end %>
       </div>
 
@@ -27,10 +27,10 @@
         <h3 class="text-base font-semibold text-gray-800 mb-4">
           🚨 Filter by urgency level
         </h3>
-        <%= link_to "All", incidents_path(request.query_parameters.deep_merge(analytics: { urgency_level: nil })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:analytics, :urgency_level).blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+        <%= link_to "All", incidents_path(request.query_parameters.deep_merge(search: { urgency_level: nil })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:search, :urgency_level).blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
 
         <% @urgency_level_options.each do |urgency_level| %>
-          <%= link_to urgency_level == "P0" ? "P0 (No response needed)" : urgency_level, incidents_path(request.query_parameters.deep_merge(analytics: { urgency_level: urgency_level })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:analytics, :urgency_level) == urgency_level ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+          <%= link_to urgency_level == "P0" ? "P0 (No response needed)" : urgency_level, incidents_path(request.query_parameters.deep_merge(search: { urgency_level: urgency_level })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:search, :urgency_level) == urgency_level ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
         <% end %>
       </div>
 
@@ -45,7 +45,7 @@
           Showing results for period:
           <span class="font-bold text-blue-600">
             <%=
-              case params.dig(:analytics, :period)
+              case params.dig(:search, :period)
               when "today"
                 "Today"
               when "yesterday"
@@ -57,10 +57,10 @@
               when "all_time"
                 "All Time"
               when "custom"
-                if params.dig(:analytics, :start_date).present? && !params.dig(:analytics, :end_date).present?
-                  "Custom (" << params.dig(:analytics, :start_date).to_date.strftime("%B %-d, %Y") << ")"
-                elsif params.dig(:analytics, :start_date).present? && params.dig(:analytics, :end_date).present?
-                  "Custom (" << params.dig(:analytics, :start_date).to_date.strftime("%B %-d, %Y") <<  " - " << params.dig(:analytics, :end_date).to_date.strftime("%B %-d, %Y") << ")"
+                if params.dig(:search, :start_date).present? && !params.dig(:search, :end_date).present?
+                  "Custom (" << params.dig(:search, :start_date).to_date.strftime("%B %-d, %Y") << ")"
+                elsif params.dig(:search, :start_date).present? && params.dig(:search, :end_date).present?
+                  "Custom (" << params.dig(:search, :start_date).to_date.strftime("%B %-d, %Y") <<  " - " << params.dig(:search, :end_date).to_date.strftime("%B %-d, %Y") << ")"
                 else
                   "Custom"
                 end
@@ -71,9 +71,9 @@
           </span>
         </p>
 
-        <%= form_with url: incidents_path, method: :get, local: true, scope: :analytics, class: "flex flex-wrap items-end gap-4" do |form| %>
-          <%# Preserve current analytics params %>
-          <% (params[:analytics] || {}).without(:start_date, :end_date, :period).each do |key, value| %>
+        <%= form_with url: incidents_path, method: :get, local: true, scope: :search, class: "flex flex-wrap items-end gap-4" do |form| %>
+          <%# Preserve current search params %>
+          <% (params[:search] || {}).without(:start_date, :end_date, :period).each do |key, value| %>
             <%= form.hidden_field key, value: value %>
           <% end %>
 
@@ -82,13 +82,13 @@
           <!-- Start Date Field -->
           <div class="flex flex-col">
             <%= form.label :start_date, "From", class: "text-sm text-gray-600 mb-1" %>
-            <%= form.date_field :start_date, value: params.dig(:analytics, :start_date), required: true, class: "rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+            <%= form.date_field :start_date, value: params.dig(:search, :start_date), required: true, class: "rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
           </div>
 
           <!-- End Date Field -->
           <div class="flex flex-col">
             <%= form.label :end_date, "To (optional)", class: "text-sm text-gray-600 mb-1" %>
-            <%= form.date_field :end_date, value: params.dig(:analytics, :end_date), class: "rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+            <%= form.date_field :end_date, value: params.dig(:search, :end_date), class: "rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
           </div>
 
           <!-- Apply Button -->
@@ -107,11 +107,11 @@
       <!-- Preset Date Range Links -->
       <div class="mt-4 text-xs text-gray-700 mt-4 bg-gray-100 p-4 rounded-lg shadow-sm">
         <span>Quick filters:</span>
-        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'today', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Today</a>
-        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'yesterday', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Yesterday</a>
-        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'this_week', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Week</a>
-        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'this_month', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Month</a>
-        <a href="<%= incidents_path(request.query_parameters.deep_merge(analytics: { period: 'all_time', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">All Time</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(search: { period: 'today', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Today</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(search: { period: 'yesterday', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">Yesterday</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(search: { period: 'this_week', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Week</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(search: { period: 'this_month', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">This Month</a>
+        <a href="<%= incidents_path(request.query_parameters.deep_merge(search: { period: 'all_time', start_date: nil, end_date: nil })) %>" class="text-blue-600 hover:underline ml-2">All Time</a>
       </div>
 
     </div>
@@ -211,10 +211,10 @@
         </table>
       </div>
     <% else %>
-      <div class="border border-gray-200 rounded-xl bg-white p-8 flex flex-col items-center text-center shadow-sm">
+      <div class="mt-6 border border-gray-200 rounded-xl bg-white p-8 flex flex-col items-center text-center shadow-sm">
         <div class="text-5xl mb-4">✅</div>
-        <h2 class="text-xl font-semibold text-gray-800">No incidents yet</h2>
-        <p class="mt-2 text-gray-500">Everything is running smoothly. When something comes up, it’ll appear here.</p>
+        <h2 class="text-xl font-semibold text-gray-800">No incidents found</h2>
+        <p class="mt-2 text-gray-500">Try adjusting the filters — we couldn’t find any incidents that match your search.</p>
       </div>
     <% end %>
   </section>
