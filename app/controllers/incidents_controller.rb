@@ -11,7 +11,7 @@ class IncidentsController < ApplicationController
       )
     end
 
-    @resolved_by_options = Incident.resolved.select(:resolved_by).distinct.pluck(:resolved_by)
+    @resolved_by_options = Incident.resolved.select(:resolved_by).distinct.pluck(:resolved_by).sort
     @urgency_level_options = ["P0", "P1", "P2", "P3"]
 
     @incidents = IncidentViewModel.wrap(Incident.order(created_at: :desc).all)
