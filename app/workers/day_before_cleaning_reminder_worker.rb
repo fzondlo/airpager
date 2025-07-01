@@ -2,6 +2,8 @@ class DayBeforeCleaningReminderWorker
   include Sidekiq::Worker
   include Task::Mapping
 
+  sidekiq_options retry: false
+
   def perform
     Task.new.cleanings_tomorrow.each do |task|
       cleaner = find_cleaner(task)
