@@ -126,6 +126,12 @@ class Task
         custom_field_id: "7ab1261c-1eca-4fe6-bb40-995b8ffcca54",
         whatsapp_group: "120363399851749931@g.us",
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-2013/e75f7e8fb6593fe"
+      },
+      {
+        name: "Riaza",
+        custom_field_id: "79a5abdb-1c34-4a57-847f-ef43520f5dae",
+        whatsapp_group: "120363401428184525@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-2033/c1085fd3590b720"
       }
     ].freeze
   end
