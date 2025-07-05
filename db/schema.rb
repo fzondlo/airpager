@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_202831) do
     t.datetime "updated_at", null: false
     t.string "resolved_by"
     t.string "urgency_level"
+    t.index ["urgency_level"], name: "index_incidents_on_urgency_level"
   end
 
   create_table "messages", force: :cascade do |t|
