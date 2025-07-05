@@ -10,7 +10,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "pending_reply", incident.kind
     assert_equal "test-convo-123", incident.source_details["conversation_id"]
     assert_equal "test-reservation-123", incident.source_details["reservation_id"]
-
+    assert incident.urgency_level.present?
 
     # Test when no reservation_id
     assert_difference -> { Incident.count }, 1 do
@@ -21,6 +21,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "pending_reply", incident.kind
     assert_equal "test-convo-124", incident.source_details["conversation_id"]
     assert_equal "", incident.source_details["reservation_id"]
+    assert incident.urgency_level.present?
   end
 
   def test_messages_received_are_stored
