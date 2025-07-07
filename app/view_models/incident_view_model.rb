@@ -80,9 +80,9 @@ class PendingReplyIncidentKind < BaseIncidentKind
 
   def conversation_messages
     @conversation_messages ||= begin
-      scope = Message.where(conversation_id: conversation_id, reservation_id: reservation_id)
-                     .where("posted_at >= ?", model.created_at)
-
+      scope = Message.where(conversation_id: conversation_id)
+      scope = scope.where(reservation_id: reservation_id) if reservation_id.present?
+      scope = scope.where("posted_at >= ?", model.created_at)
       scope = scope.where("posted_at <= ?", model.resolved_at) if model.resolved_at.present?
 
       MessageViewModel.wrap(scope.order(posted_at: :asc).all)
