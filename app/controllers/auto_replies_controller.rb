@@ -5,7 +5,7 @@ class AutoRepliesController < ApplicationController
   before_action :set_auto_reply, only: [:show, :edit, :update, :destroy]
 
   def index
-    @auto_replies = AutoReply.all.order(created_at: :desc)
+    @auto_replies = AutoReplyViewModel.wrap(AutoReply.all.order(created_at: :desc))
   end
 
   def show

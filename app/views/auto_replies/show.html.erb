@@ -3,25 +3,27 @@
 
   <div class="space-y-4 bg-white shadow rounded-xl p-6 border border-slate-200">
     <div>
-      <h2 class="text-sm font-semibold text-slate-500 uppercase">Trigger</h2>
+      <h2 class="text-sm font-semibold text-slate-500 uppercase">Question</h2>
       <p class="text-lg text-slate-800"><%= simple_format(@auto_reply.trigger) %></p>
     </div>
 
     <div>
-      <h2 class="text-sm font-semibold text-slate-500 uppercase">Reply</h2>
+      <h2 class="text-sm font-semibold text-slate-500 uppercase">Answer</h2>
       <p class="whitespace-pre-wrap text-slate-700"><%= simple_format(@auto_reply.reply) %></p>
     </div>
 
-    <% if @auto_reply.properties.any? %>
-      <div>
-        <h2 class="text-sm font-semibold text-slate-500 uppercase">Properties</h2>
+    <div>
+      <h2 class="text-sm font-semibold text-slate-500 uppercase">Properties</h2>
+      <% if @auto_reply.properties.any? %>
         <ul class="list-disc list-inside text-slate-700">
           <% @auto_reply.properties.order(:slug).each do |property| %>
           <li><%= property.name %></li>
           <% end %>
         </ul>
-      </div>
-    <% end %>
+      <% else %>
+        No properties selected
+      <% end %>
+    </div>
   </div>
 
   <div class="mt-8 flex justify-between items-center">

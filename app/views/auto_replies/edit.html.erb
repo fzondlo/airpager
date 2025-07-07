@@ -6,12 +6,12 @@
   <%= form_tag auto_reply_path(@auto_reply), method: :patch, class: "space-y-6" do %>
 
     <div>
-      <%= label_tag "auto_reply[trigger]", "Trigger", class: "block text-sm font-medium text-slate-700" %>
+      <%= label_tag "auto_reply[trigger]", "Question", class: "block text-sm font-medium text-slate-700" %>
       <%= text_area_tag "auto_reply[trigger]", @auto_reply.trigger, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
     <div>
-      <%= label_tag "auto_reply[reply]", "Reply", class: "block text-sm font-medium text-slate-700" %>
+      <%= label_tag "auto_reply[reply]", "Answer", class: "block text-sm font-medium text-slate-700" %>
       <%= text_area_tag "auto_reply[reply]", @auto_reply.reply, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
