@@ -8,6 +8,19 @@ class Task
       angie: "573184418412"
     }.freeze
 
+    WHATSAPP_FACTURA_GROUPS = {
+      "120363401619194668@g.us" => "test",
+      "120363411632014678@g.us" => "Edgar",
+      "120363340520465060@g.us" => "Airbnb",
+      "120363400773310990@g.us" => "Angela",
+      "120363401730486616@g.us" => "Sara",
+      "120363357444254649@g.us" => "Alan",
+      "120363402028991064@g.us" => "Yuri",
+      "120363400288549445@g.us" => "2024",
+      "120363418474521633@g.us" => "2025",
+      "120363417179080666@g.us" => "Bertha"
+    }.freeze
+
     ALERT_INCIDENT_GROUP = "120363420427504586@g.us".freeze
     LOGGING_WA_GROUP = "120363418506911919@g.us".freeze
 
@@ -126,6 +139,12 @@ class Task
         custom_field_id: "7ab1261c-1eca-4fe6-bb40-995b8ffcca54",
         whatsapp_group: "120363399851749931@g.us",
         calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-2013/e75f7e8fb6593fe"
+      },
+      {
+        name: "Riaza",
+        custom_field_id: "79a5abdb-1c34-4a57-847f-ef43520f5dae",
+        whatsapp_group: "120363401428184525@g.us",
+        calendar: "https://sharing.clickup.com/9013289879/b/h/8ckqrwq-2033/c1085fd3590b720"
       }
     ].freeze
   end
