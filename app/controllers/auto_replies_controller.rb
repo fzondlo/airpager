@@ -5,7 +5,10 @@ class AutoRepliesController < ApplicationController
   before_action :set_auto_reply, only: [:show, :edit, :update, :destroy]
 
   def index
-    @auto_replies = AutoReplyViewModel.wrap(AutoReply.all.order(created_at: :desc))
+    @auto_reply_query = AutoReplyQuery.new(search_params)
+
+    @auto_replies = AutoReplyViewModel.wrap(@auto_reply_query.scoped)
+    @property_options = Property.distinct.select(:name, :id).order(:name)
   end
 
   def show
@@ -54,5 +57,9 @@ class AutoRepliesController < ApplicationController
 
   def auto_reply_params
     params.require(:auto_reply).permit(:trigger, :reply, property_ids: [])
+  end
+
+  def search_params
+    @search_params ||= params.fetch(:search, {}).permit(:property_id)
   end
 end
