@@ -24,6 +24,18 @@ module Hospitable
       Response::FindReservations.new(response)
     end
 
+    def find_reservation(reservation_id)
+      response = self.class.get("/v2/reservations/#{reservation_id}?include=properties")
+      Response::FindReservation.new(response)
+    end
+
+    def find_inquiry(inquiry_id)
+      response = self.class.get("/v2/inquiries/#{inquiry_id}?include=properties")
+      Response::FindInquiry.new(response)
+    end
+
+    # TODO: Clickup segment? What is that? I don't think we are using it anyway
+    # Might be good to delete.
     def find_reservation_messages(reservation_id)
       response = self.class.get("/v2/clickup/#{reservation_id}/messages")
       Response::FindReservationMessages.new(response)
