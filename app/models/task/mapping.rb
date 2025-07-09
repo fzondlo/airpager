@@ -52,52 +52,61 @@ class Task
     }.freeze
 
     # Property Name IDs for Custom Field Ids
+    # To know all available hospitable_ids, run in a rails console `Hospitable.gateway.find_properties.properties`
     PROPERTIES = [
       {
         name: "Murano 901",
         custom_field_id: "d2aee479-0c39-4d28-bab5-88b708b0c0fd",
+        hospitable_id: "12c5c137-34c4-4264-82bb-2b6f20f568d4", #  {:id=>"12c5c137-34c4-4264-82bb-2b6f20f568d4", :name=>"Murano"},
         address: "Cra 75# 40-23\nApt 901\nEdificio Murano San Martin\nLaureles- Estadio\nMedellín, Antioquia",
         google_maps: "https://maps.app.goo.gl/qdiDviTmWWZVL1Mr6"
       },
       {
         name: "Lauret 902",
         custom_field_id: "79168bfd-d7cf-462a-a236-5908ac9ba7bc",
+        hospitable_id: "2dffe1d8-960d-4b16-8521-7f3628d9ec33", # {:id=>"2dffe1d8-960d-4b16-8521-7f3628d9ec33", :name=>"Lauret"},
         address: "CRA 72 #39A - 22,\nApt 902\nEdificio Lauret\nLaureles - Estadio\nMedellín, Antioquia",
         google_maps: "https://maps.app.goo.gl/aVHVDAGXNM24Ew7YA"
       },
       {
         name: "Nebraska 1101",
         custom_field_id: "9813fd45-359f-4d37-ba6b-c3084e5a9b8c",
+        hospitable_id: "9e22f207-2a63-4ba7-9a73-d3aca1da76d4", # {:id=>"9e22f207-2a63-4ba7-9a73-d3aca1da76d4", :name=>"Nebraska"}
         address: "Cq. 73A #34a-60\nApt 1101\nEdificio Nebraska\nLaureles - Estadio, Medellín, Laureles",
         google_maps: "https://maps.app.goo.gl/7ntzytCkPDMChEN8A"
       },
       {
         name: "Santa Ana 1001 (Alan)",
         custom_field_id: "d56ba8d9-49e0-4ed2-bbd5-ca9526ac1703",
+        hospitable_id: "d6961b70-ce54-4d87-8023-266a0b182a80", # {:id=>"d6961b70-ce54-4d87-8023-266a0b182a80", :name=>"Alans Apartment"}
         address: "Cq. 73A #39-68\nApt 1001 \nEdificio Santa Ana \nLaureles Medellín",
         google_maps: "https://maps.app.goo.gl/fj9EyXgMoUGREz5GA"
       },
       {
         name: "Santa Maria 302 (Yuri)",
         custom_field_id: "be78e5a4-9623-4b0d-a61a-2e18d405b207",
+        hospitable_id: "c70d62ee-6121-4db4-9fb0-c8afd8c7e12e", # {:id=>"c70d62ee-6121-4db4-9fb0-c8afd8c7e12e", :name=>"Modern Urban Apt w Designer"}
         address: "Cra 77 #42-19\nApt 302\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
         google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
       },
       {
         name: "Santa Maria 402 (Yuri)",
         custom_field_id: "0a52529d-51f1-48f6-b95c-5482a61cf34a",
+        hospitable_id: "45703d3e-5761-457c-956b-af7d9ddb0988", #  {:id=>"45703d3e-5761-457c-956b-af7d9ddb0988", :name=>"Santa Maria 402 Yuri"},
         address: "Cra 77 #42-19\nApt 402\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
         google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
       },
       {
         name: "Santa Maria 201 (Edgar)",
         custom_field_id: "0e3d2f39-f889-499c-869f-effd75bff830",
+        hospitable_id: "dc751389-06f9-43be-be80-c6cae8a4b51c", #  {:id=>"dc751389-06f9-43be-be80-c6cae8a4b51c", :name=>"Edgar 201"}
         address: "Cra 77 #42-19\nApt 201\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
         google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
       },
       {
         name: "Castelmola 301 (Angela)",
         custom_field_id: "f90e68e4-ef41-45af-9652-ba2d0de46268",
+        hospitable_id: "d7ac381c-e62b-482f-95ce-05c3301cfa04", # {:id=>"d7ac381c-e62b-482f-95ce-05c3301cfa04", :name=>"Angelas Apartment"}
         address: "Tv. 37 #63b-33, \nApt 301\nEdificio Castelmola\nLaureles - Estadio, Medellín",
         google_maps: "https://maps.app.goo.gl/Vu13uFrpPZoCgjjp7"
       }

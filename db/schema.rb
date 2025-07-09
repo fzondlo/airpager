@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_29_202831) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_09_123218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,7 +41,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_202831) do
     t.datetime "updated_at", null: false
     t.string "resolved_by"
     t.string "urgency_level"
-    t.index ["urgency_level"], name: "index_incidents_on_urgency_level"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -72,6 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_202831) do
     t.string "google_maps_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "hospitable_id"
     t.index ["clickup_custom_field_id"], name: "index_properties_on_clickup_custom_field_id", unique: true
     t.index ["slug"], name: "index_properties_on_slug", unique: true
   end

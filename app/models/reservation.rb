@@ -1,5 +1,4 @@
 class Reservation
-
   def self.all
     Hospitable.gateway.find_reservations(property_ids).reservations
   end
