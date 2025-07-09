@@ -15,7 +15,7 @@ class HospitableWebhooksController
     end
 
     def urgency
-      return URGENCY[:P3] if is_lead? || likely_image?
+      return URGENCY[:NO_RESPONSE_REQUIRED] if is_lead? || likely_image?
       urgency_from_chatgpt
     end
 
