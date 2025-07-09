@@ -9,8 +9,6 @@ class HospitableWebhooksController
     def resolve
       return unless hospitable_property_id.present?
 
-      binding.pry
-
       Property.find_by(hospitable_id: hospitable_property_id)&.id
     end
 
@@ -26,12 +24,20 @@ class HospitableWebhooksController
 
     def response
       @response ||= begin
-        if message.from_reservation?
+        if from_reservation?(message)
           Hospitable.gateway.find_reservation(message.reservation_id)
-        elsif message.from_inquiry?
+        elsif from_inquiry?(message)
           Hospitable.gateway.find_inquiry(message.conversation_id)
         end
       end
+    end
+
+    def from_reservation?(message)
+      message.reservation_id.present?
+    end
+
+    def from_inquiry?(message)
+      !from_reservation?(message) && message.conversation_id.present?
     end
   end
 end
