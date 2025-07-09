@@ -14,6 +14,14 @@ class HospitableWebhooksController
       end
 
       if message.from_guest? && !pending_incident.present?
+        # Chatgpt look at that comments:
+        # Need to find the property id somehow
+        # When it's a reservation (message.from_reservation?) (Hospitable.gateway.find_reservation(message.reservation_id))
+        # When it's an inquiry (message.from_inquiry?) (Hospitable.gateway.find_inquiry(message.inquiry_id)
+        # BotReply.new(message: "", property_id: "").log_reply
+
+        # PropertyIdentifier.new(MessageViewModel.wrap(stored_message)).resolve
+
         MessageEscalationPath.new(urgency, stored_message, create_incident).escalate
       end
     end
