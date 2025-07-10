@@ -14,12 +14,11 @@ class HospitableWebhooksController
       end
 
       if message.from_guest? && !pending_incident.present?
-        # TODO
-        #
-        # Connect the dots: resolve property and then use bot reply
-        #
-        # PropertyIdentifier.new(stored_message).resolve
-        # BotReply.new(message: "", property_id: "").log_reply
+        property_id = PropertyIdentifier.new(stored_message).resolve
+
+        if property_id.present?
+          BotReply.new(message: stored_message.content, property_id: property_id).log_reply
+        end
 
         MessageEscalationPath.new(urgency, stored_message, create_incident).escalate
       end

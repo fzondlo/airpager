@@ -23,7 +23,7 @@ class BotReply
   end
 
   def log_reply
-    # Waapi.gateway.send_message("[BotReply] [Message: #{@message}] [Reply: #{reply}]", LOGGING_WA_GROUP)
+    Waapi.gateway.send_message("[BotReply] [Message: #{@message.content}] [Reply: #{reply}]", LOGGING_WA_GROUP)
   end
 
   private
