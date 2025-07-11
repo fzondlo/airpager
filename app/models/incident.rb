@@ -1,4 +1,6 @@
 class Incident < ApplicationRecord
+  has_many :incident_escalations, dependent: :destroy
+
   validates :kind, presence: true
 
   scope :pending, -> { where(resolved_at: nil) }
