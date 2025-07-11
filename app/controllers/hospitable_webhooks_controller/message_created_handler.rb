@@ -7,6 +7,7 @@ class HospitableWebhooksController
     end
 
     def perform
+      # TODO: Rename store_message! and defined a method def stored_message; @stored_message end
       stored_message # to store every message
 
       if message.from_team?
@@ -23,8 +24,9 @@ class HospitableWebhooksController
 
     private
 
+    # TODO: Rename urgency_level
     def urgency
-      MessageUrgency.new(stored_message).urgency
+      MessageUrgency.new(stored_message).urgency # TODO: Rename .urgency_level
     end
 
     def stored_message
