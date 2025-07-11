@@ -6,16 +6,25 @@
   <%= form_tag auto_replies_path, method: :post, class: "space-y-6" do %>
     <div>
       <%= label_tag "auto_reply[trigger]", "Question", class: "block text-sm font-medium text-slate-700" %>
+      <p class="text-sm text-slate-500 mt-1">
+        This is what the guest might ask. For example: "Do you have a hair dryer?"
+      </p>
       <%= text_area_tag "auto_reply[trigger]", nil, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
     <div>
       <%= label_tag "auto_reply[reply]", "Answer", class: "block text-sm font-medium text-slate-700" %>
+      <p class="text-sm text-slate-500 mt-1">
+        This is the message that will be automatically sent in response. Be clear and friendly.
+      </p>
       <%= text_area_tag "auto_reply[reply]", nil, rows: 5, class: "mt-1 block w-full rounded-lg border border-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2", required: true %>
     </div>
 
     <fieldset>
       <legend class="block text-sm font-medium text-slate-700">Properties</legend>
+      <p class="text-sm text-slate-500 mt-1 mb-2">
+        Select the properties where this auto reply should be active. If none are selected, it won’t be used.
+      </p>
       <div class="mt-2 space-y-2">
         <% @properties.each do |property| %>
           <label class="flex items-center space-x-2 text-sm text-slate-700">
