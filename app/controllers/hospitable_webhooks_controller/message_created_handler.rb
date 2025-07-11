@@ -14,8 +14,10 @@ class HospitableWebhooksController
       end
 
       if message.from_guest? && !pending_incident.present?
+        incident = create_incident
+
         log_suggested_reply
-        MessageEscalationPath.new(urgency, stored_message, create_incident).escalate
+        MessageEscalationPath.new(urgency, stored_message, incident).escalate
       end
     end
 
