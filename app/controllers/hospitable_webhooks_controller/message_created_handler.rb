@@ -14,12 +14,7 @@ class HospitableWebhooksController
       end
 
       if message.from_guest? && !pending_incident.present?
-        property_id = PropertyIdentifier.new(stored_message).resolve
-
-        if property_id.present?
-          BotReply.new(message: stored_message, property_id: property_id).log_reply
-        end
-
+        log_suggested_reply
         MessageEscalationPath.new(urgency, stored_message, create_incident).escalate
       end
     end
@@ -40,6 +35,19 @@ class HospitableWebhooksController
         content: message.body,
         posted_at: message.created_at
       )
+    end
+
+    def log_suggested_reply
+      property_id = PropertyIdentifier.new(stored_message).resolve
+
+      return unless property_id.present?
+
+      bot_reply = BotReply.new(
+        message: stored_message.content,
+        property_id: property_id
+      )
+
+      bot_reply.log_reply(sender: stored_message.sender_full_name)
     end
 
     def create_incident

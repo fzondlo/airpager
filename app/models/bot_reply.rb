@@ -13,7 +13,7 @@ class BotReply
   def reply
     return FALLBACK_MESSAGE if auto_replies.empty?
 
-    response = OpenAi.gateway.auto_reply(prompt, message.content)
+    response = OpenAi.gateway.auto_reply(prompt, message)
 
     if response.success?
       response.answer
@@ -22,11 +22,11 @@ class BotReply
     end
   end
 
-  def log_reply
+  def log_reply(sender:)
     body =
       <<~MESSAGE
-        New Message from #{message.sender_full_name}:
-        #{message.content}
+        New Message from #{sender}:
+        #{message}
 
         -----
 
