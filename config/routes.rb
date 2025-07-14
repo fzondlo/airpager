@@ -27,5 +27,7 @@ Rails.application.routes.draw do
   resources :auto_replies
   resources :sandbox_auto_replies, only: [ :index, :create ]
 
+  get 'escalate/:token', to: 'incident_escalations#show', as: :incident_escalation
+
   root "incidents#index"
 end

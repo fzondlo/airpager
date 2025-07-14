@@ -21,6 +21,7 @@ class HospitableWebhooksController
 
     private
 
+    # TODO: Rename inquiry?
     def is_lead?
       message.reservation_id.nil?
     end

@@ -56,6 +56,11 @@ class HospitableWebhooksController
     def escalate_p3
       # TODO: Create after hours response that guests can click on to escalate
       if after_hours?
+
+        if has_reservation?
+          send_escalation_link_to_guest
+        end
+
         AlertPersonOnCallWorker.perform_at(next_830, incident.id, message.id, urgency_level)
         [ 10, 20, 30 ].each do |minutes|
           scheduled_time = next_830 + minutes.minutes
@@ -89,6 +94,36 @@ class HospitableWebhooksController
       log_to_wappi("#{alert} - sent to #{STAFF_ON_CALL} for #{message[:sender_full_name]}: #{message[:content]}")
     end
 
+    def send_escalation_link_to_guest
+      incident_escalation = IncidentEscalation.create(
+        incident: incident,
+        expires_at: next_830
+      )
+
+      debug_details = <<~TEXT
+        ---`
+
+        Debug details
+
+        Incident url: #{Rails.application.routes.url_helpers.incident_url(incident.id, host: "airpager-d950d85687e0.herokuapp.com")}
+      TEXT
+
+      escalation_message = <<~TEXT
+        Hi there, thanks for reaching out!
+
+        You’ve caught us outside of our usual hours, but no worries — we will be back at 8:30 am.
+
+        We appreciate your patience and look forward to helping you soon.
+
+        If this is an urgent request click this link: #{Rails.application.routes.url_helpers.incident_escalation_url("the-token", host: "airpager-d950d85687e0.herokuapp.com")}
+
+        #{debug_details}
+      TEXT
+
+      # Just logging for the time being
+      log_to_wappi(escalation_message)
+    end
+
     def log_to_wappi(alert)
       Waapi.gateway.send_message(alert, LOGGING_WA_GROUP)
     end
@@ -100,6 +135,10 @@ class HospitableWebhooksController
     def after_hours?
       current_hour = Time.zone.now.hour
       !current_hour.between?(8, 21)
+    end
+
+    def has_reservation?
+      message.reservation_id.present?
     end
 
     # I say next because this is used to schedule a job for the next morning at 8:30am

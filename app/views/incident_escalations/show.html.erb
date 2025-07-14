@@ -1,0 +1,22 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+  <div class="max-w-md w-full bg-white shadow-xl rounded-2xl p-8 text-center space-y-6">
+    <% if @status == :expired %>
+      <h1 class="text-2xl font-semibold text-red-600">Link Expired</h1>
+      <p class="text-gray-600">This escalation link is no longer valid.</p>
+    <% end %>
+
+    <% if @status == :already_triggered %>
+      <h1 class="text-2xl font-semibold text-yellow-600">Already Escalated</h1>
+      <p class="text-gray-600">
+        This escalation link has already been escalated. Our team will respond shortly.
+      </p>
+    <% end %>
+
+    <% if @status == :triggered_now %>
+      <h1 class="text-2xl font-semibold text-green-600">Team Notified</h1>
+      <p class="text-gray-600">
+        Our team has been notified. We will respond shortly.
+      </p>
+    <% end %>
+  </div>
+</div>

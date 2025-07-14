@@ -89,6 +89,58 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def test_sends_escalation_message_for_p3_after_hours
+    travel_to Time.zone.parse("22:00:00") do
+      fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P3\"\n}", body: {})
+      ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
+
+      # Allow any other send_message calls to go through without raising errors
+      Waapi::BogusGateway.any_instance.stubs(:send_message)
+
+      # Assert that the escalation message is sent exactly once
+      Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
+        message.include?("If this is an urgent request click this link")
+      end.once
+
+      post_hospitable_message_webhook
+    end
+  end
+
+  def test_does_not_send_escalation_message_during_business_hours
+    travel_to Time.zone.parse("13:00:00") do
+      fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P3\"\n}", body: {})
+      ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
+
+      # Allow any other send_message calls to go through without raising errors
+      Waapi::BogusGateway.any_instance.stubs(:send_message)
+
+      # Assert that the escalation message is never sent
+      Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
+        message.include?("If this is an urgent request click this link")
+      end.never
+
+      post_hospitable_message_webhook
+    end
+  end
+
+  def test_does_not_send_escalation_message_for_non_p3
+    travel_to Time.zone.parse("22:00:00") do
+      fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P1\"\n}", body: {})
+      ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
+
+      # Allow any other send_message calls to go through without raising errors
+      Waapi::BogusGateway.any_instance.stubs(:send_message)
+
+      # Assert that the escalation message is never sent
+      Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
+        message.include?("If this is an urgent request click this link")
+      end.never
+
+      post_hospitable_message_webhook
+    end
+  end
+
+
   # TODO: Re-implement this test when we start to respond again
   # def test_auto_responder_worker_is_enqueued_after_hours
   #   travel_to Time.zone.parse("22:00:00") do
