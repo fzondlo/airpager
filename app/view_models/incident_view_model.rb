@@ -59,10 +59,6 @@ class BaseIncidentKind
   def how_to_resolve
     "No resolution instructions available."
   end
-
-  def conversation_messages
-    []
-  end
 end
 
 class PendingReplyIncidentKind < BaseIncidentKind
@@ -78,23 +74,36 @@ class PendingReplyIncidentKind < BaseIncidentKind
     "You can solve this incident by accessing the conversation and reply to the customer: #{conversation_link}".html_safe
   end
 
-  def conversation_messages
-    @conversation_messages ||= begin
-      scope = Message.where(conversation_id: conversation_id)
-      scope = scope.where(reservation_id: reservation_id) if reservation_id.present?
-      scope = scope.where("created_at >= ?", model.created_at - 5.seconds)
-      scope = scope.where("created_at <= ?", model.resolved_at) if model.resolved_at.present?
-
-      MessageViewModel.wrap(scope.order(posted_at: :asc).all)
-    end
-  end
-
   def conversation_id
     model.source_details["conversation_id"]
   end
 
   def reservation_id
     model.source_details["reservation_id"]
+  end
+
+  def message_trigger_id
+    model.source_details["message_trigger_id"]
+  end
+
+  def message_resolution_id
+    model.source_details["message_resolution_id"]
+  end
+
+  def message_trigger
+    return unless message_trigger_id.present?
+
+    @message_trigger ||= MessageViewModel.wrap(
+      Message.find(message_trigger_id)
+    )
+  end
+
+  def message_resolution
+    return unless message_resolution_id.present?
+
+    @message_resolution ||= MessageViewModel.wrap(
+      Message.find(message_resolution_id)
+    )
   end
 
   private
