@@ -44,7 +44,7 @@
 
           <% if @incident.kind.message_trigger.present? %>
             <div class="flex justify-start">
-              <div class="'bg-gray-100 text-gray-900 max-w-md p-3 rounded-xl shadow">
+              <div class="bg-gray-100 text-gray-900 max-w-md p-3 rounded-xl shadow">
                 <div class="text-sm font-semibold mb-1">
                   Trigger – <%= @incident.kind.message_trigger.sender_full_name %>
                   <span class="text-xs text-gray-400 ml-2"><%= @incident.kind.message_trigger.posted_at.strftime('%b %d, %H:%M') %></span>
