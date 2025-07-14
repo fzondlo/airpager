@@ -8,7 +8,7 @@
       <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
         🔥 Incident <%= @incident.id %>
       </h1>
-      <%# Status badge %>
+
       <span class="inline-block px-3 py-1 text-xs font-medium rounded-full
         <%= @incident.badge_status_class %>">
         <%= @incident.status.capitalize %>
@@ -37,26 +37,40 @@
       <p class="text-gray-700"><%= @incident.how_to_resolve %></p>
     </div>
 
-    <% if @incident.kind.conversation_messages.any? %>
-      <div>
-        <h2 class="text-lg text-black font-semibold mb-4">Conversation Messages</h2>
+    <% if @incident.kind.is_a?(PendingReplyIncidentKind) %>
+      <% if @incident.kind.message_trigger.present? || @incident.kind.message_resolution.present? %>
+        <div>
+          <h2 class="text-lg text-black font-semibold mb-4">Messages</h2>
 
-        <div class="space-y-4 max-w-[600px]">
-          <% @incident.kind.conversation_messages.each do |message| %>
-            <div class="flex <%= message.from_guest? ? 'justify-start' : 'justify-end' %>">
-              <div class="<%= message.from_guest? ? 'bg-gray-100 text-gray-900' : 'bg-blue-600 text-white' %> max-w-md p-3 rounded-xl shadow">
+          <% if @incident.kind.message_trigger.present? %>
+            <div class="flex justify-start">
+              <div class="'bg-gray-100 text-gray-900 max-w-md p-3 rounded-xl shadow">
                 <div class="text-sm font-semibold mb-1">
-                  <%= message.sender_full_name %>
-                  <span class="text-xs text-gray-400 ml-2"><%= message.posted_at.strftime('%b %d, %H:%M') %></span>
+                  Trigger – <%= @incident.kind.message_trigger.sender_full_name %>
+                  <span class="text-xs text-gray-400 ml-2"><%= @incident.kind.message_trigger.posted_at.strftime('%b %d, %H:%M') %></span>
                 </div>
                 <div class="text-sm whitespace-pre-line">
-                  <%= message.content %>
+                  <%= @incident.kind.message_trigger.content %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @incident.kind.message_resolution.present? %>
+            <div class="flex justify-end">
+              <div class="bg-blue-600 text-white max-w-md p-3 rounded-xl shadow">
+                <div class="text-sm font-semibold mb-1">
+                  Resolution – <%= @incident.kind.message_resolution.sender_full_name %>
+                  <span class="text-xs text-gray-400 ml-2"><%= @incident.kind.message_resolution.posted_at.strftime('%b %d, %H:%M') %></span>
+                </div>
+                <div class="text-sm whitespace-pre-line">
+                  <%= @incident.kind.message.content %>
                 </div>
               </div>
             </div>
           <% end %>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

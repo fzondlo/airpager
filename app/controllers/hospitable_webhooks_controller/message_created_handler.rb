@@ -64,7 +64,7 @@ class HospitableWebhooksController
           platform: message.platform,
           conversation_id: message.conversation_id,
           reservation_id: message.reservation_id,
-          message_trigger_id: stored_message.id,
+          message_trigger_id: stored_message.id
         }
       )
     end
