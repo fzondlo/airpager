@@ -8,15 +8,15 @@ class IncidentEscalation < ApplicationRecord
   scope :expired, -> { where("expires_at <= ?", Time.current) }
   scope :triggered, -> { where.not(triggered_at: nil) }
 
+  def expired?
+    (expires_at.present? && (Time.current > expires_at))
+  end
+
   def triggered?
     triggered_at.present?
   end
 
   def triggered!
     update(triggered_at: Time.current)
-  end
-
-  def expired?
-    triggered? || (expires_at.present? && (Time.current > expires_at))
   end
 end
