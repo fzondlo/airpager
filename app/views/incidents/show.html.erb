@@ -64,7 +64,7 @@
                   <span class="text-xs text-gray-400 ml-2"><%= @incident.kind.message_resolution.posted_at.strftime('%b %d, %H:%M') %></span>
                 </div>
                 <div class="text-sm whitespace-pre-line">
-                  <%= @incident.kind.message.content %>
+                  <%= @incident.kind.message_resolution.content %>
                 </div>
               </div>
             </div>
