@@ -38,6 +38,5 @@ module Airpager
     #     puts "WaAPI registered w/ webhook #{local_ngrok_url}"
     #   end
     # end
-
   end
 end

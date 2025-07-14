@@ -1,8 +1,8 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
-require 'sidekiq/testing'
-require 'mocha/minitest'
+require "sidekiq/testing"
+require "mocha/minitest"
 
 Sidekiq::Testing.fake!
 
@@ -19,11 +19,10 @@ module ActiveSupport
 
     def create_incident(overrides = {})
       Incident.create!({
-        kind: 'pending_reply'
+        kind: "pending_reply"
       }.merge(overrides))
     end
 
     # Add more helper methods to be used by all tests here...
   end
 end
-

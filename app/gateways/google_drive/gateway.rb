@@ -5,7 +5,6 @@ FACTURAS_FILE_ID = "1qw1veC6s3-7XjeKXnY8G8bSbMU2jCeta"
 
 module GoogleDrive
   class Gateway
-
     def initialize(auth_json)
       @auth_json = auth_json
     end
@@ -21,7 +20,7 @@ module GoogleDrive
       file_metadata = {
         name: name,
         mime_type: "image/jpeg",
-        parents: [FACTURAS_FILE_ID]  # omit or [] to drop in root
+        parents: [ FACTURAS_FILE_ID ]  # omit or [] to drop in root
       }
       uploaded = drive.create_file(
         file_metadata,

@@ -41,7 +41,7 @@ module OpenAi
               "image_url": { "url": "data:image/jpeg;base64,#{receipt}" }
             }
           ]
-        }]
+        } ]
       }
       response = self.class.post(
         "/chat/completions",

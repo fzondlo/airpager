@@ -1,5 +1,5 @@
-require 'openssl'
-require 'base64'
+require "openssl"
+require "base64"
 
 module Whatsapp
   class Gateway
@@ -19,7 +19,7 @@ module Whatsapp
     def decrypt_image(blob, media_key_b64)
       # 1) Read blob (ciphertext + 10-byte HMAC tag)
       ciphertext = blob[0...-10]
-      mac_tag    = blob[-10,10]
+      mac_tag    = blob[-10, 10]
 
       # 2) Decode keys from Base64
       media_key = Base64.decode64(media_key_b64)
@@ -33,19 +33,19 @@ module Whatsapp
         length: 112
       )
 
-      iv         = key_material[0,16]
-      cipher_key = key_material[16,32]
-      mac_key    = key_material[48,32]
+      iv         = key_material[0, 16]
+      cipher_key = key_material[16, 32]
+      mac_key    = key_material[48, 32]
       # (the remaining 32 bytes are the “refKey,” unused here)
 
       # 4) Verify HMAC-SHA256(macKey, IV∥ciphertext) truncated to 10 bytes
-      computed_tag = OpenSSL::HMAC.digest('SHA256', mac_key, iv + ciphertext)[0,10]
+      computed_tag = OpenSSL::HMAC.digest("SHA256", mac_key, iv + ciphertext)[0, 10]
       unless OpenSSL.fixed_length_secure_compare(computed_tag, mac_tag)
         abort "❌ HMAC mismatch – aborting"
       end
 
       # 5) AES-256-CBC decrypt
-      cipher = OpenSSL::Cipher.new('aes-256-cbc')
+      cipher = OpenSSL::Cipher.new("aes-256-cbc")
       cipher.decrypt
       cipher.key = cipher_key
       cipher.iv  = iv
@@ -58,11 +58,11 @@ module Whatsapp
       # end
 
       # 7) Write out as .jpg or .webp
-      hdr = plaintext.byteslice(0,4)
-      ext = if hdr.start_with?("\xFF\xD8".b) then 'jpg'
-            elsif hdr == 'RIFF'.b      then 'webp'
-            else 'bin'
-            end
+      hdr = plaintext.byteslice(0, 4)
+      ext = if hdr.start_with?("\xFF\xD8".b) then "jpg"
+      elsif hdr == "RIFF".b      then "webp"
+      else "bin"
+      end
 
       { extension: ext, blob: plaintext }
     end

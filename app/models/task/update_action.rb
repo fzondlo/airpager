@@ -34,7 +34,7 @@ class Task
       res[:status] == "cancelled" && task_reservation_status[res[:id]] == "activo"
     end
 
-    #returns hash of reservation ids with status either "activo" or "cancelado"
+    # returns hash of reservation ids with status either "activo" or "cancelado"
     def task_reservation_status
       @task_reservation_status ||= @tasks.each_with_object({}) do |task, memo|
         memo[task.reservation_id] = task.status

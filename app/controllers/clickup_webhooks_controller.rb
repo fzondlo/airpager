@@ -27,6 +27,4 @@ class ClickupWebhooksController < ApplicationController
       staff[:custom_field_id] == payload[:history_items][0][:after]
     end
   end
-
 end
-

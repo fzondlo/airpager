@@ -10,5 +10,4 @@ module Whatsapp
   end
 
   private
-
 end

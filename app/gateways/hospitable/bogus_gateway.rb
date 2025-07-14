@@ -11,11 +11,11 @@ module Hospitable
     def find_reservation(reservation_id)
       body =
         if reservation_id == "res-123"
-          { "data" => { "properties" => [{ "id" => "prop-123" }] } }
+          { "data" => { "properties" => [ { "id" => "prop-123" } ] } }
         elsif reservation_id == "res-fail"
           nil
         else
-          { "data" => { "properties" => [{ "id" => "unknown" }] } }
+          { "data" => { "properties" => [ { "id" => "unknown" } ] } }
         end
 
       response = body.nil? ? RawResponse.new({}, 500) : RawResponse.new(body)

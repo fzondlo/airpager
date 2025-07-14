@@ -15,7 +15,7 @@ class IncidentsController < ApplicationController
     @incidents = IncidentViewModel.wrap(@incident_query.scoped)
 
     @resolved_by_options = Incident.resolved.select(:resolved_by).distinct.pluck(:resolved_by).sort
-    @urgency_level_options = ["P0", "P1", "P2", "P3"]
+    @urgency_level_options = [ "P0", "P1", "P2", "P3" ]
   end
 
   def show

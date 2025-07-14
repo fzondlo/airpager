@@ -1,7 +1,6 @@
 module Hospitable
   class Response
     class FindReservations < Response
-
       # MAKE SURE THESE MATCH THA NAMES IN Task:Mapping!
       APARTMENT_NAME_MAPPINGS = {
         "Murano" => "Murano 901",
@@ -30,13 +29,13 @@ module Hospitable
             nights: res[:nights],
             property: {
               id: property[:id],
-              name: APARTMENT_NAME_MAPPINGS[property[:name]],
+              name: APARTMENT_NAME_MAPPINGS[property[:name]]
             },
             guest: {
               first_name: guest[:first_name],
               last_name: guest[:last_name],
               language: guest[:language],
-              location: guest[:location],
+              location: guest[:location]
             }
           }
         end.compact
@@ -44,5 +43,3 @@ module Hospitable
     end
   end
 end
-
-

@@ -1,7 +1,6 @@
 module Hospitable
   class Response
     class FindProperties < Response
-
       def properties
         body["data"].map do |property_data|
           prop = property_data.with_indifferent_access

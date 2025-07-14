@@ -15,7 +15,7 @@ module Hospitable
     end
 
     def find_reservations(property_ids)
-      properties_query = property_ids.join('&properties[]=')
+      properties_query = property_ids.join("&properties[]=")
       response = self.class.get(
         "/v2/reservations/?properties[]=#{properties_query}&include=guest,properties" +
         "&start_date=#{2.month.ago.to_date}&end_date=#{2.month.from_now.to_date}" +

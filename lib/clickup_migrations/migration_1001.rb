@@ -1,6 +1,5 @@
 module ClickupMigrations
   class Migration1001 < Base
-
     DESCRIPTION = <<~DESCRIPTION
         This will update the following boards: Limpieza and Reservas
 
@@ -9,7 +8,7 @@ module ClickupMigrations
       DESCRIPTION
 
     def migration_up
-      task_ids_to_update.each{|id| update_task(id)}
+      task_ids_to_update.each { |id| update_task(id) }
     end
 
     private
@@ -18,7 +17,7 @@ module ClickupMigrations
       # unfortunately this check does nothing as the Api does not return the
       # start_date_time or due_date_time, so we are flying blind
       all_cleanings.map do |task|
-        task['id'] if task['start_date_time'] != true
+        task["id"] if task["start_date_time"] != true
       end.compact
     end
 

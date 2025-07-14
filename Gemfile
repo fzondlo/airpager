@@ -29,10 +29,10 @@ gem "httparty"
 # Google drive integration
 gem "googleauth"
 gem "google-apis-drive_v3"
-gem 'google-apis-sheets_v4', '~> 0.6.0'
+gem "google-apis-sheets_v4", "~> 0.6.0"
 
 # Processing jobs
-gem 'sidekiq'
+gem "sidekiq"
 gem "sidekiq-cron"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
@@ -54,7 +54,7 @@ gem "thruster", require: false
 gem "pry"
 
 group :production do
-  gem 'datadog', require: 'datadog/auto_instrument'
+  gem "datadog", require: "datadog/auto_instrument"
 end
 
 group :development, :test do

@@ -47,14 +47,14 @@ class IncidentEscalationTest < ActiveSupport::TestCase
       IncidentEscalation.create!(incident: @incident),
       IncidentEscalation.create!(incident: @incident, expires_at: 30.minutes.from_now),
       IncidentEscalation.create!(incident: @incident, expires_at: 1.hour.from_now),
-      IncidentEscalation.create!(incident: @incident, expires_at: nil, triggered_at: nil),
+      IncidentEscalation.create!(incident: @incident, expires_at: nil, triggered_at: nil)
     ]
 
     inactive_escalations = [
       IncidentEscalation.create!(incident: @incident, expires_at: 1.hour.ago),
       IncidentEscalation.create!(incident: @incident, expires_at: 2.hours.ago),
       IncidentEscalation.create!(incident: @incident, expires_at: nil, triggered_at: 1.hour.ago),
-      IncidentEscalation.create!(incident: @incident, expires_at: 1.hour.from_now, triggered_at: 1.hour.ago),
+      IncidentEscalation.create!(incident: @incident, expires_at: 1.hour.from_now, triggered_at: 1.hour.ago)
     ]
 
     active_ids = IncidentEscalation.active.pluck(:id)
@@ -65,13 +65,13 @@ class IncidentEscalationTest < ActiveSupport::TestCase
   def test_expired_scope_includes_only_expired_escalations
     expired_escalations = [
       IncidentEscalation.create!(incident: @incident, expires_at: 1.hour.ago),
-      IncidentEscalation.create!(incident: @incident, expires_at: 2.hours.ago),
+      IncidentEscalation.create!(incident: @incident, expires_at: 2.hours.ago)
     ]
 
     not_expired_escalations = [
       @escalation,
       IncidentEscalation.create!(incident: @incident, expires_at: 1.hour.from_now),
-      IncidentEscalation.create!(incident: @incident, expires_at: nil),
+      IncidentEscalation.create!(incident: @incident, expires_at: nil)
     ]
 
     expired_ids = IncidentEscalation.expired.pluck(:id)
@@ -82,13 +82,13 @@ class IncidentEscalationTest < ActiveSupport::TestCase
   def test_triggered_scope_includes_only_triggered_escalations
     triggered_escalations = [
       IncidentEscalation.create!(incident: @incident, triggered_at: 1.hour.ago),
-      IncidentEscalation.create!(incident: @incident, triggered_at: Time.current),
+      IncidentEscalation.create!(incident: @incident, triggered_at: Time.current)
     ]
 
     not_triggered_escalations = [
       @escalation,
       IncidentEscalation.create!(incident: @incident, triggered_at: nil),
-      IncidentEscalation.create!(incident: @incident),
+      IncidentEscalation.create!(incident: @incident)
     ]
 
     triggered_ids = IncidentEscalation.triggered.pluck(:id)

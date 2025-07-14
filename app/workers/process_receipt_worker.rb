@@ -24,7 +24,7 @@ class ProcessReceiptWorker
       receipt.description,
       image_url
     ]
-    value_range  = Google::Apis::SheetsV4::ValueRange.new(values: [row])
+    value_range  = Google::Apis::SheetsV4::ValueRange.new(values: [ row ])
 
     begin
       GoogleDrive.gateway.sheets.append_spreadsheet_value(

@@ -31,4 +31,3 @@ module OpenAi
     end
   end
 end
-

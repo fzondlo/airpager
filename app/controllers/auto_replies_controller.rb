@@ -1,8 +1,8 @@
 class AutoRepliesController < ApplicationController
   include BasicAuthProtected
 
-  before_action :set_properties, only: [:new, :edit]
-  before_action :set_auto_reply, only: [:show, :edit, :update, :destroy]
+  before_action :set_properties, only: [ :new, :edit ]
+  before_action :set_auto_reply, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @auto_reply_query = AutoReplyQuery.new(search_params)

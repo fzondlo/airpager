@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 ##
 # To run this task on production and download the file generated, run the following command:
@@ -37,12 +37,12 @@ namespace :export do
           message.id,
           message.conversation_id,
           message.reservation_id,
-          message.sender_role.presence || 'guest',
+          message.sender_role.presence || "guest",
           message.sender_full_name,
           message.content,
           message.posted_at,
           message.created_at,
-          message.updated_at,
+          message.updated_at
         ]
       end
     end
@@ -76,12 +76,12 @@ namespace :export do
           message.id,
           message.conversation_id,
           message.reservation_id,
-          message.sender_role.presence || 'guest',
+          message.sender_role.presence || "guest",
           message.sender_full_name,
           message.content,
           message.posted_at,
           message.created_at,
-          message.updated_at,
+          message.updated_at
         ]
       end
     end

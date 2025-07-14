@@ -14,7 +14,7 @@ module Waapi
         "/api/v1/instances/#{instance_id}/client/action/send-message",
         body: {
           chatId: chat_id,
-          message: message,
+          message: message
         }.to_json
       )
     end
