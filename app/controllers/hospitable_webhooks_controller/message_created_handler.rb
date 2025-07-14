@@ -7,8 +7,7 @@ class HospitableWebhooksController
     end
 
     def perform
-      # TODO: Rename store_message! and defined a method def stored_message; @stored_message end
-      stored_message # to store every message
+      store_message!
 
       if message.from_team?
         return resolve_pending_incident
@@ -24,13 +23,8 @@ class HospitableWebhooksController
 
     private
 
-    # TODO: Rename urgency_level
-    def urgency
-      MessageUrgency.new(stored_message).urgency # TODO: Rename .urgency_level
-    end
-
-    def stored_message
-      @stored_message ||= Message.create!(
+    def store_message!
+      @stored_message = Message.create!(
         conversation_id: message.conversation_id,
         reservation_id: message.reservation_id,
         sender_role: message.sender_role,
@@ -39,6 +33,15 @@ class HospitableWebhooksController
         content: message.body,
         posted_at: message.created_at
       )
+    end
+
+    def stored_message
+      @stored_message
+    end
+
+    # TODO: Rename urgency_level
+    def urgency
+      MessageUrgency.new(stored_message).urgency # TODO: Rename .urgency_level
     end
 
     def log_suggested_reply

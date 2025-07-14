@@ -30,8 +30,16 @@
         </h3>
         <%= link_to "All", incidents_path(request.query_parameters.deep_merge(search: { urgency_level: nil })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:search, :urgency_level).blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
 
+        <% urgency_labels = {
+          "P0" => "P0 (No response needed)",
+          "P1" => "P1 (Emergency)",
+          "P2" => "P2 (Important)",
+          "P3" => "P3 (Low Priority)"
+        } %>
+
         <% @urgency_level_options.each do |urgency_level| %>
-          <%= link_to urgency_level == "P0" ? "P0 (No response needed)" : urgency_level, incidents_path(request.query_parameters.deep_merge(search: { urgency_level: urgency_level })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:search, :urgency_level) == urgency_level ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
+          <% label = urgency_labels[urgency_level] || urgency_level %>
+          <%= link_to label, incidents_path(request.query_parameters.deep_merge(search: { urgency_level: urgency_level })), class: "px-4 py-1.5 rounded-full text-xs font-medium #{params.dig(:search, :urgency_level) == urgency_level ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" %>
         <% end %>
       </div>
 
