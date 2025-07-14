@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_09_145426) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_11_220054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_145426) do
     t.index ["auto_reply_id", "property_id"], name: "index_auto_reply_properties_on_auto_reply_id_and_property_id", unique: true
     t.index ["auto_reply_id"], name: "index_auto_reply_properties_on_auto_reply_id"
     t.index ["property_id"], name: "index_auto_reply_properties_on_property_id"
+  end
+
+  create_table "incident_escalations", force: :cascade do |t|
+    t.bigint "incident_id", null: false
+    t.string "token", null: false
+    t.datetime "triggered_at"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["incident_id"], name: "index_incident_escalations_on_incident_id"
+    t.index ["token"], name: "index_incident_escalations_on_token", unique: true
   end
 
   create_table "incidents", force: :cascade do |t|
@@ -79,4 +90,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_145426) do
 
   add_foreign_key "auto_reply_properties", "auto_replies"
   add_foreign_key "auto_reply_properties", "properties"
+  add_foreign_key "incident_escalations", "incidents"
 end
