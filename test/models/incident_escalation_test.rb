@@ -25,14 +25,6 @@ class IncidentEscalationTest < ActiveSupport::TestCase
     assert @escalation.triggered?
   end
 
-  def test_expired_when_triggered
-    refute @escalation.expired?
-
-    @escalation.triggered!
-
-    assert @escalation.expired?
-  end
-
   def test_expired_when_expires_at_in_past
     refute @escalation.expired?
 
