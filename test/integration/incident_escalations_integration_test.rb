@@ -13,7 +13,7 @@ class IncidentEscalationsIntegrationTest < ActionDispatch::IntegrationTest
 
     # Assert that the escalation message is sent exactly once
     Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
-      message.include?("Escalation triggered for incident")
+      message.include?("Guest clicked link to escalate incident ##{escalation.incident_id}")
     end.once
 
     get incident_escalation_path(token: escalation.token)

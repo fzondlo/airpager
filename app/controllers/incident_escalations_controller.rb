@@ -11,7 +11,7 @@ class IncidentEscalationsController < ApplicationController
     elsif escalation.triggered?
       @status = :already_triggered
     else
-      notify_team("Escalation triggered for incident ##{escalation.incident_id}")
+      notify_team("Guest clicked link to escalate incident ##{escalation.incident_id}")
       escalation.triggered!
       @status = :triggered_now
     end
