@@ -63,13 +63,21 @@ class HospitableWebhooksController
         source_details: {
           platform: message.platform,
           conversation_id: message.conversation_id,
-          reservation_id: message.reservation_id
+          reservation_id: message.reservation_id,
+          message_trigger_id: stored_message.id,
         }
       )
     end
 
     def resolve_pending_incident
-      pending_incident&.resolve!(by: message.sender_full_name)
+      pending_incident&.tap do |incident|
+        incident.resolve!(by: message.sender_full_name)
+        incident.update!(
+          source_details: incident.source_details.merge(
+            message_resolution_id: stored_message.id
+          )
+        )
+      end
     end
 
     def pending_incident

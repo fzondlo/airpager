@@ -10,6 +10,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "pending_reply", incident.kind
     assert_equal "test-convo-123", incident.source_details["conversation_id"]
     assert_equal "test-reservation-123", incident.source_details["reservation_id"]
+    assert_equal Message.first.id, incident.source_details["message_trigger_id"]
     assert incident.urgency_level.present?
 
     # Test when no reservation_id
@@ -21,6 +22,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "pending_reply", incident.kind
     assert_equal "test-convo-124", incident.source_details["conversation_id"]
     assert_equal "", incident.source_details["reservation_id"]
+    assert_equal Message.last.id, incident.source_details["message_trigger_id"]
     assert incident.urgency_level.present?
   end
 
@@ -74,6 +76,7 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
 
     assert incident.resolved_at.present?
     assert incident.resolved_by.present?
+    assert_equal Message.first.id, incident.source_details["message_resolution_id"]
   end
 
   def test_track_open_ai_requests
