@@ -41,6 +41,7 @@ class HospitableWebhooksController
         return URGENCY[:P1]
       end
 
+      # TODO: This should probably live in the gateway, so it tracks all calls automatically
       OpenAiRequest.create(
         prompt: prompt,
         answer: response.answer,

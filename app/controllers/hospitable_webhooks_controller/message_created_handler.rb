@@ -45,16 +45,7 @@ class HospitableWebhooksController
     end
 
     def log_suggested_reply
-      property_id = PropertyIdentifier.new(stored_message).resolve
-
-      return unless property_id.present?
-
-      bot_reply = BotReply.new(
-        message: stored_message.content,
-        property_id: property_id
-      )
-
-      bot_reply.log_reply(sender: stored_message.sender_full_name)
+      SuggestedReply.new(stored_message).log
     end
 
     def create_incident
