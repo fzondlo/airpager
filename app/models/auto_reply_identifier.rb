@@ -12,9 +12,7 @@ class AutoReplyIdentifier
     response = OpenAi.gateway.find_auto_reply(prompt, message)
 
     if response.success? && response.auto_reply_id.present?
-      # TODO: We are being too nice from open ai answer auto_reply_id (it could hallucinate)
-      # We should make sure it's bound to the auto_replies given in the first place.
-      AutoReply.find(response.auto_reply_id)
+      auto_replies.find_by(id: response.auto_reply_id)
     end
   end
 
