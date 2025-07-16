@@ -9,23 +9,59 @@ class HospitableWebhooksController
     end
 
     def log
-      body =
-        <<~TEXT
+      Waapi.gateway.send_message(body, LOGGING_WA_GROUP)
+
+      if auto_reply.present? && !auto_reply_already_used?
+        AutoReplyUsage.create(
+          conversation_id: message.conversation_id,
+          auto_reply: auto_reply
+        )
+      end
+    end
+
+    private
+
+    def body
+      unless auto_reply.present?
+        return <<~TEXT
           New Message from #{message.sender_full_name}:
           #{message.content}
 
           -----
 
           Suggested Reply:
-          #{auto_reply&.reply || "Sorry, I don't have an answer for that."}
+          Sorry, I don't have an answer for that.
         TEXT
+      end
 
-      Waapi.gateway.send_message(body, LOGGING_WA_GROUP)
 
-      # TODO: Track usage locally in a database table (conversation_id / auto_reply_id)
+      if auto_reply_already_used?
+        return <<~TEXT
+          New Message from #{message.sender_full_name}:
+          #{message.content}
+
+          -----
+
+          Suggested Reply:
+          #{auto_reply.reply}
+
+          -----
+
+          Debug:
+          This suggested reply has already been used in the conversation, skipping ...
+        TEXT
+      end
+
+      <<~TEXT
+        New Message from #{message.sender_full_name}:
+        #{message.content}
+
+        -----
+
+        Suggested Reply:
+        #{auto_reply.reply}
+      TEXT
     end
-
-    private
 
     def property_id
       @property_id ||= PropertyIdentifier.new(message).resolve
@@ -38,6 +74,14 @@ class HospitableWebhooksController
         message: message.content,
         property_id: property_id
       ).resolve
+    end
+
+    def auto_reply_used_ids
+      @auto_reply_used_ids ||= AutoReplyUsage.where(conversation_id: message.conversation_id).pluck(:auto_reply_id)
+    end
+
+    def auto_reply_already_used?
+      auto_reply.id.in?(auto_reply_used_ids)
     end
   end
 end
