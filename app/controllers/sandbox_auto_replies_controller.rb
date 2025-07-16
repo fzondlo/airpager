@@ -7,10 +7,10 @@ class SandboxAutoRepliesController < ApplicationController
 
   def index
     @bot_reply = if @message.present?
-      BotReply.new(
+      AutoReplyIdentifier.new(
         message: @message,
         property_id: @property_id
-      ).reply
+      ).resolve&.reply || "Sorry, I don't have an answer for that"
     end
   end
 

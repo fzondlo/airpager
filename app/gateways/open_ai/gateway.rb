@@ -54,7 +54,7 @@ module OpenAi
       Response::Receipt.new(response)
     end
 
-    def auto_reply(system_prompt, user_input, model: "gpt-4.1-nano")
+    def find_auto_reply(system_prompt, user_input, model: "gpt-4.1-nano")
       body = {
         model: model,
         messages: [
@@ -68,7 +68,7 @@ module OpenAi
         body: body.to_json
       )
 
-      Response::AutoReply.new(response)
+      Response::FindAutoReply.new(response)
     end
   end
 end

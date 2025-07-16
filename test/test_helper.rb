@@ -23,6 +23,28 @@ module ActiveSupport
       }.merge(overrides))
     end
 
+    def create_message(overrides = {})
+      Message.create!({
+        conversation_id: "conv-test-123",
+        sender_full_name: "jeremie ges",
+        content: "Hello! I'm planning a trip to the area and would love to stay at your flat."
+      }.merge(overrides))
+    end
+
+    def create_auto_reply(overrides = {})
+      AutoReply.create!({
+        trigger: "What is the Wi-Fi code?",
+        reply: "The Wi-Fi code is welcomehome"
+      }.merge(overrides))
+    end
+
+    def create_property(overrides = {})
+      Property.create!({
+        name: "Murano 901",
+        clickup_custom_field_id: "cf-123"
+      }.merge(overrides))
+    end
+
     # Add more helper methods to be used by all tests here...
   end
 end
