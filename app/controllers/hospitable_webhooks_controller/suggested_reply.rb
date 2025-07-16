@@ -70,7 +70,7 @@ class HospitableWebhooksController
     def auto_reply
       return unless property_id.present?
 
-      @auto_reply ||= ::AutoReplyIdentifier.new(
+      @auto_reply ||= AutoReplyIdentifier.new(
         message: message.content,
         property_id: property_id
       ).resolve
