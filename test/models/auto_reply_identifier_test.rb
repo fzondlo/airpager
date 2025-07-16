@@ -4,7 +4,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
   def setup
     @message = create_message
     @property = create_property
-    @auto_reply = create_auto_reply(properties: [@property])
+    @auto_reply = create_auto_reply(properties: [ @property ])
   end
 
   def test_resolve_returns_auto_reply_when_id_is_valid
@@ -17,7 +17,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
     assert_equal subject, @auto_reply
   end
 
-  def test_resolve_return_nil_when_no_auto_replies
+  def test_resolve_returns_nil_when_no_auto_replies
     @auto_reply.destroy
 
     subject = AutoReplyIdentifier.new(message: message, property_id: @property.id).resolve
@@ -49,7 +49,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
 
   def test_auto_replies_only_returns_replies_for_property
     other_property = create_property(name: "Other property", clickup_custom_field_id: "cf-other-123")
-    other_auto_reply = AutoReply.create!(trigger: "bye", reply: "Bye!", properties: [other_property])
+    other_auto_reply = AutoReply.create!(trigger: "bye", reply: "Bye!", properties: [ other_property ])
 
     OpenAi::BogusGateway.any_instance.stubs(:find_auto_reply).returns(
       stub(success?: true, auto_reply_id: other_auto_reply.id.to_s)
