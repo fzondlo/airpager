@@ -41,13 +41,6 @@ class HospitableWebhooksController
         return URGENCY[:P1]
       end
 
-      # TODO: This should probably live in the gateway, so it tracks all calls automatically
-      OpenAiRequest.create(
-        prompt: prompt,
-        answer: response.answer,
-        response_payload: response.body
-      )
-
       chatgpt_urgency_level = JSON.parse(response.answer).dig("urgency")
 
       unless chatgpt_urgency_level.to_sym.in?(URGENCY.keys)

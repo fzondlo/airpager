@@ -1,0 +1,58 @@
+<div class="max-w-5xl mx-auto py-8 px-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Open AI logs</h1>
+  </div>
+
+  <p class="text-sm text-gray-600 my-4">
+    This is a non-public view intended for the Airpager development team. It displays a complete log of all OpenAI requests made within the application. Use it to debug behavior, monitor usage, inspect prompts and responses, and trace issues.
+  </p>
+
+  <div class="overflow-x-auto bg-white shadow-md rounded-xl">
+    <table class="min-w-full table-auto text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-gray-600 uppercase text-xs py-2">
+        <tr>
+          <th class="px-6 py-3">Created At</th>
+          <th class="px-6 py-3">Request Type</th>
+          <th class="px-6 py-3">Success?</th>
+          <th class="px-6 py-3">User Prompt</th>
+          <th class="px-6 py-3">Answer</th>
+          <th class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @requests.each do |request| %>
+          <tr class="border-t border-gray-200 hover:bg-gray-50">
+            <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
+              <%= request.created_at.in_time_zone("America/Bogota").strftime("%B %-d, %Y – %H:%M") %>
+            </td>
+            <td class="px-6 py-4">
+              <% if request.success? %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Success
+                </span>
+              <% else %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Failure
+                </span>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 font-medium text-gray-800">
+              <%= request.request_type %>
+            </td>
+            <td class="px-6 py-4">
+              <%= truncate(request.user_prompt, length: 120) %>
+            </td>
+            <td class="px-6 py-4">
+              <%= request.answer %>
+            </td>
+            <td class="px-6 py-4 text-right space-x-2">
+              <div class="inline-flex items-center gap-2 text-gray-600">
+                <%= link_to "Show", open_ai_request_path(request.id), class: "text-blue-600 hover:underline" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

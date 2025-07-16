@@ -16,13 +16,18 @@ module OpenAi
           { role: "user", content: prompt }
         ]
       }
+
       response = self.class.post(
         "/chat/completions",
         body: body.to_json
       )
 
-      puts "Prompt: #{prompt}"
-      puts "Response: #{response.to_json}"
+      track_open_ai_request(
+        request_type: "chat",
+        model: model,
+        user_prompt: prompt,
+        response: response
+      )
 
       Response::Chat.new(response)
     end
@@ -48,18 +53,22 @@ module OpenAi
         body: body.to_json
       )
 
-      puts "Prompt: #{prompt}"
-      puts "Response: #{response.to_json}"
+      track_open_ai_request(
+        request_type: "process_receipt",
+        model: model,
+        user_prompt: prompt,
+        response: response
+      )
 
       Response::Receipt.new(response)
     end
 
-    def find_auto_reply(system_prompt, user_input, model: "gpt-4.1-nano")
+    def find_auto_reply(system_prompt, user_prompt, model: "gpt-4.1-nano")
       body = {
         model: model,
         messages: [
           { role: "system", content: system_prompt },
-          { role: "user", content: user_input }
+          { role: "user", content: user_prompt }
         ]
       }
 
@@ -68,7 +77,31 @@ module OpenAi
         body: body.to_json
       )
 
+      track_open_ai_request(
+        request_type: "find_auto_reply",
+        model: model,
+        system_prompt: system_prompt,
+        user_prompt: user_prompt,
+        response: response
+      )
+
       Response::FindAutoReply.new(response)
+    end
+
+    private
+
+    def track_open_ai_request(request_type:, model:, system_prompt: nil, user_prompt:, response:)
+      OpenAiRequest.create(
+        request_id: response.headers["x-request-id"],
+        request_type: request_type,
+        model: model,
+        system_prompt: system_prompt,
+        user_prompt: user_prompt,
+        response_headers: response.headers,
+        response_payload: response.parsed_response,
+        success: response.success?,
+        answer: response.parsed_response.dig("choices", 0, "message", "content")
+      )
     end
   end
 end
