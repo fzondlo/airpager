@@ -23,14 +23,14 @@ class HospitableWebhooksController
       MessageUrgency.new(@message)
     end
 
-    test "returns :P3 when message is a lead (reservation_id is nil)" do
+    test "returns :P0 when message is a lead (reservation_id is nil)" do
       @message.update!(reservation_id: nil)
-      assert_equal :P3, subject.urgency
+      assert_equal :P0, subject.urgency
     end
 
-    test "returns :P3 when message is likely an image (content is nil)" do
+    test "returns :P0 when message is likely an image (content is nil)" do
       @message.update!(content: nil)
-      assert_equal :P3, subject.urgency
+      assert_equal :P0, subject.urgency
     end
 
     test "returns :P1 when OpenAI responds with a valid urgency" do

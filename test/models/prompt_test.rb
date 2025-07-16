@@ -30,16 +30,16 @@ class PromptTest < ActiveSupport::TestCase
         - Water heater is not working.
 
       P3:
-        - Not an urgent problem, more of a question or a thankyou that should require a "you're welcome"
+        - Not an urgent problem
         - A request for a late checkout or early checkin
         - A request for a refund or a discount
         - A request to schedule a complimentary cleaning
-        - Recommendations for food or places to visit.
-        - When they send passports or identification documents.
+        - Asking for a recommendation, eg: restaurant or places to visit.
 
       NO_RESPONSE_REQUIRED:
         - When conversation has come to a natural conclusion.
-        - When the guest is just saying thank you or goodbye and a "you're welcome" is not appropriate
+        - When the guest is just saying thank you, or you're welcome.
+        - When they send passports or identification documents.
 
       Here is the Conversation:
       [guest - Alice]: Hi, I have a question about my booking.
