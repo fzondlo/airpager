@@ -92,7 +92,7 @@ module OpenAi
 
     def track_open_ai_request(request_type:, model:, system_prompt: nil, user_prompt:, response:)
       OpenAiRequest.create(
-        request_id: response.headers['x-request-id'],
+        request_id: response.headers["x-request-id"],
         request_type: request_type,
         model: model,
         system_prompt: system_prompt,
