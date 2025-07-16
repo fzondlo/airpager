@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_16_121957) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_16_132945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,11 +75,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_121957) do
   end
 
   create_table "open_ai_requests", force: :cascade do |t|
-    t.text "prompt"
+    t.text "user_prompt"
     t.text "answer"
     t.jsonb "response_payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "request_id"
+    t.string "request_type"
+    t.string "model"
+    t.text "system_prompt"
+    t.boolean "success", default: true, null: false
+    t.jsonb "response_headers"
   end
 
   create_table "properties", force: :cascade do |t|
