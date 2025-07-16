@@ -37,7 +37,7 @@
               <% end %>
             </td>
             <td class="px-6 py-4 font-medium text-gray-800">
-              <%= request.request_type %>
+              <%= request.request_type.presence || "–" %>
             </td>
             <td class="px-6 py-4">
               <%= truncate(request.user_prompt, length: 120) %>
