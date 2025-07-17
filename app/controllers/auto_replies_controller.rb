@@ -34,7 +34,7 @@ class AutoRepliesController < ApplicationController
 
   def update
     if @auto_reply.update(auto_reply_params)
-      redirect_to auto_replies_path, notice: "Auto reply was successfully updated."
+      redirect_to edit_auto_reply_path(@auto_reply), notice: "Auto reply was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -56,7 +56,7 @@ class AutoRepliesController < ApplicationController
   end
 
   def auto_reply_params
-    params.require(:auto_reply).permit(:trigger, :reply, property_ids: [])
+    params.require(:auto_reply).permit(:trigger, :reply, :live_enabled, property_ids: [])
   end
 
   def search_params
