@@ -6,6 +6,21 @@
   <%= form_tag auto_reply_path(@auto_reply), method: :patch, class: "space-y-6" do %>
 
     <div>
+      <%= label_tag "auto_reply[live]", "Send real replies?", class: "block text-sm font-medium text-slate-700" %>
+
+      <p class="text-sm text-slate-500 mt-1 mb-2">
+        When off, this reply will only run in the <%= link_to "chat sandbox ↗", sandbox_auto_replies_path, target: '_blank', class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %> for testing purposes. Turn it on to enable live replies.
+      </p>
+
+      <label class="relative inline-flex items-center cursor-pointer">
+        <%= hidden_field_tag 'auto_reply[live_enabled]', 'false' %>
+        <%= check_box_tag 'auto_reply[live_enabled]', 'true', @auto_reply.live_enabled, class: 'sr-only peer' %>
+        <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-colors"></div>
+        <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-all peer-checked:translate-x-full"></div>
+      </label>
+    </div>
+
+    <div>
       <%= label_tag "auto_reply[trigger]", "Question", class: "block text-sm font-medium text-slate-700" %>
       <p class="text-sm text-slate-500 mt-1">
         This is what the guest might ask. For example: "Do you have a hair dryer?"
@@ -39,7 +54,7 @@
     </div>
 
     <div class="flex items-center justify-between">
-      <%= link_to "Cancel", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+      <%= link_to "Back", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
       <%= submit_tag "Update Auto Reply", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>
     </div>
   <% end %>

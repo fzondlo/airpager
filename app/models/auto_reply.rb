@@ -4,4 +4,8 @@ class AutoReply < ApplicationRecord
 
   validates :trigger, presence: true
   validates :reply, presence: true
+
+  validates :live_enabled, inclusion: { in: [ true, false ] }
+
+  scope :live_enabled, -> { where(live_enabled: true) }
 end

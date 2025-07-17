@@ -72,7 +72,8 @@ class HospitableWebhooksController
 
       @auto_reply ||= AutoReplyIdentifier.new(
         message: message.content,
-        property_id: property_id
+        property_id: property_id,
+        live_mode: true
       ).resolve
     end
 

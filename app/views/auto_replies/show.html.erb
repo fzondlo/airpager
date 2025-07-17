@@ -1,7 +1,22 @@
 <div class="max-w-2xl mx-auto py-10 px-6">
-  <h1 class="text-2xl font-bold text-slate-800 mb-6">Auto Reply Details</h1>
+  <h1 class="text-2xl font-bold text-slate-800 mb-6">Auto Reply #<%= @auto_reply.id %></h1>
 
   <div class="space-y-4 bg-white shadow rounded-xl p-6 border border-slate-200">
+    <div>
+      <h2 class="text-sm font-semibold text-slate-500 uppercase">Live enabled?</h2>
+      <p class="mt-2">
+        <% if @auto_reply.live_enabled? %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-md font-medium bg-green-100 text-green-800">
+            Live
+          </span>
+        <% else %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-md font-medium bg-gray-100 text-gray-800">
+            Sandbox
+          </span>
+        <% end %>
+      </p>
+    </div>
+
     <div>
       <h2 class="text-sm font-semibold text-slate-500 uppercase">Question</h2>
       <p class="text-lg text-slate-800"><%= simple_format(@auto_reply.trigger) %></p>
@@ -31,12 +46,12 @@
 
     <div class="flex gap-3">
       <%= link_to "Edit", edit_auto_reply_path(@auto_reply),
-                  class: "text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition" %>
+                  class: "text-sm bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl transition" %>
 
       <%= button_to "Delete", auto_reply_path(@auto_reply),
                     method: :delete,
                     data: { turbo_confirm: "Are you sure?" },
-                    class: "text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition" %>
+                    class: "text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition cursor-pointer" %>
     </div>
   </div>
 </div>

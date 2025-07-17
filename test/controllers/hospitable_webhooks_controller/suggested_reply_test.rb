@@ -5,7 +5,7 @@ class HospitableWebhooksController
     def setup
       @message = create_message(content: "What is the wifi code?")
       @property = create_property
-      @auto_reply = create_auto_reply(trigger: "wifi code?", reply: "The Wi-Fi code is welcomehome", properties: [ @property ])
+      @auto_reply = create_auto_reply(trigger: "wifi code?", reply: "The Wi-Fi code is welcomehome", properties: [ @property ], live_enabled: true)
     end
 
     def test_logs_message_with_suggested_reply
