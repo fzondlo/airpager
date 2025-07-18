@@ -23,33 +23,33 @@ class HospitableWebhooksController
       MessageUrgency.new(@message)
     end
 
-    test "returns :P0 when message is a lead (reservation_id is nil)" do
+    test "returns :P0 when message is an inquiry (reservation_id is nil)" do
       @message.update!(reservation_id: nil)
-      assert_equal :P0, subject.urgency
+      assert_equal :P0, subject.urgency_level
     end
 
     test "returns :P0 when message is likely an image (content is nil)" do
       @message.update!(content: nil)
-      assert_equal :P0, subject.urgency
+      assert_equal :P0, subject.urgency_level
     end
 
-    test "returns :P1 when OpenAI responds with a valid urgency" do
+    test "returns :P2 when OpenAI responds with a valid urgency" do
       fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P2\"\n}", body: {})
       ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
-      assert_equal :P2, subject.urgency
+      assert_equal :P2, subject.urgency_level
     end
 
     test "logs a warning and returns :P1 when OpenAI responds with unknown urgency" do
       fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"something_crazy\"\n}", body: {})
       ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
       Rails.logger.expects(:warn).with { |arg| arg.include?("ChatGPT returned an unknown urgency:") }
-      assert_equal :P1, subject.urgency
+      assert_equal :P1, subject.urgency_level
     end
 
     test "returns :P1 when OpenAI does not succeed" do
       fake_response = stub(success?: false)
       ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
-      assert_equal :P1, subject.urgency
+      assert_equal :P1, subject.urgency_level
     end
   end
 end

@@ -14,9 +14,9 @@ class HospitableWebhooksController
       @message = message
     end
 
-    def urgency
+    def urgency_level
       return URGENCY[:NO_RESPONSE_REQUIRED] if inquiry? || likely_image?
-      urgency_from_chatgpt
+      urgency_level_from_chatgpt
     end
 
     private
@@ -33,7 +33,7 @@ class HospitableWebhooksController
       @conversation_messages ||= Message.where(conversation_id: message.conversation_id, reservation_id: message.reservation_id).order(posted_at: :desc).limit(5).all.reverse
     end
 
-    def urgency_from_chatgpt
+    def urgency_level_from_chatgpt
       response = ::OpenAi.gateway.chat(prompt)
 
       unless response.success?

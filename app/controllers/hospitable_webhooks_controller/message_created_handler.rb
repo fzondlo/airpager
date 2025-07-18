@@ -17,7 +17,7 @@ class HospitableWebhooksController
         incident = create_incident
 
         log_suggested_reply
-        MessageEscalationPath.new(urgency, stored_message, incident).escalate
+        MessageEscalationPath.new(urgency_level, stored_message, incident).escalate
       end
     end
 
@@ -39,9 +39,8 @@ class HospitableWebhooksController
       @stored_message
     end
 
-    # TODO: Rename urgency_level
-    def urgency
-      MessageUrgency.new(stored_message).urgency # TODO: Rename .urgency_level
+    def urgency_level
+      MessageUrgency.new(stored_message).urgency_level
     end
 
     def log_suggested_reply
