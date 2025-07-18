@@ -15,14 +15,13 @@ class HospitableWebhooksController
     end
 
     def urgency
-      return URGENCY[:NO_RESPONSE_REQUIRED] if is_lead? || likely_image?
+      return URGENCY[:NO_RESPONSE_REQUIRED] if inquiry? || likely_image?
       urgency_from_chatgpt
     end
 
     private
 
-    # TODO: Rename inquiry?
-    def is_lead?
+    def inquiry?
       message.reservation_id.nil?
     end
 
