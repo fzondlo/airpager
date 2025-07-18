@@ -1,6 +1,6 @@
 class Task
   class TaskBuilder
-    include Task::Mapping
+    include SystemConfig
 
     class PropertyNotFoundError < StandardError; end
 

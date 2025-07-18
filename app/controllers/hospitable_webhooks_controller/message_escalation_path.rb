@@ -1,6 +1,6 @@
 class HospitableWebhooksController
   class MessageEscalationPath
-    include Task::Mapping
+    include SystemConfig
 
     attr_reader :urgency_level, :message, :incident
 

@@ -1,6 +1,6 @@
 class WaapiWebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
-  include Task::Mapping
+  include SystemConfig
 
   def create
     return if !subscribed_to_group? || !contains_image?

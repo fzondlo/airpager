@@ -1,5 +1,5 @@
 class IncidentEscalationsController < ApplicationController
-  include Task::Mapping # TODO: Need to improve naming / refactor
+  include SystemConfig
 
   def show
     @show_header = false

@@ -14,7 +14,7 @@ class CreateProperties < ActiveRecord::Migration[8.0]
     add_index :properties, :slug, unique: true
 
     # Initial seeding from existing hardcoded properties
-    Task::Mapping::PROPERTIES.each do |property|
+    SystemConfig::PROPERTIES.each do |property|
       Property.create!(
         name: property[:name],
         clickup_custom_field_id: property[:custom_field_id],

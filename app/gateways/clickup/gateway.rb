@@ -1,7 +1,7 @@
 module Clickup
   class Gateway
     include HTTParty
-    include Task::Mapping
+    include SystemConfig
     base_uri "https://api.clickup.com"
 
     def initialize(api_token)

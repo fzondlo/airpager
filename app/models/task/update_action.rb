@@ -1,6 +1,6 @@
 class Task
   class UpdateAction
-    include Task::Mapping
+    include SystemConfig
 
     def initialize(hospitable_reservations, tasks)
       @hospitable_reservations = hospitable_reservations

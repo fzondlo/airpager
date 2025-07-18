@@ -1,6 +1,6 @@
 class HospitableWebhooksController
   class SuggestedReply
-    include Task::Mapping
+    include SystemConfig
 
     attr_reader :message
 

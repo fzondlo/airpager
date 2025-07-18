@@ -1,6 +1,6 @@
 class DayOfCleaningReminderWorker
   include Sidekiq::Worker
-  include Task::Mapping
+  include SystemConfig
 
   sidekiq_options retry: false
 

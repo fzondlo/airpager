@@ -1,6 +1,6 @@
 class Task
   class SyncTasks
-    include Task::Mapping
+    include SystemConfig
 
     def initialize(hospitable_reservations, action_for_reservation, tasks, task_type)
       @hospitable_reservations = hospitable_reservations

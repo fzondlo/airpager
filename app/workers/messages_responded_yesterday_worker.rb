@@ -1,6 +1,6 @@
 class MessagesRespondedYesterdayWorker
   include Sidekiq::Worker
-  include Task::Mapping
+  include SystemConfig
 
   ADMIN_GROUP = "120363403470995044@g.us"
 

@@ -1,5 +1,5 @@
 class Task
-  include Task::Mapping
+  include SystemConfig
 
   def sync_all_tasks
     sync_cleaning_tasks

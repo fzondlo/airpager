@@ -1,6 +1,6 @@
 class AlertTeamWorker
   include Sidekiq::Worker
-  include Task::Mapping
+  include SystemConfig
 
   def perform(incident_id, message_id, urgency_level)
     incident = Incident.find_by(id: incident_id)

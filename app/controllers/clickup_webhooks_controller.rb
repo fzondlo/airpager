@@ -1,6 +1,6 @@
 class ClickupWebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
-  include Task::Mapping
+  include SystemConfig
 
   def create
     if cleaner_update? && assigned_cleaner

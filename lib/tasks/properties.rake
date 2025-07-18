@@ -1,7 +1,7 @@
 namespace :properties do
-  desc "Sync Task::Mapping::PROPERTIES into Property records"
+  desc "Sync SystemConfig::PROPERTIES into Property records"
   task sync_from_mapping: :environment do
-    Task::Mapping::PROPERTIES.each do |prop|
+    SystemConfig::PROPERTIES.each do |prop|
       attrs = {
         name: prop[:name],
         slug: prop[:name].parameterize,
