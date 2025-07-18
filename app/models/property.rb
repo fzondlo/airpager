@@ -7,6 +7,7 @@ class Property < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :slug, presence: true, uniqueness: true
   validates :clickup_custom_field_id, presence: true
+  validates :hospitable_id, presence: true
 
   private
 

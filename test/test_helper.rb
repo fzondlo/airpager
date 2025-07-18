@@ -41,7 +41,8 @@ module ActiveSupport
     def create_property(overrides = {})
       Property.create!({
         name: "Murano 901",
-        clickup_custom_field_id: "cf-123"
+        clickup_custom_field_id: "cf-123",
+        hospitable_id: "hospitable-123"
       }.merge(overrides))
     end
 

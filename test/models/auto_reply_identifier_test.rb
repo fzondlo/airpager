@@ -48,7 +48,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
   end
 
   def test_resolve_only_returns_replies_for_property
-    other_property = create_property(name: "Other property", clickup_custom_field_id: "cf-other-123")
+    other_property = create_property(name: "Other property", clickup_custom_field_id: "cf-other-123", hospitable_id: "hospitable-other-123")
     other_auto_reply = AutoReply.create!(trigger: "bye", reply: "Bye!", properties: [ other_property ])
 
     OpenAi::BogusGateway.any_instance.stubs(:find_auto_reply).returns(
