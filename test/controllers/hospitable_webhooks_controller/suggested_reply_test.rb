@@ -23,7 +23,7 @@ class HospitableWebhooksController
         stub(success?: true, auto_reply_id: @auto_reply.id.to_s)
       )
 
-      PropertyIdentifier.any_instance.stubs(:resolve).returns(@property.id)
+      PropertyIdentifier.any_instance.stubs(:resolve).returns(@property)
 
       Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
         assert_equal expected_log, message
@@ -54,7 +54,7 @@ class HospitableWebhooksController
         stub(success?: true, auto_reply_id: @auto_reply.id.to_s)
       )
 
-      PropertyIdentifier.any_instance.stubs(:resolve).returns(@property.id)
+      PropertyIdentifier.any_instance.stubs(:resolve).returns(@property)
 
       Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
         assert_equal expected_log, message
@@ -78,7 +78,7 @@ class HospitableWebhooksController
         stub(success?: true, auto_reply_id: nil)
       )
 
-      PropertyIdentifier.any_instance.stubs(:resolve).returns(@property.id)
+      PropertyIdentifier.any_instance.stubs(:resolve).returns(@property)
 
       Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
         assert_equal expected_log, message

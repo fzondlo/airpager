@@ -13,9 +13,9 @@ class HospitableWebhooksController
         conversation_id: "conv-123"
       )
 
-      id = PropertyIdentifier.new(message).resolve
+      property = PropertyIdentifier.new(message).resolve
 
-      assert_equal @property.id, id
+      assert_equal @property.id, property.id
     end
 
     def test_resolves_property_id_from_inquiry
@@ -24,9 +24,9 @@ class HospitableWebhooksController
         conversation_id: "inq-123"
       )
 
-      id = PropertyIdentifier.new(message).resolve
+      property = PropertyIdentifier.new(message).resolve
 
-      assert_equal @property.id, id
+      assert_equal @property.id, property.id
     end
 
     def test_resolves_nil_when_no_matching_properties
@@ -37,8 +37,8 @@ class HospitableWebhooksController
         conversation_id: "inq-123"
       )
 
-      id = PropertyIdentifier.new(message).resolve
-      assert_nil id
+      property = PropertyIdentifier.new(message).resolve
+      assert_nil property
     end
 
     def test_resolves_nil_on_failed_gateway_response
@@ -47,16 +47,16 @@ class HospitableWebhooksController
         conversation_id: "inq-fail"
       )
 
-      id = PropertyIdentifier.new(message).resolve
-      assert_nil id
+      property = PropertyIdentifier.new(message).resolve
+      assert_nil property
 
       message = Message.create!(
         reservation_id: "res-fail",
         conversation_id: "conv-123"
       )
 
-      id = PropertyIdentifier.new(message).resolve
-      assert_nil id
+      property = PropertyIdentifier.new(message).resolve
+      assert_nil property
     end
   end
 end

@@ -64,7 +64,7 @@ class HospitableWebhooksController
     end
 
     def property_id
-      @property_id ||= PropertyIdentifier.new(message).resolve
+      @property_id ||= PropertyIdentifier.new(message).resolve&.id
     end
 
     def auto_reply

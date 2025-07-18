@@ -6,11 +6,10 @@ class HospitableWebhooksController
       @message = message
     end
 
-    # TODO: Should probably return the Property record, not just the id
     def resolve
       return unless hospitable_property_id.present?
 
-      Property.find_by(hospitable_id: hospitable_property_id)&.id
+      Property.find_by(hospitable_id: hospitable_property_id)
     end
 
     private
