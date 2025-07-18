@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_17_113414) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_18_122859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,6 +98,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_113414) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "hospitable_id"
+    t.jsonb "hospitable_metadata", default: {}, null: false
     t.index ["clickup_custom_field_id"], name: "index_properties_on_clickup_custom_field_id", unique: true
     t.index ["hospitable_id"], name: "index_properties_on_hospitable_id", unique: true
     t.index ["slug"], name: "index_properties_on_slug", unique: true
