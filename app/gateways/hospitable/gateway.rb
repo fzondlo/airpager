@@ -34,13 +34,6 @@ module Hospitable
       Response::FindInquiry.new(response)
     end
 
-    # TODO: Clickup segment? What is that? I don't think we are using it anyway
-    # Might be good to delete.
-    def find_reservation_messages(reservation_id)
-      response = self.class.get("/v2/clickup/#{reservation_id}/messages")
-      Response::FindReservationMessages.new(response)
-    end
-
     def send_message_for_reservation(reservation_id, message)
       # response = self.class.post("/v2/reservations/#{reservation_id}/messages", body: {
       #   body: message

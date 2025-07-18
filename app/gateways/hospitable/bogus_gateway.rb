@@ -40,10 +40,6 @@ module Hospitable
       # no-op
     end
 
-    def find_reservation_messages(reservation_id)
-      # no-op
-    end
-
     def send_message_for_inquiry(conversation_id, message)
        # no-op
      end
