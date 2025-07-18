@@ -43,6 +43,14 @@ module Hospitable
     def find_reservation_messages(reservation_id)
       # no-op
     end
+
+    def send_message_for_inquiry(conversation_id, message)
+       # no-op
+     end
+
+     def send_message_for_reservation(reservation_id, message)
+       # no-op
+     end
   end
 
   class RawResponse

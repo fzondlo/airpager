@@ -40,5 +40,19 @@ module Hospitable
       response = self.class.get("/v2/clickup/#{reservation_id}/messages")
       Response::FindReservationMessages.new(response)
     end
+
+    def send_message_for_reservation(reservation_id, message)
+      # response = self.class.post("/v2/reservations/#{reservation_id}/messages", body: {
+      #   body: message
+      # }.to_json)
+      # Response::SendMessageForReservation.new(response)
+    end
+
+    def send_message_for_inquiry(conversation_id, message)
+      # response = self.class.post("/v2/inquiries/#{conversation_id}/messages", body: {
+      #   body: message
+      # }.to_json)
+      # Response::SendMessageForInquiry.new(response)
+    end
   end
 end
