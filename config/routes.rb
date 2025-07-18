@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :sandbox_auto_replies, only: [ :index, :create ]
 
   resources :open_ai_requests, only: [ :index, :show ]
+  resources :properties, only: [ :index, :show ]
 
   get "escalate/:token", to: "incident_escalations#show", as: :incident_escalation
 
