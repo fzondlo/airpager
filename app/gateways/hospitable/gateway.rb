@@ -10,7 +10,7 @@ module Hospitable
     end
 
     def find_properties
-     response = self.class.get("/v2/properties/")
+     response = self.class.get("/v2/properties/?per_page=100")
      Response::FindProperties.new(response)
     end
 
