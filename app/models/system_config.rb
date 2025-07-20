@@ -108,6 +108,20 @@ module SystemConfig
       hospitable_id: "d7ac381c-e62b-482f-95ce-05c3301cfa04", # {:id=>"d7ac381c-e62b-482f-95ce-05c3301cfa04", :name=>"Angelas Apartment"}
       address: "Tv. 37 #63b-33, \nApt 301\nEdificio Castelmola\nLaureles - Estadio, Medellín",
       google_maps: "https://maps.app.goo.gl/Vu13uFrpPZoCgjjp7"
+    },
+    {
+      name: "Castelmola 501 (Bertha)",
+      custom_field_id: "2edca996-4981-4ed9-a2b5-96edd99ab186",
+      hospitable_id: "dba79bc0-d496-4dfc-9f62-b1956da48f6e",
+      address: "Tv. 37 #63b-33, \nApt 501\nEdificio Castelmola\nLaureles - Estadio, Medellín",
+      google_maps: "https://maps.app.goo.gl/Vu13uFrpPZoCgjjp7"
+    },
+    {
+      name: "Santa Maria 202",
+      custom_field_id: "1172bd0a-f0f9-4fc9-a7db-7f2f92269a3a",
+      hospitable_id: "9a4437c5-a071-4723-b195-131586acd529",
+      address: "Cra 77 #42-19\nApt 202\nEdificio Santa Maria de Fiore \nLaureles - Estadio, Medellín",
+      google_maps: "https://maps.app.goo.gl/Dvtzu3oy8WAggEW7A"
     }
   ].freeze
 

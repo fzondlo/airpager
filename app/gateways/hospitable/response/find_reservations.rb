@@ -10,7 +10,9 @@ module Hospitable
         "Nebraska" => "Nebraska 1101",
         "Santa Maria 402 Yuri" => "Santa Maria 402 (Yuri)",
         "Edgar 201" => "Santa Maria 201 (Edgar)",
-        "Angelas Apartment" => "Castelmola 301 (Angela)"
+        "Angelas Apartment" => "Castelmola 301 (Angela)",
+        "202 Santa Maria" => "Santa Maria 202",
+        "501 Castelmola Bertha" => "Castelmola 501 (Bertha)"
       }
 
       def reservations

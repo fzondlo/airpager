@@ -4,6 +4,6 @@ class Reservation
   end
 
   def self.property_ids
-    Hospitable.gateway.find_properties.properties.pluck(:id)
+    Hospitable.gateway.find_properties.properties.pluck("id")
   end
 end
