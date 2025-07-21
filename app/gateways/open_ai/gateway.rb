@@ -1,5 +1,6 @@
 module OpenAi
   class Gateway
+
     include HTTParty
     base_uri "https://api.openai.com/v1"
 
@@ -17,17 +18,23 @@ module OpenAi
         ]
       }
 
-      response = self.class.post(
-        "/chat/completions",
-        body: body.to_json
-      )
+      response = with_retries do
+        http_response = self.class.post(
+          "/chat/completions",
+          body: body.to_json
+        )
 
-      track_open_ai_request(
-        request_type: "chat",
-        model: model,
-        user_prompt: prompt,
-        response: response
-      )
+        track_open_ai_request(
+          request_type: "chat",
+          model: model,
+          user_prompt: prompt,
+          response: http_response
+        )
+
+        raise RetryableError.new(http_response) unless http_response.success?
+        http_response
+      end
+
 
       Response::Chat.new(response)
     end
@@ -48,17 +55,22 @@ module OpenAi
           ]
         } ]
       }
-      response = self.class.post(
-        "/chat/completions",
-        body: body.to_json
-      )
+      response = with_retries do
+        http_response = self.class.post(
+          "/chat/completions",
+          body: body.to_json
+        )
 
-      track_open_ai_request(
-        request_type: "process_receipt",
-        model: model,
-        user_prompt: prompt,
-        response: response
-      )
+        track_open_ai_request(
+          request_type: "process_receipt",
+          model: model,
+          user_prompt: prompt,
+          response: http_response
+        )
+
+        raise RetryableError.new(http_response) unless http_response.success?
+        http_response
+      end
 
       Response::Receipt.new(response)
     end
@@ -72,23 +84,43 @@ module OpenAi
         ]
       }
 
-      response = self.class.post(
-        "/chat/completions",
-        body: body.to_json
-      )
+      response = with_retries do
+        http_response = self.class.post(
+          "/chat/completions",
+          body: body.to_json
+        )
 
-      track_open_ai_request(
-        request_type: "find_auto_reply",
-        model: model,
-        system_prompt: system_prompt,
-        user_prompt: user_prompt,
-        response: response
-      )
+        track_open_ai_request(
+          request_type: "find_auto_reply",
+          model: model,
+          system_prompt: system_prompt,
+          user_prompt: user_prompt,
+          response: http_response
+        )
+
+        raise RetryableError.new(http_response) unless http_response.success?
+        http_response
+      end
 
       Response::FindAutoReply.new(response)
     end
 
     private
+
+    def with_retries(max_attempts: 3, base_sleep: 1)
+      attempts = 0
+      begin
+        attempts += 1
+        yield
+      rescue RetryableError => e
+        if attempts < max_attempts
+          sleep(base_sleep * attempts)
+          retry
+        else
+          return e.http_response
+        end
+      end
+    end
 
     def track_open_ai_request(request_type:, model:, system_prompt: nil, user_prompt:, response:)
       OpenAiRequest.create(
@@ -100,8 +132,16 @@ module OpenAi
         response_headers: response.headers,
         response_payload: response.parsed_response,
         success: response.success?,
-        answer: response.parsed_response.dig("choices", 0, "message", "content")
+        answer: response.success? ? response.parsed_response.dig("choices", 0, "message", "content") : nil
       )
+    end
+
+    class RetryableError < StandardError
+      attr_reader :http_response
+
+      def initialize(http_response)
+        @http_response = http_response
+      end
     end
   end
 end
