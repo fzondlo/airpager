@@ -44,19 +44,23 @@
   <div class="mt-8">
     <h2 class="font-bold text-xl">Live usage</h2>
 
-    <% if @auto_reply.auto_reply_usages.any? %>
+    <% if @auto_reply.live_usages.any? %>
       <table class="min-w-full table-auto text-sm text-left text-gray-700">
         <thead class="bg-gray-100 text-gray-600 uppercase text-xs py-2">
           <tr>
-            <th class="px-6 py-3">Conversation ID</th>
+            <th class="px-6 py-3">Message Trigger</th>
+            <th class="px-6 py-3">Suggested reply</th>
             <th class="px-6 py-3">Replied at</th>
           </tr>
         </thead>
         <tbody>
-          <% @auto_reply.auto_reply_usages.each do |auto_reply_usage| %>
+          <% @auto_reply.live_usages.each do |auto_reply_usage| %>
             <tr class="border-t border-gray-200 hover:bg-gray-50">
               <td class="px-6 py-4">
-                <%= auto_reply_usage.conversation_id %>
+                <%= auto_reply_usage.message_trigger_content %>
+              </td>
+              <td class="px-6 py-4">
+                <%= auto_reply_usage.suggested_reply %>
               </td>
               <td class="px-6 py-4">
                 <%= auto_reply_usage.created_at %>
@@ -77,19 +81,23 @@
   <div class="mt-8">
     <h2 class="font-bold text-xl">Sandbox usage</h2>
 
-    <% if @auto_reply.auto_reply_usages.any? %>
+    <% if @auto_reply.sandbox_usages.any? %>
       <table class="min-w-full table-auto text-sm text-left text-gray-700">
         <thead class="bg-gray-100 text-gray-600 uppercase text-xs py-2">
           <tr>
-            <th class="px-6 py-3">Conversation ID</th>
+            <th class="px-6 py-3">Message Trigger</th>
+            <th class="px-6 py-3">Suggested reply</th>
             <th class="px-6 py-3">Replied at</th>
           </tr>
         </thead>
         <tbody>
-          <% @auto_reply.auto_reply_usages.each do |auto_reply_usage| %>
+          <% @auto_reply.sandbox_usages.each do |auto_reply_usage| %>
             <tr class="border-t border-gray-200 hover:bg-gray-50">
               <td class="px-6 py-4">
-                <%= auto_reply_usage.conversation_id %>
+                <%= auto_reply_usage.message_trigger_content %>
+              </td>
+              <td class="px-6 py-4">
+                <%= auto_reply_usage.suggested_reply %>
               </td>
               <td class="px-6 py-4">
                 <%= auto_reply_usage.created_at %>
