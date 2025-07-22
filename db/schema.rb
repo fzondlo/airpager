@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_18_122859) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_22_141501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -37,7 +37,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_18_122859) do
     t.bigint "auto_reply_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "usage_type", null: false
+    t.string "reservation_id"
+    t.string "message_trigger_id"
+    t.text "suggested_reply"
     t.index ["auto_reply_id"], name: "index_auto_reply_usages_on_auto_reply_id"
+    t.index ["conversation_id"], name: "index_auto_reply_usages_on_conversation_id"
+    t.index ["reservation_id"], name: "index_auto_reply_usages_on_reservation_id"
+    t.index ["usage_type"], name: "index_auto_reply_usages_on_usage_type"
   end
 
   create_table "incident_escalations", force: :cascade do |t|

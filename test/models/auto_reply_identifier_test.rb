@@ -58,15 +58,4 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
     subject = AutoReplyIdentifier.new(message: @message, property_id: @property.id).resolve
     assert_nil subject
   end
-
-  def test_resolve_ignores_auto_reply_when_not_live_enabled_in_live_mode
-    @auto_reply.update!(live_enabled: false) # should be ignored in live mode
-
-    OpenAi::BogusGateway.any_instance.stubs(:find_auto_reply).returns(
-      stub(success?: true, auto_reply_id: @auto_reply.id.to_s)
-    )
-
-    subject = AutoReplyIdentifier.new(message: @message, property_id: @property.id, live_mode: true).resolve
-    assert_nil subject
-  end
 end

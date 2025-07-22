@@ -74,6 +74,39 @@
     <% end %>
   </div>
 
+  <div class="mt-8">
+    <h2 class="font-bold text-xl">Sandbox usage</h2>
+
+    <% if @auto_reply.auto_reply_usages.any? %>
+      <table class="min-w-full table-auto text-sm text-left text-gray-700">
+        <thead class="bg-gray-100 text-gray-600 uppercase text-xs py-2">
+          <tr>
+            <th class="px-6 py-3">Conversation ID</th>
+            <th class="px-6 py-3">Replied at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @auto_reply.auto_reply_usages.each do |auto_reply_usage| %>
+            <tr class="border-t border-gray-200 hover:bg-gray-50">
+              <td class="px-6 py-4">
+                <%= auto_reply_usage.conversation_id %>
+              </td>
+              <td class="px-6 py-4">
+                <%= auto_reply_usage.created_at %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="mt-6 border border-gray-200 rounded-xl bg-white p-8 flex flex-col items-center text-center shadow-sm">
+        <div class="text-5xl mb-4">🕒</div>
+        <h2 class="text-xl font-semibold text-gray-800">Waiting for First Sandbox Use</h2>
+        <p class="mt-2 text-gray-500">Once this auto reply is triggered in a live conversation while in sandbox mode, its usage details will be shown here—even if it's not actually sent.</p>
+      </div>
+    <% end %>
+  </div>
+
   <div class="mt-8 flex justify-between items-center">
     <%= link_to "Back", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
 
