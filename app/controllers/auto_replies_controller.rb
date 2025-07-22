@@ -48,7 +48,9 @@ class AutoRepliesController < ApplicationController
   private
 
   def set_auto_reply
-    @auto_reply = AutoReply.find(params[:id])
+    @auto_reply = AutoReplyViewModel.wrap(
+      AutoReply.find(params[:id])
+    )
   end
 
   def set_properties
