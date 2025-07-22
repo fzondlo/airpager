@@ -8,13 +8,13 @@ class AutoReplyViewModel < ApplicationViewModel
   end
 
   def sandbox_usages
-    @sandbox_usages ||= AutoReplyViewModel.wrap(
+    @sandbox_usages ||= AutoReplyUsageViewModel.wrap(
       AutoReplyUsage.where(auto_reply_id: model.id, usage_type: "sandbox").order(created_at: :desc)
     )
   end
 
   def live_usages
-    @live_usages ||= AutoReplyViewModel.wrap(
+    @live_usages ||= AutoReplyUsageViewModel.wrap(
       AutoReplyUsage.where(auto_reply_id: model.id, usage_type: "live").order(created_at: :desc)
     )
   end
