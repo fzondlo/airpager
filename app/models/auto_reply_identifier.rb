@@ -1,10 +1,9 @@
 class AutoReplyIdentifier
-  attr_reader :message, :property_id, :live_mode
+  attr_reader :message, :property_id
 
-  def initialize(message:, property_id:, live_mode: false)
+  def initialize(message:, property_id:)
     @message = message
     @property_id = property_id
-    @live_mode = live_mode
   end
 
   def resolve
@@ -22,13 +21,7 @@ class AutoReplyIdentifier
   def auto_replies
     return ::AutoReply.none unless property_id.present?
 
-    scope = ::AutoReply.joins(:properties).where(properties: { id: property_id })
-    scope = scope.live_enabled if live_mode?
-    scope
-  end
-
-  def live_mode?
-    !!@live_mode
+    ::AutoReply.joins(:properties).where(properties: { id: property_id })
   end
 
   def prompt

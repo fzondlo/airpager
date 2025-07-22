@@ -9,7 +9,7 @@
       <%= label_tag "auto_reply[live]", "Send real replies?", class: "block text-sm font-medium text-slate-700" %>
 
       <p class="text-sm text-slate-500 mt-1 mb-2">
-        When off, this reply will only run in the <%= link_to "chat sandbox ↗", sandbox_auto_replies_path, target: '_blank', class: 'text-blue-600 underline underline-dotted hover:text-blue-800' %> for testing purposes. Turn it on to enable live replies.
+        When off, this reply won’t be sent to guests but will still be logged under “Sandbox usage” in the Auto Reply view. Turn it on to send real replies and log them under “Live usage.”
       </p>
 
       <label class="relative inline-flex items-center cursor-pointer">

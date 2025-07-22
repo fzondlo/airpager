@@ -1,6 +1,5 @@
 module OpenAi
   class Gateway
-
     include HTTParty
     base_uri "https://api.openai.com/v1"
 
@@ -117,7 +116,7 @@ module OpenAi
           sleep(base_sleep * attempts)
           retry
         else
-          return e.http_response
+          e.http_response
         end
       end
     end

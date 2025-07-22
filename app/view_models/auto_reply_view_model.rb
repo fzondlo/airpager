@@ -6,4 +6,16 @@ class AutoReplyViewModel < ApplicationViewModel
       "No properties selected"
     end
   end
+
+  def sandbox_usages
+    @sandbox_usages ||= AutoReplyViewModel.wrap(
+      AutoReplyUsage.where(auto_reply_id: model.id, usage_type: "sandbox").order(created_at: :desc)
+    )
+  end
+
+  def live_usages
+    @live_usages ||= AutoReplyViewModel.wrap(
+      AutoReplyUsage.where(auto_reply_id: model.id, usage_type: "live").order(created_at: :desc)
+    )
+  end
 end
