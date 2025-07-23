@@ -12,7 +12,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
       stub(success?: true, auto_reply_id: @auto_reply.id.to_s)
     )
 
-    subject = AutoReplyIdentifier.new(message: @message, property_id: @property.id).resolve
+    subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve
 
     assert_equal subject, @auto_reply
   end
@@ -20,7 +20,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
   def test_resolve_returns_nil_when_no_auto_replies
     @auto_reply.destroy
 
-    subject = AutoReplyIdentifier.new(message: message, property_id: @property.id).resolve
+    subject = AutoReplyIdentifier.new(message: message, property: @property).resolve
     assert_nil subject
   end
 
@@ -29,7 +29,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
       stub(success?: false, auto_reply_id: nil)
     )
 
-    subject = AutoReplyIdentifier.new(message: @message, property_id: @property.id).resolve
+    subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve
     assert_nil subject
   end
 
@@ -38,12 +38,12 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
       stub(success?: true, auto_reply_id: "999")
     )
 
-    subject = AutoReplyIdentifier.new(message: @message, property_id: @property.id).resolve
+    subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve
     assert_nil subject
   end
 
-  def test_resolve_with_blank_property_id_returns_nil
-    subject = AutoReplyIdentifier.new(message: message, property_id: nil).resolve
+  def test_resolve_with_blank_property_returns_nil
+    subject = AutoReplyIdentifier.new(message: message, property: nil).resolve
     assert_nil subject
   end
 
@@ -55,7 +55,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
       stub(success?: true, auto_reply_id: other_auto_reply.id.to_s)
     )
 
-    subject = AutoReplyIdentifier.new(message: @message, property_id: @property.id).resolve
+    subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve
     assert_nil subject
   end
 end

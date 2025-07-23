@@ -1,6 +1,6 @@
 module OpenAi
   class BogusGateway
-    def chat(prompt, model: "gpt-4.1-nano-bogus")
+    def chat(prompt, model: "gpt-4.1-nano-bogus", metadata: {})
       Response::Chat.new(RawResponse.new(fake_chat_response(prompt)))
     end
 

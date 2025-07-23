@@ -34,7 +34,12 @@ class HospitableWebhooksController
     end
 
     def urgency_level_from_chatgpt
-      response = ::OpenAi.gateway.chat(prompt)
+      response = ::OpenAi.gateway.chat(prompt, metadata: {
+        message_id: message.id,
+        reservation_id: message.reservation_id,
+        conversation_id: message.conversation_id,
+        hospitable_thread_url: "https://my.hospitable.com/inbox/thread/#{message.conversation_id}"
+      })
 
       unless response.success?
         return URGENCY[:P1]

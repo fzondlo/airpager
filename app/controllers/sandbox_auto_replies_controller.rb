@@ -3,13 +3,13 @@ class SandboxAutoRepliesController < ApplicationController
 
   before_action :set_properties
   before_action :set_message
-  before_action :set_property_id
+  before_action :set_property
 
   def index
     @bot_reply = if @message.present?
       AutoReplyIdentifier.new(
         message: @message,
-        property_id: @property_id
+        property: @property
       ).resolve&.reply || "Sorry, I don't have an answer for that"
     end
   end
@@ -21,10 +21,18 @@ class SandboxAutoRepliesController < ApplicationController
   end
 
   def set_message
-    @message = params[:message]
+    if params[:message].present?
+      @message = Message.new(content: params[:message])
+    else
+      @message = nil
+    end
   end
 
-  def set_property_id
-    @property_id = params[:property_id]
+  def set_property
+    if params[:property_id].present?
+      @property = Property.find(params[:property_id])
+    else
+      @property = nil
+    end
   end
 end

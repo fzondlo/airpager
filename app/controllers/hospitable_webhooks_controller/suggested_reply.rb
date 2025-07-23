@@ -120,16 +120,16 @@ class HospitableWebhooksController
       Waapi.gateway.send_message(body, LOGGING_WA_GROUP)
     end
 
-    def property_id
-      @property_id ||= PropertyIdentifier.new(message).resolve&.id
+    def property
+      @property ||= PropertyIdentifier.new(message).resolve
     end
 
     def auto_reply
-      return unless property_id.present?
+      return unless property.present?
 
       @auto_reply ||= AutoReplyIdentifier.new(
-        message: message.content,
-        property_id: property_id
+        message: message,
+        property: property
       ).resolve
     end
 

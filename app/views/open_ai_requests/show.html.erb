@@ -35,6 +35,11 @@
     </div>
 
     <div>
+      <h2 class="text-sm font-semibold text-gray-500 uppercase">Metadata</h2>
+      <pre class="whitespace-pre-wrap break-words text-sm bg-gray-100 text-gray-800 font-mono rounded-md p-4 overflow-x-auto"><code><%= JSON.pretty_generate(@request.metadata) %></code></pre>
+    </div>
+
+    <div>
       <h2 class="text-sm font-semibold text-gray-500 uppercase">Response Payload</h2>
       <pre class="whitespace-pre-wrap break-words text-sm bg-gray-100 text-gray-800 font-mono rounded-md p-4 overflow-x-auto"><code><%= JSON.pretty_generate(@request.response_payload) %></code></pre>
     </div>

@@ -9,7 +9,7 @@ module OpenAi
                          "Accept" => "application/json"
     end
 
-    def chat(prompt, model: "gpt-4.1-nano")
+    def chat(prompt, model: "gpt-4.1-nano", metadata: {})
       body = {
         model: model,
         messages: [
@@ -27,7 +27,8 @@ module OpenAi
           request_type: "chat",
           model: model,
           user_prompt: prompt,
-          response: http_response
+          response: http_response,
+          metadata: metadata
         )
 
         raise RetryableError.new(http_response) unless http_response.success?
@@ -74,7 +75,7 @@ module OpenAi
       Response::Receipt.new(response)
     end
 
-    def find_auto_reply(system_prompt, user_prompt, model: "gpt-4.1-nano")
+    def find_auto_reply(system_prompt, user_prompt, model: "gpt-4.1-nano", metadata: {})
       body = {
         model: model,
         messages: [
@@ -94,7 +95,8 @@ module OpenAi
           model: model,
           system_prompt: system_prompt,
           user_prompt: user_prompt,
-          response: http_response
+          response: http_response,
+          metadata: metadata
         )
 
         raise RetryableError.new(http_response) unless http_response.success?
@@ -121,7 +123,7 @@ module OpenAi
       end
     end
 
-    def track_open_ai_request(request_type:, model:, system_prompt: nil, user_prompt:, response:)
+    def track_open_ai_request(request_type:, model:, system_prompt: nil, user_prompt:, response:, metadata: {})
       OpenAiRequest.create(
         request_id: response.headers["x-request-id"],
         request_type: request_type,
@@ -131,7 +133,8 @@ module OpenAi
         response_headers: response.headers,
         response_payload: response.parsed_response,
         success: response.success?,
-        answer: response.success? ? response.parsed_response.dig("choices", 0, "message", "content") : nil
+        answer: response.success? ? response.parsed_response.dig("choices", 0, "message", "content") : nil,
+        metadata: metadata
       )
     end
 
