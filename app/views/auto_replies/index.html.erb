@@ -52,12 +52,16 @@
                 </span>
               <% end %>
             </td>
-            <td class="px-6 py-4 font-medium text-gray-800">
-              <%= auto_reply.trigger %>
-              <br/>
-              <span class="text-xs font-light"><%= auto_reply.property_names_display %></span>
+            <td class="font-medium text-gray-800">
+              <%= link_to auto_reply_path(auto_reply.model), class: "block px-6 py-4" do %>
+                <%= auto_reply.trigger %>
+                <br/>
+                <span class="text-xs font-light"><%= auto_reply.property_names_display %></span>
+              <% end %>
             </td>
-            <td class="px-6 py-4"><%= truncate(auto_reply.reply, length: 120) %></td>
+            <td>
+              <%= link_to truncate(auto_reply.reply, length: 120), auto_reply_path(auto_reply.model), class: "block px-6 py-4" %>
+            </td>
             <td class="px-6 py-4 text-right space-x-2">
               <div class="inline-flex items-center gap-2 text-gray-600">
                 <%= link_to "Show", auto_reply_path(auto_reply.model), class: "text-blue-600 hover:underline" %>

@@ -1,4 +1,8 @@
 <div class="max-w-2xl mx-auto py-10 px-6">
+  <div class="mb-8 flex justify-between items-center">
+    <%= link_to "← Back to auto replies", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+  </div>
+
   <h1 class="text-2xl font-bold text-slate-800 mb-6">Edit Auto Reply</h1>
 
   <%= render "shared/form_errors", record: @auto_reply %>
@@ -54,7 +58,7 @@
     </div>
 
     <div class="flex items-center justify-between">
-      <%= link_to "Back", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+      <%= link_to "← Back to auto replies", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
       <%= submit_tag "Update Auto Reply", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>
     </div>
   <% end %>

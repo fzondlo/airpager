@@ -1,4 +1,19 @@
 <div class="max-w-2xl mx-auto py-10 px-6">
+
+  <div class="mb-8 flex justify-between items-center">
+    <%= link_to "← Back to auto replies", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+
+    <div class="flex gap-3">
+      <%= link_to "Edit", edit_auto_reply_path(@auto_reply.model),
+                  class: "text-sm bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl transition" %>
+
+      <%= button_to "Delete", auto_reply_path(@auto_reply.model),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition cursor-pointer" %>
+    </div>
+  </div>
+
   <h1 class="text-2xl font-bold text-slate-800 mb-6">Auto Reply #<%= @auto_reply.id %></h1>
 
   <div class="space-y-4 bg-white shadow rounded-xl p-6 border border-slate-200">
@@ -113,19 +128,5 @@
         <p class="mt-2 text-gray-500">Once this auto reply is triggered in a live conversation while in sandbox mode, its usage details will be shown here—even if it's not actually sent.</p>
       </div>
     <% end %>
-  </div>
-
-  <div class="mt-8 flex justify-between items-center">
-    <%= link_to "Back", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
-
-    <div class="flex gap-3">
-      <%= link_to "Edit", edit_auto_reply_path(@auto_reply),
-                  class: "text-sm bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl transition" %>
-
-      <%= button_to "Delete", auto_reply_path(@auto_reply),
-                    method: :delete,
-                    data: { turbo_confirm: "Are you sure?" },
-                    class: "text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition cursor-pointer" %>
-    </div>
   </div>
 </div>
