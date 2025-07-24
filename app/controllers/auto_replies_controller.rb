@@ -2,6 +2,7 @@ class AutoRepliesController < ApplicationController
   include BasicAuthProtected
 
   before_action :set_properties, only: [ :new, :edit ]
+  before_action :set_trigger_context_options, only: [ :edit ]
   before_action :set_auto_reply, only: [ :show, :edit, :update, :destroy ]
 
   def index
@@ -57,8 +58,16 @@ class AutoRepliesController < ApplicationController
     @properties = Property.all
   end
 
+  def set_trigger_context_options
+    @trigger_context_options = [
+      ["Inquiry", "inquiry"],
+      ["Reservation", "reservation"],
+      ["Both", "both"]
+    ]
+  end
+
   def auto_reply_params
-    params.require(:auto_reply).permit(:trigger, :reply, :live_enabled, property_ids: [])
+    params.require(:auto_reply).permit(:trigger, :reply, :live_enabled, :trigger_context, property_ids: [])
   end
 
   def search_params

@@ -18,4 +18,10 @@ class AutoReplyViewModel < ApplicationViewModel
       AutoReplyUsage.where(auto_reply_id: model.id, usage_type: "live").order(created_at: :desc)
     )
   end
+
+  def trigger_context_display
+    return model.trigger_context.capitalize unless model.trigger_context == 'both'
+
+    'Inquiry and Reservation'
+  end
 end

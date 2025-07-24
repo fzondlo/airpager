@@ -27,10 +27,25 @@ class AutoReplyIdentifier
   def auto_replies
     return ::AutoReply.none unless property&.id.present?
 
-    ::AutoReply.joins(:properties).where(properties: { id: property.id })
+    ::AutoReply
+    .joins(:properties)
+    .where(properties: { id: property.id })
+    .where(trigger_context: [trigger_context, "both"])
   end
 
   def prompt
     Prompt.find_auto_reply(auto_replies)
+  end
+
+  def inquiry?
+    !reservation?
+  end
+
+  def reservation?
+    message.reservation_id.present?
+  end
+
+  def trigger_context
+    reservation? ? "reservation" : "inquiry"
   end
 end

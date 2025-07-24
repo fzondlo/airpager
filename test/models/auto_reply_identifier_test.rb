@@ -20,7 +20,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
   def test_resolve_returns_nil_when_no_auto_replies
     @auto_reply.destroy
 
-    subject = AutoReplyIdentifier.new(message: message, property: @property).resolve
+    subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve
     assert_nil subject
   end
 
@@ -43,7 +43,7 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
   end
 
   def test_resolve_with_blank_property_returns_nil
-    subject = AutoReplyIdentifier.new(message: message, property: nil).resolve
+    subject = AutoReplyIdentifier.new(message: @message, property: nil).resolve
     assert_nil subject
   end
 
@@ -53,6 +53,18 @@ class AutoReplyIdentifierTest < ActiveSupport::TestCase
 
     OpenAi::BogusGateway.any_instance.stubs(:find_auto_reply).returns(
       stub(success?: true, auto_reply_id: other_auto_reply.id.to_s)
+    )
+
+    subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve
+    assert_nil subject
+  end
+
+  def test_resolve_does_not_return_wrong_context_auto_reply
+    @message.update!(reservation_id: nil)
+    @auto_reply.update!(trigger_context: "reservation")
+
+    OpenAi::BogusGateway.any_instance.stubs(:find_auto_reply).returns(
+      stub(success?: true, auto_reply_id: @auto_reply.id.to_s)
     )
 
     subject = AutoReplyIdentifier.new(message: @message, property: @property).resolve

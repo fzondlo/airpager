@@ -7,6 +7,7 @@ class AutoReply < ApplicationRecord
   validates :reply, presence: true
 
   validates :live_enabled, inclusion: { in: [ true, false ] }
+  validates :trigger_context, inclusion: { in: [ "inquiry", "reservation", "both" ] }
 
   scope :live_enabled, -> { where(live_enabled: true) }
 end

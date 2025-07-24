@@ -1,19 +1,19 @@
 <div class="max-w-2xl mx-auto py-10 px-6">
   <div class="mb-8 flex justify-between items-center">
-    <%= link_to "← Back to auto replies", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+    <%= link_to "← Back to auto reply", auto_reply_path(@auto_reply.model), class: "text-slate-500 hover:underline text-sm" %>
   </div>
 
-  <h1 class="text-2xl font-bold text-slate-800 mb-6">Edit Auto Reply</h1>
+  <h1 class="text-2xl font-bold text-slate-800 mb-6">Edit Auto Reply #<%= @auto_reply.id %></h1>
 
   <%= render "shared/form_errors", record: @auto_reply %>
 
-  <%= form_tag auto_reply_path(@auto_reply), method: :patch, class: "space-y-6" do %>
+  <%= form_tag auto_reply_path(@auto_reply.model), method: :patch, class: "space-y-6" do %>
 
     <div>
-      <%= label_tag "auto_reply[live]", "Send real replies?", class: "block text-sm font-medium text-slate-700" %>
+      <%= label_tag "auto_reply[live]", "Send replies?", class: "block text-sm font-medium text-slate-700" %>
 
       <p class="text-sm text-slate-500 mt-1 mb-2">
-        When off, this reply won’t be sent to guests but will still be logged under “Sandbox usage” in the Auto Reply view. Turn it on to send real replies and log them under “Live usage.”
+        When off, this reply won’t be sent to guests but will still be logged under “Sandbox usage” in the Auto Reply view. Turn it on to send replies and log them under “Live usage.”
       </p>
 
       <label class="relative inline-flex items-center cursor-pointer">
@@ -22,6 +22,18 @@
         <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-colors"></div>
         <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-all peer-checked:translate-x-full"></div>
       </label>
+    </div>
+
+    <div>
+      <%= label_tag "auto_reply[trigger_context]", "When should this auto-reply be used?", class: "block text-sm font-medium text-slate-700" %>
+
+      <p class="text-sm text-slate-500 mt-1 mb-2">
+        Choose whether this reply should trigger for guest inquiries, reservations, or both. This helps you tailor replies to the situation the guest is in.
+      </p>
+
+      <%= select_tag "auto_reply[trigger_context]",
+            options_for_select(@trigger_context_options, selected: @auto_reply.trigger_context),
+            class: "border p-2 border-gray-300 w-60" %>
     </div>
 
     <div>
@@ -58,7 +70,7 @@
     </div>
 
     <div class="flex items-center justify-between">
-      <%= link_to "← Back to auto replies", auto_replies_path, class: "text-slate-500 hover:underline text-sm" %>
+      <%= link_to "← Back to auto reply", auto_reply_path(@auto_reply.model), class: "text-slate-500 hover:underline text-sm" %>
       <%= submit_tag "Update Auto Reply", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer" %>
     </div>
   <% end %>
