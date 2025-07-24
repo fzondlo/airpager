@@ -55,7 +55,11 @@ module Clickup
       end
 
       def get_dropdown_value_for_cf(cf, field_name)
-        cf[:type_config][:options].select { |o| o[:orderindex] == cf[:value] }[0][field_name]
+        begin
+          cf[:type_config][:options].select { |o| o[:orderindex] == cf[:value] }[0][field_name]
+        rescue NoMethodError
+          nil
+        end
       end
     end
   end

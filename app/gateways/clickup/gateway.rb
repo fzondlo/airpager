@@ -24,6 +24,10 @@ module Clickup
       )
     end
 
+    def delete_task(task_id)
+      self.class.delete("/api/v2/task/#{task_id}")
+    end
+
     def find_task(task_id)
       response = self.class.get("/api/v2/task/#{task_id}")
       Response::FindTask.new(response.parsed_response)
@@ -31,10 +35,22 @@ module Clickup
 
     def find_tasks(list_name, query_params = {})
       list = LIST_NAMES_TO_ID[list_name]
-      response = self.class.get("/api/v2/list/#{list}/task", query: query_params)
-      response.parsed_response["tasks"].map do |task|
-        Response::FindTask.new(task)
+      query_params["page"] = 0
+      tasks = []
+
+      loop do
+        response = self.class.get("/api/v2/list/#{list}/task", query: query_params)
+        tasks_data = response.parsed_response["tasks"] || []
+
+        tasks_data.each do |task|
+          tasks << Response::FindTask.new(task)
+        end
+        
+        break if response["last_page"] == true
+        query_params["page"] += 1
       end
+
+      tasks
     end
 
     def get_custom_fields_for(list_name)
