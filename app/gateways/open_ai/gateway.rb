@@ -9,7 +9,7 @@ module OpenAi
                          "Accept" => "application/json"
     end
 
-    def chat(prompt, model: "gpt-4.1-nano", metadata: {})
+    def chat(prompt, model: "gpt-4.1", metadata: {})
       body = {
         model: model,
         messages: [
@@ -75,7 +75,7 @@ module OpenAi
       Response::Receipt.new(response)
     end
 
-    def find_auto_reply(system_prompt, user_prompt, model: "gpt-4.1-nano", metadata: {})
+    def find_auto_reply(system_prompt, user_prompt, model: "gpt-4.1", metadata: {})
       body = {
         model: model,
         messages: [
