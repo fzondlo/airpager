@@ -32,7 +32,7 @@ gem 'twilio-ruby', '~> 7.7.0'
 # Google drive integration
 gem "googleauth"
 gem "google-apis-drive_v3"
-gem "google-apis-sheets_v4", "~> 0.6.0"
+gem "google-apis-sheets_v4", "~> 0.45.0"
 
 # Processing jobs
 gem "sidekiq"
