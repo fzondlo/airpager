@@ -7,6 +7,8 @@ module SystemConfig
     angie: "573184418412"
   }.freeze
 
+  TWILIO_PHONE_NUMBER =  "+17039520007".freeze
+
   WHATSAPP_FACTURA_GROUPS = {
     "120363401619194668@g.us" => "test",
     "120363411632014678@g.us" => "Edgar",

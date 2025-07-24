@@ -26,6 +26,9 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Make API calls
 gem "httparty"
 
+# Voice calls
+gem 'twilio-ruby', '~> 7.7.0'
+
 # Google drive integration
 gem "googleauth"
 gem "google-apis-drive_v3"
