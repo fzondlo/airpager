@@ -91,6 +91,7 @@ class HospitableWebhooksController
     def alert_person_on_call
       alert = "Tienes un mensaje pendiente de AirBnB con Prioridad #{urgency_level} de #{message.sender_full_name}"
       Waapi.gateway.send_message(alert, person_on_call)
+      TwilioApi.gateway.create_call(person_on_call)
       log_to_wappi("#{alert} - sent to #{STAFF_ON_CALL} for #{message[:sender_full_name]}: #{message[:content]}")
     end
 
@@ -115,7 +116,7 @@ class HospitableWebhooksController
 
         We appreciate your patience and look forward to helping you soon.
 
-        If this is an urgent request click this link: #{Rails.application.routes.url_helpers.incident_escalation_url("the-token", host: "airpager-d950d85687e0.herokuapp.com")}
+        If this is an urgent request click this link: #{Rails.application.routes.url_helpers.incident_escalation_url(incident_escalation.token, host: "airpager-d950d85687e0.herokuapp.com")}
 
         #{debug_details}
       TEXT
