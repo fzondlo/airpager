@@ -85,6 +85,38 @@ class HospitableWebhooksIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def test_alert_person_on_call_for_p1
+    fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P1\"\n}", body: {})
+    ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
+
+    # Allow any other send_message calls to go through without raising errors
+    Waapi::BogusGateway.any_instance.stubs(:send_message)
+
+    Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
+      message.include?("Tienes un mensaje pendiente de AirBnB con Prioridad P1")
+    end.once
+
+    TwilioApi::BogusGateway.any_instance.expects(:create_call).once
+
+    post_hospitable_message_webhook
+  end
+
+  def test_alert_person_on_call_for_p2
+    fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P2\"\n}", body: {})
+    ::OpenAi.stubs(:gateway).returns(stub(chat: fake_response))
+
+    # Allow any other send_message calls to go through without raising errors
+    Waapi::BogusGateway.any_instance.stubs(:send_message)
+
+    Waapi::BogusGateway.any_instance.expects(:send_message).with do |message|
+      message.include?("Tienes un mensaje pendiente de AirBnB con Prioridad P2")
+    end.once
+
+    TwilioApi::BogusGateway.any_instance.expects(:create_call).once
+
+    post_hospitable_message_webhook
+  end
+
   def test_sends_escalation_message_for_p3_after_hours
     travel_to Time.zone.parse("22:00:00") do
       fake_response = stub(success?: true, answer: "{\n  \"urgency\": \"P3\"\n}", body: {})
