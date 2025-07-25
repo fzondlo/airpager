@@ -38,7 +38,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_120350) do
     t.bigint "auto_reply_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "usage_type", null: false
+    t.string "usage_type", default: "sandbox", null: false
     t.string "reservation_id"
     t.string "message_trigger_id"
     t.text "suggested_reply"
@@ -69,6 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_120350) do
     t.datetime "updated_at", null: false
     t.string "resolved_by"
     t.string "urgency_level"
+    t.index ["urgency_level"], name: "index_incidents_on_urgency_level"
   end
 
   create_table "messages", force: :cascade do |t|
