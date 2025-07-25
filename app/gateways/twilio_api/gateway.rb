@@ -7,11 +7,11 @@ module TwilioApi
       @auth_token = auth_token
     end
 
-    def create_call(phone_number: "+573170949147", url: "http://demo.twilio.com/docs/classic.mp3")
+    def create_call(phone_number)
       client.calls.create(
         from: SystemConfig::TWILIO_PHONE_NUMBER,
         to: phone_number,
-        url: url
+        url: "https://handler.twilio.com/twiml/EH92d57a98fa015b948b857f3daaa7dc57"
       )
     end
 
