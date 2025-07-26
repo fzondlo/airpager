@@ -15,13 +15,28 @@ module Hospitable
     end
 
     def find_reservations(property_ids)
+      page = 1
+      all_reservations = []
       properties_query = property_ids.join("&properties[]=")
-      response = self.class.get(
-        "/v2/reservations/?properties[]=#{properties_query}&include=guest,properties" +
-        "&start_date=#{2.month.ago.to_date}&end_date=#{2.month.from_now.to_date}" +
-        "&per_page=100"
-      )
-      Response::FindReservations.new(response)
+
+      loop do
+        response = self.class.get(
+          "/v2/reservations/?properties[]=#{properties_query}" \
+          "&include=guest,properties" \
+          "&start_date=#{2.months.ago.to_date}" \
+          "&end_date=#{2.months.from_now.to_date}" \
+          "&per_page=100&page=#{page}"
+        )
+        parsed_response = Response::FindReservations.new(response)
+        all_reservations.concat(parsed_response.reservations)
+
+        last_page = response["meta"]["last_page"]
+        break if page >= last_page
+
+        page += 1
+      end
+
+      all_reservations
     end
 
     def find_reservation(reservation_id)

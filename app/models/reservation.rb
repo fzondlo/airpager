@@ -1,6 +1,6 @@
 class Reservation
   def self.all
-    Hospitable.gateway.find_reservations(property_ids).reservations
+    Hospitable.gateway.find_reservations(property_ids)
   end
 
   def self.property_ids
